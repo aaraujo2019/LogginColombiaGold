@@ -664,7 +664,6 @@ public class clsRf
         }
         catch (Exception eX)
         {
-
             throw new Exception(eX.Message);
         }
     }
@@ -681,7 +680,6 @@ public class clsRf
         }
         catch (Exception eX)
         {
-
             throw new Exception(eX.Message);
         }
     }
@@ -700,7 +698,6 @@ public class clsRf
         }
         catch (Exception eX)
         {
-
             throw new Exception(eX.Message);
         }
     }
@@ -721,7 +718,6 @@ public class clsRf
         }
         catch (Exception eX)
         {
-
             throw new Exception(eX.Message);
         }
     }
@@ -740,7 +736,6 @@ public class clsRf
         }
         catch (Exception eX)
         {
-
             throw new Exception(eX.Message);
         }
     }
@@ -759,7 +754,6 @@ public class clsRf
         }
         catch (Exception eX)
         {
-
             throw new Exception(eX.Message);
         }
     }

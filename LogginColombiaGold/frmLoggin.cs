@@ -108,11 +108,7 @@ namespace LogginColombiaGold
                 {
                     TabPpal.TabPages.Remove(tbGeotech);
                 }
-                datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Weathering'");
-                if (datoPest.Length == 0)
-                {
-                    TabPpal.TabPages.Remove(tbWeathering);
-                }
+                
                 datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Stuctures'");
                 if (datoPest.Length == 0)
                 {
@@ -123,11 +119,22 @@ namespace LogginColombiaGold
                 {
                     TabPpal.TabPages.Remove(tbMineraliz);
                 }
-                datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Density'");
-                if (datoPest.Length == 0)
-                {
-                    TabPpal.TabPages.Remove(tbDensity);
-                }
+
+                /* No se usan solicitan quitarlos*/
+                TabPpal.TabPages.Remove(tbWeathering);
+                TabPpal.TabPages.Remove(tbDensity);
+
+                //datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Weathering'");
+                //if (datoPest.Length == 0)
+                //{
+                //    TabPpal.TabPages.Remove(tbWeathering);
+                //}
+
+                //datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Density'");
+                //if (datoPest.Length == 0)
+                //{
+                //    TabPpal.TabPages.Remove(tbDensity);
+                //}
             }
 
             //TabPpal.TabPages.Remove(tbDensity);

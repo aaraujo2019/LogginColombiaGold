@@ -1004,7 +1004,7 @@
             // 
             this.btnValidBox.Image = ((System.Drawing.Image)(resources.GetObject("btnValidBox.Image")));
             this.btnValidBox.InitialImage = null;
-            this.btnValidBox.Location = new System.Drawing.Point(650, 74);
+            this.btnValidBox.Location = new System.Drawing.Point(650, 18);
             this.btnValidBox.Margin = new System.Windows.Forms.Padding(2);
             this.btnValidBox.Name = "btnValidBox";
             this.btnValidBox.Size = new System.Drawing.Size(36, 36);
@@ -1018,7 +1018,7 @@
             // 
             this.btnExcelBox.Image = ((System.Drawing.Image)(resources.GetObject("btnExcelBox.Image")));
             this.btnExcelBox.InitialImage = null;
-            this.btnExcelBox.Location = new System.Drawing.Point(606, 74);
+            this.btnExcelBox.Location = new System.Drawing.Point(606, 18);
             this.btnExcelBox.Margin = new System.Windows.Forms.Padding(2);
             this.btnExcelBox.Name = "btnExcelBox";
             this.btnExcelBox.Size = new System.Drawing.Size(36, 36);
@@ -1032,12 +1032,12 @@
             // 
             this.TabPpal.Controls.Add(this.tbSamples);
             this.TabPpal.Controls.Add(this.tbBox);
-            this.TabPpal.Controls.Add(this.tbWeathering);
             this.TabPpal.Controls.Add(this.tbLithology);
             this.TabPpal.Controls.Add(this.tbAlteration);
             this.TabPpal.Controls.Add(this.tbStructure);
             this.TabPpal.Controls.Add(this.tbMineraliz);
             this.TabPpal.Controls.Add(this.tbGeotech);
+            this.TabPpal.Controls.Add(this.tbWeathering);
             this.TabPpal.Controls.Add(this.tbDensity);
             this.TabPpal.Location = new System.Drawing.Point(7, 77);
             this.TabPpal.Name = "TabPpal";
@@ -1070,17 +1070,9 @@
             // 
             // groupBox15
             // 
-            this.groupBox15.Controls.Add(this.txtEditPhotoBox);
-            this.groupBox15.Controls.Add(this.label122);
-            this.groupBox15.Controls.Add(this.txtPhotoBox);
-            this.groupBox15.Controls.Add(this.label146);
             this.groupBox15.Controls.Add(this.btnValidBox);
             this.groupBox15.Controls.Add(this.btnExcelBox);
             this.groupBox15.Controls.Add(this.btnCancelBox);
-            this.groupBox15.Controls.Add(this.txtRowBox);
-            this.groupBox15.Controls.Add(this.label67);
-            this.groupBox15.Controls.Add(this.txtColumnBox);
-            this.groupBox15.Controls.Add(this.label68);
             this.groupBox15.Controls.Add(this.label46);
             this.groupBox15.Controls.Add(this.label66);
             this.groupBox15.Controls.Add(this.cmbHoleIDBox);
@@ -1091,9 +1083,17 @@
             this.groupBox15.Controls.Add(this.label71);
             this.groupBox15.Controls.Add(this.txtFromBox);
             this.groupBox15.Controls.Add(this.label72);
+            this.groupBox15.Controls.Add(this.dgBox);
+            this.groupBox15.Controls.Add(this.txtEditPhotoBox);
+            this.groupBox15.Controls.Add(this.label122);
+            this.groupBox15.Controls.Add(this.txtPhotoBox);
+            this.groupBox15.Controls.Add(this.label146);
+            this.groupBox15.Controls.Add(this.txtRowBox);
+            this.groupBox15.Controls.Add(this.label67);
+            this.groupBox15.Controls.Add(this.txtColumnBox);
+            this.groupBox15.Controls.Add(this.label68);
             this.groupBox15.Controls.Add(this.txtStand);
             this.groupBox15.Controls.Add(this.label73);
-            this.groupBox15.Controls.Add(this.dgBox);
             this.groupBox15.Location = new System.Drawing.Point(6, 6);
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.Size = new System.Drawing.Size(703, 387);
@@ -1102,41 +1102,45 @@
             // 
             // txtEditPhotoBox
             // 
-            this.txtEditPhotoBox.Location = new System.Drawing.Point(18, 90);
+            this.txtEditPhotoBox.Location = new System.Drawing.Point(350, 361);
             this.txtEditPhotoBox.Name = "txtEditPhotoBox";
             this.txtEditPhotoBox.Size = new System.Drawing.Size(56, 20);
             this.txtEditPhotoBox.TabIndex = 9;
+            this.txtEditPhotoBox.Visible = false;
             this.txtEditPhotoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEditPhotoBox_KeyPress);
             // 
             // label122
             // 
             this.label122.AutoSize = true;
-            this.label122.Location = new System.Drawing.Point(15, 73);
+            this.label122.Location = new System.Drawing.Point(347, 344);
             this.label122.Name = "label122";
             this.label122.Size = new System.Drawing.Size(56, 13);
             this.label122.TabIndex = 52;
             this.label122.Text = "Edit Photo";
+            this.label122.Visible = false;
             // 
             // txtPhotoBox
             // 
-            this.txtPhotoBox.Location = new System.Drawing.Point(630, 43);
+            this.txtPhotoBox.Location = new System.Drawing.Point(633, 361);
             this.txtPhotoBox.Name = "txtPhotoBox";
             this.txtPhotoBox.Size = new System.Drawing.Size(56, 20);
             this.txtPhotoBox.TabIndex = 8;
+            this.txtPhotoBox.Visible = false;
             this.txtPhotoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhotoBox_KeyPress);
             // 
             // label146
             // 
             this.label146.AutoSize = true;
-            this.label146.Location = new System.Drawing.Point(627, 26);
+            this.label146.Location = new System.Drawing.Point(630, 344);
             this.label146.Name = "label146";
             this.label146.Size = new System.Drawing.Size(35, 13);
             this.label146.TabIndex = 51;
             this.label146.Text = "Photo";
+            this.label146.Visible = false;
             // 
             // btnCancelBox
             // 
-            this.btnCancelBox.Location = new System.Drawing.Point(611, 118);
+            this.btnCancelBox.Location = new System.Drawing.Point(510, 33);
             this.btnCancelBox.Name = "btnCancelBox";
             this.btnCancelBox.Size = new System.Drawing.Size(75, 23);
             this.btnCancelBox.TabIndex = 11;
@@ -1146,43 +1150,47 @@
             // 
             // txtRowBox
             // 
-            this.txtRowBox.Location = new System.Drawing.Point(568, 43);
+            this.txtRowBox.Location = new System.Drawing.Point(571, 361);
             this.txtRowBox.Name = "txtRowBox";
             this.txtRowBox.Size = new System.Drawing.Size(56, 20);
             this.txtRowBox.TabIndex = 7;
+            this.txtRowBox.Visible = false;
             this.txtRowBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowBox_KeyPress);
             // 
             // label67
             // 
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(565, 26);
+            this.label67.Location = new System.Drawing.Point(568, 344);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(29, 13);
             this.label67.TabIndex = 46;
             this.label67.Text = "Row";
+            this.label67.Visible = false;
             // 
             // txtColumnBox
             // 
-            this.txtColumnBox.Location = new System.Drawing.Point(504, 43);
+            this.txtColumnBox.Location = new System.Drawing.Point(507, 361);
             this.txtColumnBox.Name = "txtColumnBox";
             this.txtColumnBox.Size = new System.Drawing.Size(56, 20);
             this.txtColumnBox.TabIndex = 6;
+            this.txtColumnBox.Visible = false;
             this.txtColumnBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtColumnBox_KeyPress);
             // 
             // label68
             // 
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(501, 26);
+            this.label68.Location = new System.Drawing.Point(504, 344);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(42, 13);
             this.label68.TabIndex = 45;
             this.label68.Text = "Column";
+            this.label68.Visible = false;
             // 
             // label46
             // 
             this.label46.AutoSize = true;
             this.label46.ForeColor = System.Drawing.Color.Blue;
-            this.label46.Location = new System.Drawing.Point(158, 67);
+            this.label46.Location = new System.Drawing.Point(158, 64);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(122, 13);
             this.label46.TabIndex = 41;
@@ -1191,7 +1199,7 @@
             // label66
             // 
             this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(13, 29);
+            this.label66.Location = new System.Drawing.Point(13, 21);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(43, 13);
             this.label66.TabIndex = 40;
@@ -1200,7 +1208,7 @@
             // cmbHoleIDBox
             // 
             this.cmbHoleIDBox.FormattingEnabled = true;
-            this.cmbHoleIDBox.Location = new System.Drawing.Point(16, 45);
+            this.cmbHoleIDBox.Location = new System.Drawing.Point(16, 37);
             this.cmbHoleIDBox.Name = "cmbHoleIDBox";
             this.cmbHoleIDBox.Size = new System.Drawing.Size(127, 21);
             this.cmbHoleIDBox.TabIndex = 1;
@@ -1209,7 +1217,7 @@
             // 
             // btnAddBox
             // 
-            this.btnAddBox.Location = new System.Drawing.Point(525, 119);
+            this.btnAddBox.Location = new System.Drawing.Point(424, 34);
             this.btnAddBox.Name = "btnAddBox";
             this.btnAddBox.Size = new System.Drawing.Size(75, 23);
             this.btnAddBox.TabIndex = 10;
@@ -1219,7 +1227,7 @@
             // 
             // txtToBox
             // 
-            this.txtToBox.Location = new System.Drawing.Point(225, 44);
+            this.txtToBox.Location = new System.Drawing.Point(225, 36);
             this.txtToBox.Name = "txtToBox";
             this.txtToBox.Size = new System.Drawing.Size(56, 20);
             this.txtToBox.TabIndex = 3;
@@ -1227,7 +1235,7 @@
             // 
             // txtNoBox
             // 
-            this.txtNoBox.Location = new System.Drawing.Point(291, 43);
+            this.txtNoBox.Location = new System.Drawing.Point(291, 35);
             this.txtNoBox.Name = "txtNoBox";
             this.txtNoBox.Size = new System.Drawing.Size(103, 20);
             this.txtNoBox.TabIndex = 4;
@@ -1236,7 +1244,7 @@
             // label69
             // 
             this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(288, 27);
+            this.label69.Location = new System.Drawing.Point(288, 19);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(25, 13);
             this.label69.TabIndex = 29;
@@ -1245,7 +1253,7 @@
             // label71
             // 
             this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(222, 27);
+            this.label71.Location = new System.Drawing.Point(222, 19);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(20, 13);
             this.label71.TabIndex = 25;
@@ -1253,7 +1261,7 @@
             // 
             // txtFromBox
             // 
-            this.txtFromBox.Location = new System.Drawing.Point(161, 44);
+            this.txtFromBox.Location = new System.Drawing.Point(161, 36);
             this.txtFromBox.Name = "txtFromBox";
             this.txtFromBox.Size = new System.Drawing.Size(56, 20);
             this.txtFromBox.TabIndex = 2;
@@ -1262,7 +1270,7 @@
             // label72
             // 
             this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(158, 27);
+            this.label72.Location = new System.Drawing.Point(158, 19);
             this.label72.Name = "label72";
             this.label72.Size = new System.Drawing.Size(30, 13);
             this.label72.TabIndex = 23;
@@ -1270,29 +1278,31 @@
             // 
             // txtStand
             // 
-            this.txtStand.Location = new System.Drawing.Point(409, 43);
+            this.txtStand.Location = new System.Drawing.Point(412, 361);
             this.txtStand.Name = "txtStand";
             this.txtStand.Size = new System.Drawing.Size(87, 20);
             this.txtStand.TabIndex = 5;
+            this.txtStand.Visible = false;
             this.txtStand.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStand_KeyPress);
             // 
             // label73
             // 
             this.label73.AutoSize = true;
-            this.label73.Location = new System.Drawing.Point(406, 26);
+            this.label73.Location = new System.Drawing.Point(409, 344);
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(35, 13);
             this.label73.TabIndex = 21;
             this.label73.Text = "Stand";
+            this.label73.Visible = false;
             // 
             // dgBox
             // 
             this.dgBox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgBox.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgBox.Location = new System.Drawing.Point(18, 147);
+            this.dgBox.Location = new System.Drawing.Point(7, 83);
             this.dgBox.Name = "dgBox";
             this.dgBox.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgBox.Size = new System.Drawing.Size(668, 227);
+            this.dgBox.Size = new System.Drawing.Size(690, 291);
             this.dgBox.TabIndex = 12;
             this.dgBox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBox_CellClick);
             this.dgBox.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBox_CellDoubleClick);
