@@ -23,6 +23,15 @@ namespace LogginColombiaGold
             //clsRf.dsPermisos = oRf.getFormsByGrupoAll(clsRf.sIdGrupo);
             try
             {
+                //***** Este fragmento es utilizado para realización de modificaciones y pruebas. AAA ****
+
+                //frmLoggin oLog = new frmLoggin();
+                //oLog.MdiParent = this;
+                //oLog.Show();
+
+                //****************************************************************
+                // Para pruebas se debe comentar el siguiente fragmento de codigo.
+
                 DataRow[] dato = dtFormsAllowed.Select("nombre_Real_Form = 'frmLoggin'");
                 if (dato.Length > 0)
                 {
