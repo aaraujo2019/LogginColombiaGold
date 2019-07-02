@@ -1,759 +1,771 @@
-﻿using System;
+﻿using DataAccess;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
 
 public class clsRf
 {
-    private DataAccess.ManagerDA oData = new DataAccess.ManagerDA();
-
+    private ManagerDA oData = new ManagerDA();
     public static string sUser;
     public static string sIdentification;
     public static string sIdGrupo;
     public static DataSet dsPermisos;
     public int iIdProject;
-
-
     public string sCodeLith;
-
-
     public DataTable getCollarsPlatf(string _sHoleId)
     {
+        DataTable result;
         try
         {
-            DataSet dtData = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@HoleId";
-            arr[0].Value = _sHoleId;
-            dtData = oData.ExecuteDataset("usp_DH_Platform_ListReport", arr, CommandType.StoredProcedure);
-            return dtData.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@HoleId";
+            parameters[0].Value = _sHoleId;
+            dataSet = this.oData.ExecuteDataset("usp_DH_Platform_ListReport", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
+    public DataTable getTarget(string _sCode)
+    {
+        DataTable result;
+        try
+        {
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@CODE";
+            parameters[0].Value = _sCode;
+            dataSet = this.oData.ExecuteDataset("usp_RfTarget_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return result;
+    }
     public DataTable getLocation(string _sCode)
     {
+        DataTable result;
         try
         {
-            DataSet dtLocation = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@CODE";
-            arr[0].Value = _sCode;
-            dtLocation = oData.ExecuteDataset("usp_RfLocation_List", arr, CommandType.StoredProcedure);
-            return dtLocation.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@CODE";
+            parameters[0].Value = _sCode;
+            dataSet = this.oData.ExecuteDataset("usp_RfLocation_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getVersionProject()
     {
+        DataTable result;
         try
         {
-            DataSet dtVersion = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@Id";
-            arr[0].Value = iIdProject;
-            dtVersion = oData.ExecuteDataset("[usp_getProject]", arr, CommandType.StoredProcedure);
-            return dtVersion.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@Id";
+            parameters[0].Value = this.iIdProject;
+            dataSet = this.oData.ExecuteDataset("[usp_getProject]", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //[usp_RfTextures_List]
     public DataTable getRfTextures_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfTextures = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@Code";
-            arr[0].Value = sCodeLith;
-            dtRfTextures = oData.ExecuteDataset("usp_RfTextures_List", arr, CommandType.StoredProcedure);
-            return dtRfTextures.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@Code";
+            parameters[0].Value = this.sCodeLith;
+            dataSet = this.oData.ExecuteDataset("usp_RfTextures_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-    //[usp_RFGsize_List]
     public DataTable getRFGsize_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRFGsize = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@Code";
-            arr[0].Value = sCodeLith;
-            dtRFGsize = oData.ExecuteDataset("usp_RFGsize_List", arr, CommandType.StoredProcedure);
-            return dtRFGsize.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@Code";
+            parameters[0].Value = this.sCodeLith;
+            dataSet = this.oData.ExecuteDataset("usp_RFGsize_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-    //usp_TransactionsAdd
     public string InsertTrans(string _sTABLE, string _TRANS, string _LOGINTRANS, string _DATOSTRANS)
     {
+        string result;
         try
         {
-            object oRes;
-            SqlParameter[] arr = oData.GetParameters(4);
-            arr[0].ParameterName = "@sTABLE";
-            arr[0].Value = _sTABLE;
-            arr[1].ParameterName = "@TRANS";
-            arr[1].Value = _TRANS;
-            arr[2].ParameterName = "@LOGINTRANS";
-            arr[2].Value = _LOGINTRANS;
-            arr[3].ParameterName = "@DATOSTRANS";
-            arr[3].Value = _DATOSTRANS; 
-            oRes = oData.ExecuteScalar("[usp_TransactionsAdd]", arr, CommandType.StoredProcedure);
-            return oRes.ToString();
-
+            SqlParameter[] parameters = this.oData.GetParameters(4);
+            parameters[0].ParameterName = "@sTABLE";
+            parameters[0].Value = _sTABLE;
+            parameters[1].ParameterName = "@TRANS";
+            parameters[1].Value = _TRANS;
+            parameters[2].ParameterName = "@LOGINTRANS";
+            parameters[2].Value = _LOGINTRANS;
+            parameters[3].ParameterName = "@DATOSTRANS";
+            parameters[3].Value = _DATOSTRANS;
+            object obj = this.oData.ExecuteScalar("[usp_TransactionsAdd]", parameters, CommandType.StoredProcedure);
+            result = obj.ToString();
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //[[usp_saveUserPasswd]]
     public string UpdatePass(string _sPassOld, string _sPass, string _sLogin)
     {
+        string result;
         try
         {
-            object oRes;
-            SqlParameter[] arr = oData.GetParameters(3);
-            arr[0].ParameterName = "@PasswdOld";
-            arr[0].Value = _sPassOld;
-            arr[1].ParameterName = "@PasswdNew";
-            arr[1].Value = _sPass;
-            arr[2].ParameterName = "@LoginUser";
-            arr[2].Value = _sLogin;
-            oRes = oData.ExecuteScalar("[usp_saveUserPasswd]", arr, CommandType.StoredProcedure);
-            return oRes.ToString();
-
+            SqlParameter[] parameters = this.oData.GetParameters(3);
+            parameters[0].ParameterName = "@PasswdOld";
+            parameters[0].Value = _sPassOld;
+            parameters[1].ParameterName = "@PasswdNew";
+            parameters[1].Value = _sPass;
+            parameters[2].ParameterName = "@LoginUser";
+            parameters[2].Value = _sLogin;
+            object obj = this.oData.ExecuteScalar("[usp_saveUserPasswd]", parameters, CommandType.StoredProcedure);
+            result = obj.ToString();
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //usp_TransactionsList
     public DataTable getTransList(string _sUser)
     {
+        DataTable result;
         try
         {
-            DataSet dtTransList = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@LOGINTRANS";
-            arr[0].Value = _sUser;
-            dtTransList = oData.ExecuteDataset("usp_TransactionsList", arr, CommandType.StoredProcedure);
-            return dtTransList.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@LOGINTRANS";
+            parameters[0].Value = _sUser;
+            dataSet = this.oData.ExecuteDataset("usp_TransactionsList", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //usp_RfWorker_ListByCred
-    public DataTable getRfWorkerCred( string _sCod, string _sPass)
+    public DataTable getRfWorkerCred(string _sCod, string _sPass)
     {
+        DataTable result;
         try
         {
-            DataSet dtRfWorker = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(2);
-            arr[0].ParameterName = "@Cod";
-            arr[0].Value = _sCod;
-            arr[1].ParameterName = "@Password";
-            arr[1].Value = _sPass;
-            dtRfWorker = oData.ExecuteDataset("usp_RfWorker_ListByCred", arr, CommandType.StoredProcedure);
-            return dtRfWorker.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(2);
+            parameters[0].ParameterName = "@Cod";
+            parameters[0].Value = _sCod;
+            parameters[1].ParameterName = "@Password";
+            parameters[1].Value = _sPass;
+            dataSet = this.oData.ExecuteDataset("usp_RfWorker_ListByCred", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //usp_Inv_Samples_List
     public DataTable getInvSamples()
     {
+        DataTable result;
         try
         {
-            DataSet dtInvSamples = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtInvSamples = oData.ExecuteDataset("usp_Inv_Samples_List", arr, CommandType.StoredProcedure);
-            return dtInvSamples.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_Inv_Samples_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfPrefixW_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfPrefixW = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfPrefixW = oData.ExecuteDataset("usp_RfPrefixW_List", arr, CommandType.StoredProcedure);
-            return dtRfPrefixW.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfPrefixW_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfTypeStructure_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfTypeStructure = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfTypeStructure = oData.ExecuteDataset("usp_RfTypeStructure_List", arr, CommandType.StoredProcedure);
-            return dtRfTypeStructure.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfTypeStructure_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfGSize_ListMin(string _sOpcion)
     {
+        DataTable result;
         try
         {
-            DataSet dtRfGSize = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@Opcion";
-            arr[0].Value = _sOpcion;
-            dtRfGSize = oData.ExecuteDataset("usp_RFGsize_ListAll", arr, CommandType.StoredProcedure);
-            return dtRfGSize.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@Opcion";
+            parameters[0].Value = _sOpcion;
+            dataSet = this.oData.ExecuteDataset("usp_RFGsize_ListAll", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //[usp_RfFillStructure_List]
     public DataTable getRfFillStructure_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfStructure = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfStructure = oData.ExecuteDataset("usp_RfFillStructure_List", arr, CommandType.StoredProcedure);
-            return dtRfStructure.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfFillStructure_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
-
+        return result;
     }
-
-    //[usp_RfStyleAlt_List]
     public DataTable getRfStyleAlt_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfStyleAlt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfStyleAlt = oData.ExecuteDataset("usp_RfStyleAlt_List", arr, CommandType.StoredProcedure);
-            return dtRfStyleAlt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfStyleAlt_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
-
+        return result;
     }
-
     public DataTable getRfMinerAlt_ListMin(string _sType)
     {
+        DataTable result;
         try
         {
-            DataSet dtRfMinerAlt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@TypeAlt";
-            arr[0].Value = _sType;
-            dtRfMinerAlt = oData.ExecuteDataset("usp_RfMinerAlt_ListTypeAlt", arr, CommandType.StoredProcedure);
-            return dtRfMinerAlt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@TypeAlt";
+            parameters[0].Value = _sType;
+            dataSet = this.oData.ExecuteDataset("usp_RfMinerAlt_ListTypeAlt", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //usp_RfMinerAlt_List
     public DataTable getRfMinerAlt_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtMinerAlt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtMinerAlt = oData.ExecuteDataset("usp_RfMinerAlt_List", arr, CommandType.StoredProcedure);
-            return dtMinerAlt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfMinerAlt_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
-
+        return result;
     }
-
-    //[usp_RfIntensityAlt_List]
     public DataTable getRfIntensityAlt_List(string _sProjectGC)
     {
+        DataTable result;
         try
         {
-            DataSet dtRfIntensityAlt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@Project";
-            arr[0].Value = _sProjectGC;
-            dtRfIntensityAlt = oData.ExecuteDataset("usp_RfIntensityAlt_List", arr, CommandType.StoredProcedure);
-            return dtRfIntensityAlt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@Project";
+            parameters[0].Value = _sProjectGC;
+            dataSet = this.oData.ExecuteDataset("usp_RfIntensityAlt_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //[usp_RfTypeAlt_List]
     public DataTable getRfTypeAlt_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfTypeAlt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfTypeAlt = oData.ExecuteDataset("usp_RfTypeAlt_List", arr, CommandType.StoredProcedure);
-            return dtRfTypeAlt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfTypeAlt_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //[usp_RfMinPercent_List]
     public DataTable getRfMinerPercent_List(string _sProjectGC)
     {
+        DataTable result;
         try
         {
-            DataSet dtRfMinerMinSt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@Project";
-            arr[0].Value = _sProjectGC;
-            dtRfMinerMinSt = oData.ExecuteDataset("usp_RfMinPercent_List", arr, CommandType.StoredProcedure);
-            return dtRfMinerMinSt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@Project";
+            parameters[0].Value = _sProjectGC;
+            dataSet = this.oData.ExecuteDataset("usp_RfMinPercent_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfMinerMinSt_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfMinerMinSt = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfMinerMinSt = oData.ExecuteDataset("usp_RfMinerStyle_List", arr, CommandType.StoredProcedure);
-            return dtRfMinerMinSt.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfMinerStyle_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfMinerMin_ListOxid()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfMinerMin = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfMinerMin = oData.ExecuteDataset("usp_RfMinerMin_ListOxid", arr, CommandType.StoredProcedure);
-            return dtRfMinerMin.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfMinerMin_ListOxid", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfMinerMin_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfMinerMin = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfMinerMin = oData.ExecuteDataset("usp_RfMinerMin_List", arr, CommandType.StoredProcedure);
-            return dtRfMinerMin.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfMinerMin_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfColour_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfColour = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfColour = oData.ExecuteDataset("usp_RfColour_List", arr, CommandType.StoredProcedure);
-            return dtRfColour.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfColour_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    /// <summary>
-    /// Oxidation Intensity
-    /// </summary>
-    /// <returns></returns>
     public DataTable getRfOxidation_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfOxidation_List = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfOxidation_List = oData.ExecuteDataset("usp_RfOxidation_List", arr, CommandType.StoredProcedure);
-            return dtRfOxidation_List.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfOxidation_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    /// <summary>
-    /// Oxidation Percent
-    /// </summary>
-    /// <returns></returns>
     public DataTable getRfOxides_List()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfOxidation_List = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfOxidation_List = oData.ExecuteDataset("usp_RfOxides_List", arr, CommandType.StoredProcedure);
-            return dtRfOxidation_List.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfOxides_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getWeathering()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfGeotechAltMet = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfGeotechAltMet = oData.ExecuteDataset("usp_RfWeathering_List", arr, CommandType.StoredProcedure);
-            return dtRfGeotechAltMet.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfWeathering_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfGeotechHardness()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfGeotechHardness = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfGeotechHardness = oData.ExecuteDataset("usp_RfGeotechHardness_List", arr, CommandType.StoredProcedure);
-            return dtRfGeotechHardness.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfGeotechHardness_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfGeotechBreak()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfGeotechBreak = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfGeotechBreak = oData.ExecuteDataset("usp_RfGeotechBreak_List", arr, CommandType.StoredProcedure);
-            return dtRfGeotechBreak.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfGeotechBreak_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfPrefix()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfPrefix = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfPrefix = oData.ExecuteDataset("usp_Prefix_List", arr, CommandType.StoredProcedure);
-            return dtRfPrefix.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_Prefix_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfWorker()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfWorker = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfWorker = oData.ExecuteDataset("usp_RfWorker_List", arr, CommandType.StoredProcedure);
-            return dtRfWorker.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfWorker_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-            
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfCodeLab()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfCodeLab = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfCodeLab = oData.ExecuteDataset("usp_RfCodeLab_List", arr, CommandType.StoredProcedure);
-            return dtRfCodeLab.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfCodeLab_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfPreparationCode()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfPreparationCode = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfPreparationCode = oData.ExecuteDataset("usp_RfPreparationCode_List", arr, CommandType.StoredProcedure);
-            return dtRfPreparationCode.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfPreparationCode_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getRfAnalysisCodeLab()
     {
+        DataTable result;
         try
         {
-            DataSet dtRfAnalysisCodeLab = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dtRfAnalysisCodeLab = oData.ExecuteDataset("usp_RfAnalysisCodeLab_List", arr, CommandType.StoredProcedure);
-            return dtRfAnalysisCodeLab.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfAnalysisCodeLab_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataTable getUsersPortal(string _sLogin)
     {
+        DataTable result;
         try
         {
-            DataSet dtUsersPortal = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@sLogin";
-            arr[0].Value = _sLogin;
-            dtUsersPortal = oData.ExecuteDataset("usp_getUsersSubpartners_PORTAL", arr, CommandType.StoredProcedure);
-            return dtUsersPortal.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@sLogin";
+            parameters[0].Value = _sLogin;
+            dataSet = this.oData.ExecuteDataset("usp_getUsersSubpartners_PORTAL", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+        return result;
     }
-    
-    //[usp_DH_RfTypeSample_List]
     public DataTable getRfTypeSample()
     {
+        DataTable result;
         try
         {
-            DataSet dsRfTypeSample = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dsRfTypeSample = oData.ExecuteDataset("usp_DH_RfTypeSample_List", arr, CommandType.StoredProcedure);
-            return dsRfTypeSample.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_DH_RfTypeSample_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
     public DataSet getDsRfLithology()
     {
+        DataSet result;
         try
         {
-            DataSet dsRfLithology = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dsRfLithology = oData.ExecuteDataset("usp_DH_RfLithology_List", arr, CommandType.StoredProcedure);
-            return dsRfLithology;
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_DH_RfLithology_List", parameters, CommandType.StoredProcedure);
+            result = dataSet;
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    ////Se utilizara para Samples
     public DataTable getRfLithology()
     {
+        DataTable result;
         try
         {
-            DataSet dsRfLithology = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dsRfLithology = oData.ExecuteDataset("usp_DH_RfLithology_List", arr, CommandType.StoredProcedure);
-            return dsRfLithology.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_DH_RfLithology_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //Se utilizara para Lithology
     public DataTable getRfLithologyDH()
     {
+        DataTable result;
         try
         {
-            DataSet dsRfLithology = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(0);
-            dsRfLithology = oData.ExecuteDataset("usp_DH_RfLithology_List", arr, CommandType.StoredProcedure);
-            return dsRfLithology.Tables[1];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_DH_RfLithology_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[1];
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //Permisos por formulario
     public DataSet getFormsByGrupoAll(string _IdGrupo)
     {
+        DataSet result;
         try
         {
-            DataSet dsFormsGroup = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@idGrupo";
-            arr[0].Value = _IdGrupo;
-            dsFormsGroup = oData.ExecuteDataset("usp_getFormByGrupoAll_PORTAL", arr, CommandType.StoredProcedure);
-            return dsFormsGroup;
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@idGrupo";
+            parameters[0].Value = _IdGrupo;
+            dataSet = this.oData.ExecuteDataset("usp_getFormByGrupoAll_PORTAL", parameters, CommandType.StoredProcedure);
+            result = dataSet;
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //Permisos por formulario
     public DataTable getFormsByGrupo(string _sIdGrupo, string _sIDGrupo)
     {
+        DataTable result;
         try
         {
-            DataSet dtFormsGroup = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(2);
-            arr[0].ParameterName = "@idGrupo";
-            arr[0].Value = _sIdGrupo;
-            arr[1].ParameterName = "@ID_Project";
-            arr[1].Value = _sIDGrupo;
-            dtFormsGroup = oData.ExecuteDataset("usp_getFormulariosByGrupo", arr, CommandType.StoredProcedure);
-            return dtFormsGroup.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(2);
+            parameters[0].ParameterName = "@idGrupo";
+            parameters[0].Value = _sIdGrupo;
+            parameters[1].ParameterName = "@ID_Project";
+            parameters[1].Value = _sIDGrupo;
+            dataSet = this.oData.ExecuteDataset("usp_getFormulariosByGrupo", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //Permisos en cada formulario por cada accion (insertar, modificar, eliminar ...)
     public DataTable getPermisosFormsByGrupo(string _IdGrupo)
     {
+        DataTable result;
         try
         {
-            DataSet dtPermFormsGroup = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@idGrupo";
-            arr[0].Value = _IdGrupo;
-            dtPermFormsGroup = oData.ExecuteDataset("usp_getPermisosFormByGrupo_PORTAL", arr, CommandType.StoredProcedure);
-            return dtPermFormsGroup.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@idGrupo";
+            parameters[0].Value = _IdGrupo;
+            dataSet = this.oData.ExecuteDataset("usp_getPermisosFormByGrupo_PORTAL", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
-    //[usp_getUsuarios_PORTAL]
     public DataTable getUsuarios(string _IdUser)
     {
+        DataTable result;
         try
         {
-            DataSet dtUsers = new DataSet();
-            SqlParameter[] arr = oData.GetParameters(1);
-            arr[0].ParameterName = "@sUsuario";
-            arr[0].Value = _IdUser;
-            dtUsers = oData.ExecuteDataset("usp_getUsuarios_PORTAL", arr, CommandType.StoredProcedure);
-            return dtUsers.Tables[0];
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@sUsuario";
+            parameters[0].Value = _IdUser;
+            dataSet = this.oData.ExecuteDataset("usp_getUsuarios_PORTAL", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
         }
-        catch (Exception eX)
+        catch (Exception ex)
         {
-            throw new Exception(eX.Message);
+            throw new Exception(ex.Message);
         }
+        return result;
     }
-
 }
 

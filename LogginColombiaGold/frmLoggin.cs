@@ -1,58 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Configuration;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Data;
+using System.IO;
+using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace LogginColombiaGold
 {
     public partial class frmLoggin : Form
     {
+        private clsRf oRf = new clsRf();
+        private clsDHCollars oCollars = new clsDHCollars();
+        private clsDHSamples oSamp = new clsDHSamples();
+        private clsDHGeotech oGeo = new clsDHGeotech();
+        private clsDHLithology oLit = new clsDHLithology();
+        private clsDH_Weathering oWeat = new clsDH_Weathering();
+        private clsDH_Structures oStr = new clsDH_Structures();
+        private clsDHMineraliz oMiner = new clsDHMineraliz();
+        private clsDHBox oBox = new clsDHBox();
+        private clsDHAlterations oAlt = new clsDHAlterations();
+        private clsDHOxides oOxid = new clsDHOxides();
+        private clsDHDensity oDens = new clsDHDensity();
+        private bool bHoleValid = true;
+        private bool bInicio = false;
+        private static string sDHSamplesID = "0";
+        private static string sEdit = "0";
+        private static string sEditGeo = "0";
+        private static string sEditLit = "0";
+        private static string sEditWeat = "0";
+        private static string sEditStruct = "0";
+        private static string sEditMiner = "0";
+        private static string sEditBox = "0";
+        private static string sEditAlt = "0";
+        private static string sEditDens = "0";
+        private static string sEditDensM = "0";
+        private static string sValidLogging = ""; //variable para saber que pestaña validar
 
-        clsRf oRf = new clsRf();
-        clsDHCollars oCollars = new clsDHCollars();
-        clsDHSamples oSamp = new clsDHSamples();
-        clsDHGeotech oGeo = new clsDHGeotech();
-        clsDHLithology oLit = new clsDHLithology();
-        clsDH_Weathering oWeat = new clsDH_Weathering();
-        clsDH_Structures oStr = new clsDH_Structures();
-        clsDHMineraliz oMiner = new clsDHMineraliz();
-        clsDHBox oBox = new clsDHBox();
-        clsDHAlterations oAlt = new clsDHAlterations();
-        clsDHOxides oOxid = new clsDHOxides();
-        clsDHDensity oDens = new clsDHDensity();
-
-        bool bHoleValid = true;
-        bool bInicio = false;
-        
-        static string sDHSamplesID = "0";
-        static string sEdit = "0";
-        static string sEditGeo = "0";
-        static string sEditLit = "0";
-        static string sEditWeat = "0";
-        static string sEditStruct = "0";
-        static string sEditMiner = "0";
-        static string sEditBox = "0";
-        static string sEditAlt = "0";
-        static string sEditDens = "0";
-        static string sEditDensM = "0";
-        static string sValidLogging = ""; //variable para saber que pestaña validar
-
-        static string SheetExcel = "";
-
-        Configuration conf = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+        private static string SheetExcel = "";
+        private Configuration conf = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
 
         public frmLoggin()
         {
             InitializeComponent();
             bInicio = true;
-            
+
             FillHoleIDForm();
 
             FillCmb();
@@ -108,7 +103,7 @@ namespace LogginColombiaGold
                 {
                     TabPpal.TabPages.Remove(tbGeotech);
                 }
-                
+
                 datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Stuctures'");
                 if (datoPest.Length == 0)
                 {
@@ -151,6 +146,8 @@ namespace LogginColombiaGold
                 txtTo.Text = "";
                 cmbLithology.SelectedValue = "-1";
                 cmbSampleType.SelectedValue = "-1";
+                cmbVeinLocationSamp.Text = "";
+                cmbVeinStructureSamp.SelectedValue = "-1";
             }
             catch (Exception ex)
             {
@@ -259,6 +256,17 @@ namespace LogginColombiaGold
                 cmbLabDensM.DataSource = dtLab;
                 cmbLabDensM.SelectedValue = ConfigurationSettings.AppSettings["IDProjectGC"].ToString();
 
+                DataTable dtVeinStrutureSamp = new DataTable();
+                dtVeinStrutureSamp = oRf.getTarget("");
+                DataRow dataRow3 = dtVeinStrutureSamp.NewRow();
+                dataRow3[0] = "-1";
+                dataRow3[1] = "Select an option..";
+                dtVeinStrutureSamp.Rows.Add(dataRow3);
+                this.cmbVeinStructureSamp.DisplayMember = "Description";
+                this.cmbVeinStructureSamp.ValueMember = "Code";
+                this.cmbVeinStructureSamp.DataSource = dtVeinStrutureSamp;
+                this.cmbVeinStructureSamp.SelectedValue = -1;
+
             }
             catch (Exception ex)
             {
@@ -313,15 +321,15 @@ namespace LogginColombiaGold
 
                 gdLoggin.Columns["SKDHSamples"].Visible = false;
 
-                
+
                 foreach (DataGridViewColumn Col in gdLoggin.Columns)
                 {
                     Col.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
                 //gdLoggin.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
 
-               
-                
+
+
             }
             catch (Exception ex)
             {
@@ -360,6 +368,8 @@ namespace LogginColombiaGold
                 txtDupDe.Text = "";
                 cmbLithology.SelectedValue = "-1";
                 txtCommentsSamp.Text = "";
+                cmbVeinLocationSamp.Text = "";
+                cmbVeinStructureSamp.SelectedValue = "-1";
                 EnableControls();
             }
             catch (Exception ex)
@@ -421,17 +431,7 @@ namespace LogginColombiaGold
                 {
                     //Valida que el sampleid no este repetido
                     DataTable dtValSamp = SampleIdRepeat(txtSampNo.Text.ToString());
-                    bool bValSamp = false;
                     if (dtValSamp.Rows.Count > 0)
-                    {
-                        bValSamp = false;
-                    }
-                    else
-                    {
-                        bValSamp = true;
-                    }
-
-                    if (bValSamp == false)
                     {
                         MessageBox.Show("Sample duplicated to HoleID: " + dtValSamp.Rows[0]["HoleID"].ToString()
                             , "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -439,7 +439,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                
+
 
                 //validar lithology si se elige original
                 string sLith = "";
@@ -520,7 +520,7 @@ namespace LogginColombiaGold
                         }
 
                     }
-                    #endregion
+                #endregion
 
                 ProcessAdd:
 
@@ -550,7 +550,7 @@ namespace LogginColombiaGold
                     //if (cmbLithology.SelectedValue.ToString() == "-1" || cmbLithology.SelectedValue.ToString() == "")
                     //    sLith = null;
                     //else 
-                        
+
                     sLith = cmbLithology.SelectedValue.ToString();
 
                     clsDHSamples.sStaticFrom = txtTo.Text.ToString();
@@ -603,13 +603,25 @@ namespace LogginColombiaGold
 
                     oSamp.sLith = sLith; //cmbLithology.SelectedValue.ToString();
 
+                    string text3 = "";
+                    if (this.cmbVeinLocationSamp.Text.ToString() == "HW: Hanging-wall of vein")
+                    {
+                        text3 = "HW";
+                    }
+                    else
+                    {
+                        if (this.cmbVeinLocationSamp.Text.ToString() == "FW: Footwall of vein")
+                        {
+                            text3 = "FW";
+                        }
+                    }
+                    oSamp.sVeinLocation = ((text3.ToString() == "") ? null : text3.ToString());
+                    oSamp.sVein = ((this.cmbVeinStructureSamp.SelectedValue.ToString() == "-1") ? null : this.cmbVeinStructureSamp.SelectedValue.ToString());
+
                     string sResp = oSamp.DHSamples_AddLoggin();
 
                     if (sResp.ToString() == "OK")
                     {
-                        //MessageBox.Show("Insert Successful ", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-
                         ///Valida la informacion contra los datos de litologia
                         DataTable dtLit = new DataTable();
                         oLit.sOpcion = "2";
@@ -625,9 +637,6 @@ namespace LogginColombiaGold
                         }
                         /* [Litho], [From], [To] */
                         ///Fin. Valida la informacion contra los datos de litologia
-
-
-
                         //Para limpiar la variable sDHSamplesID que se utiliza para modificar un dato
                         //cuando le doy doble clic en el registro
                         oSamp.sOpcion = "2";
@@ -635,20 +644,16 @@ namespace LogginColombiaGold
 
 
                         //Implementar visualizar la ultima modificacion en pantalla
-                        if (sEdit == "1")
+                        if (sEdit == "1" && gdLoggin.Rows.Count > 1)
                         {
-                            if (gdLoggin.Rows.Count > 1)
-                            {
-                                DataTable dtSamp = (DataTable)gdLoggin.DataSource;
-                                DataRow[] myRow = dtSamp.Select(@"SKDHSamples = '" + sDHSamplesID + "'");
-                                int rowindex = dtSamp.Rows.IndexOf(myRow[0]);
-                                gdLoggin.Rows[rowindex].Selected = true;
-                                gdLoggin.CurrentCell = gdLoggin.Rows[rowindex].Cells[1];
-                            }
+                            DataTable dtSamp = (DataTable)gdLoggin.DataSource;
+                            DataRow[] myRow = dtSamp.Select(@"SKDHSamples = '" + sDHSamplesID + "'");
+                            int rowindex = dtSamp.Rows.IndexOf(myRow[0]);
+                            gdLoggin.Rows[rowindex].Selected = true;
+                            gdLoggin.CurrentCell = gdLoggin.Rows[rowindex].Cells[1];
                         }
 
                         sDHSamplesID = "0";
-
 
                         //Insertar el registro para el historial de transacciones por usuario
                         oRf.InsertTrans("DH_Collars", "Update", clsRf.sUser.ToString(),
@@ -681,35 +686,11 @@ namespace LogginColombiaGold
                         }
 
                         sEdit = "0";
-
-
-                        /*  DataTable dtOri = dtOriginal();
-                            DataRow[] drOrig = dtOri.Select("Value <> '" + cmbSampleType.SelectedValue.ToString() + "'");
-                            if (drOrig.Length > 0)
-                            {
-                                txtFrom.Text = "-99";
-                                txtTo.Text = "-99";
-                            }
-                         */
-
-
-                        //DataTable dtOri = dtOriginal();
-                        //DataRow[] drOrig = dtOri.Select("Value <> '" + cmbSampleType.SelectedValue.ToString() + "'");
-                        //if (drOrig.Length > 0)
-                        //{
-                        //    clsDHSamples.sStaticFrom = txtTo.Text.ToString();
-                        //}
-
-
-
-
                     }
                     else
                     {
                         MessageBox.Show("Error Insert: " + sResp.ToString(), "Samples", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-
-
                 }
                 else
                 {
@@ -815,7 +796,7 @@ namespace LogginColombiaGold
                     oSamp.sOpcion = "2";
                     FillLoggin();
 
-                    clsDHSamples.sConsLoggin =  txtSampNoIni.Text.ToString().ToUpper();
+                    clsDHSamples.sConsLoggin = txtSampNoIni.Text.ToString().ToUpper();
                     txtSampNo.Text = clsDHSamples.sConsLoggin.ToString();
 
                 }
@@ -847,13 +828,13 @@ namespace LogginColombiaGold
                 if (dtLogg.Rows.Count > 0)
                 {
                     bHoleValid = true;
-                    
+
                 }
                 else
                 {
-                    
+
                     bHoleValid = false;
-                   
+
                 }
             }
             catch (Exception ex)
@@ -889,7 +870,7 @@ namespace LogginColombiaGold
                     return;
                 }
 
-               
+
 
                 //HoleIDValidate(cmbHoleID.SelectedValue.ToString());
 
@@ -912,7 +893,7 @@ namespace LogginColombiaGold
                 //        DisableControls(); 
                 //        return;
                 //    }
-                    
+
                 //    oSamp.sOpcion = "2";
                 //    FillLoggin();
 
@@ -931,8 +912,8 @@ namespace LogginColombiaGold
                 //    bHoleValid = false;
                 //    MessageBox.Show("HoleId Invalid", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //}
-                
-                
+
+
             }
             catch (Exception ex)
             {
@@ -1017,7 +998,7 @@ namespace LogginColombiaGold
                     txtFrom.Text = "-99";
                     txtTo.Text = "-99";
                 }
-                
+
 
                 DataTable dtDup = dtDupDe();
                 DataRow[] dato = dtDup.Select("Value = '" + cmbSampleType.SelectedValue.ToString() + "'");
@@ -1041,7 +1022,7 @@ namespace LogginColombiaGold
 
                     txtFrom.Text = "-99";
                     txtTo.Text = "-99";
-                    
+
                 }
                 else
                 {
@@ -1054,7 +1035,7 @@ namespace LogginColombiaGold
             }
         }
 
-        
+
 
         private void btnExcel_Click(object sender, EventArgs e)
         {
@@ -1073,7 +1054,7 @@ namespace LogginColombiaGold
                 //oWB = oXL.Workbooks.Open(@"D:/Template_Shipment_Sgs.xls", 0, true, 5,
 
 
-                oWB = oXL.Workbooks.Open(ConfigurationSettings.AppSettings["Ruta_Logging"].ToString(),
+                oWB = oXL.Workbooks.Open(Path.Combine(Application.StartupPath, "GZC_120316_Template_ValidSamples.xls"),
                     0, false, 5,
                 Type.Missing, Type.Missing, false, Type.Missing, Type.Missing, true, false,
                 Type.Missing, false, false, false);
@@ -1090,16 +1071,17 @@ namespace LogginColombiaGold
 
                 oSheet = (Excel._Worksheet)oWB.ActiveSheet;
 
-                oSheet.Cells[1, 6] = cmbHoleID.SelectedValue.ToString();
+                oSheet.Cells[4, 3] = cmbHoleID.SelectedValue.ToString();
 
                 int iInicial = 6;
                 for (int i = 0; i < gdLoggin.Rows.Count - 1; i++)
                 {
-
-                    oSheet.Cells[iInicial, 3] = gdLoggin.Rows[i].Cells["From"].Value.ToString();
-                    oSheet.Cells[iInicial, 4] = gdLoggin.Rows[i].Cells["To"].Value.ToString();
-                    oSheet.Cells[iInicial, 5] = gdLoggin.Rows[i].Cells["Sample"].Value.ToString();
-                    oSheet.Cells[iInicial, 6] = gdLoggin.Rows[i].Cells["SampleType"].Value.ToString();
+                    oSheet.Cells[iInicial, 1] = gdLoggin.Rows[i].Cells["Sample"].Value.ToString();
+                    oSheet.Cells[iInicial, 2] = gdLoggin.Rows[i].Cells["From"].Value.ToString();
+                    oSheet.Cells[iInicial, 3] = gdLoggin.Rows[i].Cells["To"].Value.ToString();
+                    oSheet.Cells[iInicial, 4] = gdLoggin.Rows[i].Cells["SampleType"].Value.ToString();
+                    oSheet.Cells[iInicial, 5] = gdLoggin.Rows[i].Cells["DupDe"].Value.ToString();
+                    oSheet.Cells[iInicial, 6] = gdLoggin.Rows[i].Cells["Lithology"].Value.ToString();
 
                     iInicial += 1;
                 }
@@ -1129,7 +1111,7 @@ namespace LogginColombiaGold
         //    wks.SaveAs(@"C:\savedFile.txt", Microsoft.Office.Interop.Excel.XlFileFormat.xlTextWindows, 
         //        Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, 
         //        Type.Missing, Type.Missing); } 
-        
+
         private void gdLoggin_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -1138,31 +1120,49 @@ namespace LogginColombiaGold
                 //    , "Logging", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 //    MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 //{
-                    sEdit = "1";
-                    EnableControls();
-                    //cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
-                    HoleIDValidate(gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString());
+                sEdit = "1";
+                EnableControls();
+                //cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
+                HoleIDValidate(gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString());
 
-                    if (bHoleValid == true)
+                if (bHoleValid)
+                {
+                    sDHSamplesID = gdLoggin.Rows[e.RowIndex].Cells["SKDHSamples"].Value.ToString();
+                    txtSampNo.Text = gdLoggin.Rows[e.RowIndex].Cells["Sample"].Value.ToString();
+                    txtFrom.Text = gdLoggin.Rows[e.RowIndex].Cells["From"].Value.ToString();
+                    txtTo.Text = gdLoggin.Rows[e.RowIndex].Cells["To"].Value.ToString();
+                    txtDupDe.Text = gdLoggin.Rows[e.RowIndex].Cells["DupDe"].Value.ToString();
+                    txtCommentsSamp.Text = gdLoggin.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
+                    cmbLithology.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString() == ""
+                            ? "-1" : gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString();
+
+                    cmbSampleType.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["SampleType"].Value.ToString();
+                    cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
+
+                    if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "HW")
                     {
-                        sDHSamplesID = gdLoggin.Rows[e.RowIndex].Cells["SKDHSamples"].Value.ToString();
-                        txtSampNo.Text = gdLoggin.Rows[e.RowIndex].Cells["Sample"].Value.ToString();
-                        txtFrom.Text = gdLoggin.Rows[e.RowIndex].Cells["From"].Value.ToString();
-                        txtTo.Text = gdLoggin.Rows[e.RowIndex].Cells["To"].Value.ToString();
-                        txtDupDe.Text = gdLoggin.Rows[e.RowIndex].Cells["DupDe"].Value.ToString();
-                        txtCommentsSamp.Text = gdLoggin.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
-                        cmbLithology.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString() == ""
-                                ? "-1" : gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString();
-
-                        cmbSampleType.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["SampleType"].Value.ToString();
-                        cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
-
-                        
+                        this.cmbVeinLocationSamp.Text = "HW: Hanging-wall of vein";
                     }
                     else
                     {
-                        MessageBox.Show("HoleId Invalid. Not Allow ", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "FW")
+                        {
+                            this.cmbVeinLocationSamp.Text = "FW: Footwall of vein";
+                        }
+                        else
+                        {
+                            if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "")
+                            {
+                                this.cmbVeinLocationSamp.Text = "";
+                            }
+                        }
                     }
+                    this.cmbVeinStructureSamp.SelectedValue = ((this.gdLoggin.Rows[e.RowIndex].Cells["Vein"].Value.ToString() == "") ? "-1" : this.gdLoggin.Rows[e.RowIndex].Cells["Vein"].Value.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("HoleId Invalid. Not Allow ", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 //}
             }
             catch (Exception ex)
@@ -1186,12 +1186,12 @@ namespace LogginColombiaGold
                     MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     sEdit = "0";
-                    
+
                     HoleIDValidate(gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString());
 
                     if (bHoleValid == true)
                     {
-                        
+
                         oSamp.iDHSampID = int.Parse(gdLoggin.Rows[e.RowIndex].Cells["SKDHSamples"].Value.ToString());
                         string sRespDel = oSamp.DHSamples_DeleteLoggin();
                         if (sRespDel == "OK")
@@ -1308,7 +1308,7 @@ namespace LogginColombiaGold
                 {
                     stringCol.Add(Convert.ToString(row["Comb"]));
                 }
-                
+
                 return stringCol;
 
             }
@@ -1412,17 +1412,17 @@ namespace LogginColombiaGold
                 }
                 //if (txtFromGeo.Text != "-99")
                 //{
-                    //if (double.Parse(txtFromGeo.Text.ToString()) < 0 || double.Parse(txtToGeo.Text.ToString()) < 0)
-                    //{
-                        if (double.Parse(txtFromGeo.Text.ToString()) >= double.Parse(txtToGeo.Text.ToString()))
-                        {
-                            sresp = " 'From' greater than 'To'";
-                            return sresp;
-                        }
-                    //}
-                    //return sresp = "From or To must be greater than zero (0)";
+                //if (double.Parse(txtFromGeo.Text.ToString()) < 0 || double.Parse(txtToGeo.Text.ToString()) < 0)
+                //{
+                if (double.Parse(txtFromGeo.Text.ToString()) >= double.Parse(txtToGeo.Text.ToString()))
+                {
+                    sresp = " 'From' greater than 'To'";
+                    return sresp;
+                }
                 //}
-                
+                //return sresp = "From or To must be greater than zero (0)";
+                //}
+
 
                 oCollars.sHoleID = cmbHoleIdGeo.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
@@ -1437,7 +1437,7 @@ namespace LogginColombiaGold
 
                 //if (txtJoinCondition.Text.ToString() == "")
                 //{ txtJoinCondition.Text = "0"; }
-                
+
                 //if (double.Parse(txtJoinCondition.Text.ToString()) < 0
                 //    || double.Parse(txtJoinCondition.Text.ToString()) > 25)
                 //{
@@ -1494,14 +1494,14 @@ namespace LogginColombiaGold
                     }
 
                 }
-                ContinuarValid:
-                
+            ContinuarValid:
+
 
                 return sresp;
             }
             catch (Exception ex)
             {
-               throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -1536,7 +1536,7 @@ namespace LogginColombiaGold
                         double.Parse(txtDifferGeo.Text.ToString()) * 100).ToString();
                 }
 
-                
+
 
                 if (txtRec_mGeo.Text.ToString() == "-99")
                 {
@@ -1600,7 +1600,7 @@ namespace LogginColombiaGold
                         cmbHardness.SelectedValue = "-1";
                     }
                 }
-                
+
 
                 //Valida que el rango sea valido para el pozo
                 DataTable dtValidRange = new DataTable();
@@ -1625,7 +1625,7 @@ namespace LogginColombiaGold
                     oGeo.iDHGeotechID = 0;
                     oGeo.sOpcion = "1";
                 }
-                
+
                 oGeo.sHoleID = cmbHoleIdGeo.SelectedValue.ToString();
                 if (dgGeotech.Rows.Count <= 1)
                 {
@@ -1635,50 +1635,104 @@ namespace LogginColombiaGold
                 oGeo.iTo = double.Parse(txtToGeo.Text.ToString());
 
                 if (cmbLithGeo.SelectedValue.ToString() == "-1" || cmbLithGeo.SelectedValue.ToString() == "")
+                {
                     oGeo.sLithCod = null;
-                else oGeo.sLithCod = cmbLithGeo.SelectedValue.ToString();
+                }
+                else
+                {
+                    oGeo.sLithCod = cmbLithGeo.SelectedValue.ToString();
+                }
 
                 if (txtRec_mGeo.Text.ToString() == "")
-                    oGeo.dRecm =  null;
-                else oGeo.dRecm = double.Parse(txtRec_mGeo.Text.ToString());
-             
+                {
+                    oGeo.dRecm = null;
+                }
+                else
+                {
+                    oGeo.dRecm = double.Parse(txtRec_mGeo.Text.ToString());
+                }
+
                 //oGeo.dRecm = txtRec_mGeo.Text.ToString() == "" ? null : double.Parse(txtRec_mGeo.Text.ToString());
-                if (txtRQD_cmGeo.Text.ToString() == "" )
+                if (txtRQD_cmGeo.Text.ToString() == "")
+                {
                     oGeo.dRQDcm = null;
-                else oGeo.dRQDcm = double.Parse(txtRQD_cmGeo.Text.ToString());
+                }
+                else
+                {
+                    oGeo.dRQDcm = double.Parse(txtRQD_cmGeo.Text.ToString());
+                }
 
                 if (txtNumOfFact.Text.ToString() == "")
+                {
                     oGeo.dNoOfFract = null;
-                else oGeo.dNoOfFract = double.Parse(txtNumOfFact.Text.ToString());
+                }
+                else
+                {
+                    oGeo.dNoOfFract = double.Parse(txtNumOfFact.Text.ToString());
+                }
 
                 if (txtJoinCondition.Text.ToString() == "")
+                {
                     oGeo.dJoinCond = null;
-                else oGeo.dJoinCond = double.Parse(txtJoinCondition.Text.ToString());
+                }
+                else
+                {
+                    oGeo.dJoinCond = double.Parse(txtJoinCondition.Text.ToString());
+                }
 
                 if (txtJrGeo.Text.ToString() == "")
-                    oGeo.dJr =  null;
-                else oGeo.dJr = double.Parse(txtJrGeo.Text.ToString());
+                {
+                    oGeo.dJr = null;
+                }
+                else
+                {
+                    oGeo.dJr = double.Parse(txtJrGeo.Text.ToString());
+                }
 
-                if (txtJnGeo.Text.ToString() == "" )
+                if (txtJnGeo.Text.ToString() == "")
+                {
                     oGeo.dJn = null;
-                else oGeo.dJn =  double.Parse(txtJnGeo.Text.ToString());
+                }
+                else
+                {
+                    oGeo.dJn = double.Parse(txtJnGeo.Text.ToString());
+                }
 
                 if (txtJaGeo.Text.ToString() == "")
+                {
                     oGeo.dJa = null;
-                else oGeo.dJa = double.Parse(txtJaGeo.Text.ToString());
+                }
+                else
+                {
+                    oGeo.dJa = double.Parse(txtJaGeo.Text.ToString());
+                }
 
                 if (cmbDegreeBreak.SelectedValue.ToString() == "-1" || cmbDegreeBreak.SelectedValue.ToString() == "")
+                {
                     oGeo.sDegBreak = null;
-                else oGeo.sDegBreak = cmbDegreeBreak.SelectedValue.ToString();
+                }
+                else
+                {
+                    oGeo.sDegBreak = cmbDegreeBreak.SelectedValue.ToString();
+                }
 
                 if (cmbHardness.SelectedValue.ToString() == "-1" || cmbHardness.SelectedValue.ToString() == "")
+                {
                     oGeo.sHardness = null;
-                else oGeo.sHardness = cmbHardness.SelectedValue.ToString();
+                }
+                else
+                {
+                    oGeo.sHardness = cmbHardness.SelectedValue.ToString();
+                }
 
                 if (txtComments.Text.ToString() == "-1" || txtComments.Text.ToString() == "")
+                {
                     oGeo.sComments = null;
-                else oGeo.sComments = txtComments.Text.ToString();
-
+                }
+                else
+                {
+                    oGeo.sComments = txtComments.Text.ToString();
+                }
 
                 oGeo.sAltWeath = null;
 
@@ -1689,15 +1743,15 @@ namespace LogginColombiaGold
                 {
                     FilldtGeo("2");
                     //MessageBox.Show("Saved");
-                    
+
                     //Insertar el registro para el historial de transacciones por usuario
                     oRf.InsertTrans("DH_Geotech", sEditGeo == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
                         "Hole ID: " + cmbHoleIdGeo.SelectedValue.ToString() + "." +
                         " From: " + txtFromGeo.Text.ToString() + "." +
                         " To: " + txtToGeo.Text.ToString() + "." +
                         " Lithology: " + cmbLithGeo.SelectedValue.ToString() == "Select an option.." || cmbLithGeo.SelectedValue.ToString() == ""
-	                        ? "" : cmbLithGeo.SelectedValue.ToString() + "." +
-                        " dRecm: " + txtRec_mGeo.Text.ToString() +"." +
+                            ? "" : cmbLithGeo.SelectedValue.ToString() + "." +
+                        " dRecm: " + txtRec_mGeo.Text.ToString() + "." +
                         " dRQDcm: " + txtRQD_cmGeo.Text.ToString() + "." +
                         " dNoFact: " + txtNumOfFact.Text.ToString() + "." +
                         " Join Condition: " + txtJoinCondition.Text.ToString() + "." +
@@ -1730,7 +1784,7 @@ namespace LogginColombiaGold
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
             }
         }
 
@@ -1755,7 +1809,7 @@ namespace LogginColombiaGold
             }
         }
 
-        
+
         private void FilldtGeo(string _sOpcion)
         {
             try
@@ -1796,7 +1850,7 @@ namespace LogginColombiaGold
                 txtToGeo.Text = "";
                 //cmbLithGeo.SelectedValue = "Select an option..";
                 txtRec_mGeo.Text = "";
-                txtRQD_cmGeo.Text ="";
+                txtRQD_cmGeo.Text = "";
                 txtNumOfFact.Text = "";
                 txtJoinCondition.Text = "";
                 txtJrGeo.Text = "";
@@ -1871,22 +1925,22 @@ namespace LogginColombiaGold
             try
             {
                 if (MessageBox.Show("Row Delete. " + "Hole Id" + dgGeotech.Rows[e.RowIndex].Cells["HoleID"].Value.ToString()
-                    + " From " + dgGeotech.Rows[e.RowIndex].Cells["From"].Value.ToString() 
+                    + " From " + dgGeotech.Rows[e.RowIndex].Cells["From"].Value.ToString()
                     + " To " + dgGeotech.Rows[e.RowIndex].Cells["To"].Value.ToString()
                     , "GeoTech", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                                 MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                {
+                    oGeo.sHoleID = dgGeotech.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
+                    oGeo.iFrom = double.Parse(dgGeotech.Rows[e.RowIndex].Cells["From"].Value.ToString());
+                    string sDelete = oGeo.DH_Geotech_Delete();
+                    if (sDelete == "OK")
                     {
-                        oGeo.sHoleID = dgGeotech.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
-                        oGeo.iFrom = double.Parse(dgGeotech.Rows[e.RowIndex].Cells["From"].Value.ToString());
-                        string sDelete = oGeo.DH_Geotech_Delete();
-                        if (sDelete == "OK")
-                        {
-                            MessageBox.Show("Row Deleted", "Geotech", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            FilldtGeo("2");
-                            sEdit = "0";
-                            CleanControlsGeo();
-                        }
+                        MessageBox.Show("Row Deleted", "Geotech", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FilldtGeo("2");
+                        sEdit = "0";
+                        CleanControlsGeo();
                     }
+                }
             }
             catch (Exception ex)
             {
@@ -2062,7 +2116,7 @@ namespace LogginColombiaGold
                     //}
                     //return sresp = "From or To must be greater than zero (0)";
                 }
-                
+
                 return sresp;
             }
             catch (Exception ex)
@@ -2115,23 +2169,29 @@ namespace LogginColombiaGold
                         return;
                     }
                 }
-                
+
 
                 if (sEditLit == "1")
                 {
                     oLit.sOpcion = "2";
                 }
-                else {
+                else
+                {
                     oLit.iDHLithologyID = 0;
-                    oLit.sOpcion = "1"; 
+                    oLit.sOpcion = "1";
                 }
-                
+
                 oLit.sHoleID = cmbHoleIdLit.SelectedValue.ToString();
-                
-                
+
+
                 if (txtObservLit.Text.ToString() == "")
+                {
                     oLit.sObservation = null;
-                else oLit.sObservation = txtObservLit.Text.ToString();
+                }
+                else
+                {
+                    oLit.sObservation = txtObservLit.Text.ToString();
+                }
 
                 if (dgLithology.Rows.Count == 1)
                 {
@@ -2140,20 +2200,35 @@ namespace LogginColombiaGold
                 else { oLit.dFrom = double.Parse(txtFromLit.Text.ToString()); }
                 oLit.dTo = double.Parse(txtToLit.Text.ToString());
                 oLit.sLithCode = cmbLithologyLit.SelectedValue.ToString();
-                
+
                 //oLit.sGSize = cmbGsizeLith.SelectedValue != null ? cmbGsizeLith.SelectedValue.ToString() : "-1";
                 if (cmbGsizeLith.SelectedValue.ToString() == "-1" || cmbGsizeLith.SelectedValue.ToString() == "")
+                {
                     oLit.sGSize = null;
-                else oLit.sGSize = cmbGsizeLith.SelectedValue.ToString();
+                }
+                else
+                {
+                    oLit.sGSize = cmbGsizeLith.SelectedValue.ToString();
+                }
 
                 //oLit.sTextures = cmbTexturesLith.SelectedValue.ToString() != null ? cmbTexturesLith.SelectedValue.ToString() : "-1";
                 if (cmbTexturesLith.SelectedValue.ToString() == "-1" || cmbTexturesLith.SelectedValue.ToString() == "")
+                {
                     oLit.sTextures = null;
-                else oLit.sTextures = cmbTexturesLith.SelectedValue.ToString();
+                }
+                else
+                {
+                    oLit.sTextures = cmbTexturesLith.SelectedValue.ToString();
+                }
 
                 if (cmbLithologyLit.SelectedValue.ToString() == "-1" || cmbLithologyLit.SelectedValue.ToString() == "")
+                {
                     oLit.sLithCode = "";
-                else oLit.sLithCode = cmbLithologyLit.SelectedValue.ToString();
+                }
+                else
+                {
+                    oLit.sLithCode = cmbLithologyLit.SelectedValue.ToString();
+                }
 
                 clsDHLithology.sStaticFrom = txtToLit.Text.ToString();
 
@@ -2217,7 +2292,7 @@ namespace LogginColombiaGold
 
                 sEditLit = "0";
 
-            } 
+            }
             catch (Exception ex)
             {
                 if (ex.GetType().ToString() != "System.NullReferenceException")
@@ -2226,8 +2301,8 @@ namespace LogginColombiaGold
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
-            }       
+
+            }
         }
 
         private void CleanControlsLit()
@@ -2515,10 +2590,10 @@ namespace LogginColombiaGold
                         return sresp;
                     }
 
-                        //return sresp = "From or To must be greater than zero (0)";
+                    //return sresp = "From or To must be greater than zero (0)";
                     //}                
                 }
-                
+
                 return sresp;
             }
             catch (Exception ex)
@@ -2557,9 +2632,11 @@ namespace LogginColombiaGold
 
                 if (sEditWeat == "1")
                 { oWeat.sOpcion = "2"; }
-                else {
+                else
+                {
                     oWeat.iDHWeatheringID = 0;
-                    oWeat.sOpcion = "1"; }
+                    oWeat.sOpcion = "1";
+                }
 
                 oWeat.sHoleID = cmbHoleIdWeat.SelectedValue.ToString();
 
@@ -2575,42 +2652,80 @@ namespace LogginColombiaGold
 
 
                 if (cmbOxidationWeat.SelectedValue.ToString() == "" || cmbOxidationWeat.SelectedValue.ToString() == "-1")
+                {
                     oWeat.dOxidation = null;
-                else oWeat.dOxidation = double.Parse(cmbOxidationWeat.SelectedValue.ToString());
+                }
+                else
+                {
+                    oWeat.dOxidation = double.Parse(cmbOxidationWeat.SelectedValue.ToString());
+                }
 
                 if (cmbColourWeat.SelectedValue.ToString() == "" || cmbColourWeat.SelectedValue.ToString() == "-1")
+                {
                     oWeat.sColour1 = null;
-                else oWeat.sColour1 = cmbColourWeat.SelectedValue.ToString();
-
+                }
+                else
+                {
+                    oWeat.sColour1 = cmbColourWeat.SelectedValue.ToString();
+                }
 
                 if (cmbSufixWeat.SelectedValue.ToString() == "" || cmbSufixWeat.SelectedValue.ToString() == "-1")
+                {
                     oWeat.sSufix1 = null;
-                else oWeat.sSufix1 = cmbSufixWeat.SelectedValue.ToString();
-                
+                }
+                else
+                {
+                    oWeat.sSufix1 = cmbSufixWeat.SelectedValue.ToString();
+                }
+
                 oWeat.sColour2 = null;
                 oWeat.sSufix2 = null;
 
-                
-                if (txtObservWeat.Text.ToString() == "")
-                    oWeat.sObservation = null;
-                else oWeat.sObservation = txtObservWeat.Text.ToString();
 
+                if (txtObservWeat.Text.ToString() == "")
+                {
+                    oWeat.sObservation = null;
+                }
+                else
+                {
+                    oWeat.sObservation = txtObservWeat.Text.ToString();
+                }
 
                 if (cmbMin1Oxid.SelectedValue.ToString() == "" || cmbMin1Oxid.SelectedValue.ToString() == "-1")
+                {
                     oWeat.sMineral1 = null;
-                else oWeat.sMineral1 = cmbMin1Oxid.SelectedValue.ToString();
+                }
+                else
+                {
+                    oWeat.sMineral1 = cmbMin1Oxid.SelectedValue.ToString();
+                }
 
                 if (cmbMin2Oxid.SelectedValue.ToString() == "" || cmbMin2Oxid.SelectedValue.ToString() == "-1")
+                {
                     oWeat.sMineral2 = null;
-                else oWeat.sMineral2 = cmbMin2Oxid.SelectedValue.ToString();
+                }
+                else
+                {
+                    oWeat.sMineral2 = cmbMin2Oxid.SelectedValue.ToString();
+                }
 
                 if (cmbMin3Oxid.SelectedValue.ToString() == "" || cmbMin3Oxid.SelectedValue.ToString() == "-1")
+                {
                     oWeat.sMineral3 = null;
-                else oWeat.sMineral3 = cmbMin3Oxid.SelectedValue.ToString();
+                }
+                else
+                {
+                    oWeat.sMineral3 = cmbMin3Oxid.SelectedValue.ToString();
+                }
 
                 if (cmbMin4Oxid.SelectedValue.ToString() == "" || cmbMin4Oxid.SelectedValue.ToString() == "-1")
+                {
                     oWeat.sMineral4 = null;
-                else oWeat.sMineral4 = cmbMin4Oxid.SelectedValue.ToString();
+                }
+                else
+                {
+                    oWeat.sMineral4 = cmbMin4Oxid.SelectedValue.ToString();
+                }
 
                 clsDH_Weathering.sStaticFrom = txtToWeat.Text.ToString();
 
@@ -2645,9 +2760,9 @@ namespace LogginColombiaGold
                         " Weathering: " + cmbWeatheringWeat.SelectedValue.ToString() + "." +
                         " Colour: " + cmbColourWeat.SelectedValue.ToString() + "." +
                         " Sufix: " + cmbSufixWeat.SelectedValue.ToString());
-                    
-                    
-                    
+
+
+
 
                     txtFromWeat.Text = clsDH_Weathering.sStaticFrom.ToString();
                     txtToWeat.Focus();
@@ -2668,7 +2783,7 @@ namespace LogginColombiaGold
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
             }
         }
 
@@ -2832,7 +2947,7 @@ namespace LogginColombiaGold
                     {
                         sresp = "Angle To Axis less than 0 or greater than 90";
                         return sresp;
-                    }  
+                    }
                 }
 
                 if (txtUpAngleSt.Text != "")
@@ -2870,7 +2985,7 @@ namespace LogginColombiaGold
                         return sresp;
                     }
                 }
-                
+
 
                 return sresp;
             }
@@ -3012,7 +3127,7 @@ namespace LogginColombiaGold
             try
             {
                 string sResp = ControlsValidateStr().ToString();
-               
+
                 if (sResp.ToString() != "")
                 {
                     MessageBox.Show(sResp.ToString(), "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -3033,55 +3148,106 @@ namespace LogginColombiaGold
 
                 if (sEditStruct == "1")
                 { oStr.sOpcion = "2"; }
-                else { 
-                        oStr.sOpcion = "1";
-                        oStr.iDHStructrueID = 0;
-                    }
-                
+                else
+                {
+                    oStr.sOpcion = "1";
+                    oStr.iDHStructrueID = 0;
+                }
+
                 oStr.sType = cmbStructureTypeSt.SelectedValue.ToString();
 
 
                 if (txtAngleToCorest.Text.ToString() == "")
+                {
                     oStr.dAngleToCore = null;
-                else oStr.dAngleToCore = double.Parse(txtAngleToCorest.Text.ToString());
+                }
+                else
+                {
+                    oStr.dAngleToCore = double.Parse(txtAngleToCorest.Text.ToString());
+                }
 
                 if (txtCommentsSt.Text.ToString() == "")
+                {
                     oStr.sComments = null;
-                else oStr.sComments = txtCommentsSt.Text.ToString();
-                
+                }
+                else
+                {
+                    oStr.sComments = txtCommentsSt.Text.ToString();
+                }
+
                 oStr.dLenght = 0;
 
                 if (txtUpAngleSt.Text.ToString() == "")
+                {
                     oStr.dUpAngle = null;
-                else oStr.dUpAngle = double.Parse(txtUpAngleSt.Text.ToString());
+                }
+                else
+                {
+                    oStr.dUpAngle = double.Parse(txtUpAngleSt.Text.ToString());
+                }
 
                 if (txtBtnAngleSt.Text.ToString() == "")
+                {
                     oStr.dBtonAngle = null;
-                else oStr.dBtonAngle = double.Parse(txtBtnAngleSt.Text.ToString());
+                }
+                else
+                {
+                    oStr.dBtonAngle = double.Parse(txtBtnAngleSt.Text.ToString());
+                }
 
                 if (txtAppThickSt.Text.ToString() == "")
+                {
                     oStr.dAppThick = null;
-                else oStr.dAppThick = double.Parse(txtAppThickSt.Text.ToString());
+                }
+                else
+                {
+                    oStr.dAppThick = double.Parse(txtAppThickSt.Text.ToString());
+                }
 
-                if (cmbFillSt.SelectedValue.ToString() ==  "-1" || cmbFillSt.SelectedValue.ToString() == "")
+                if (cmbFillSt.SelectedValue.ToString() == "-1" || cmbFillSt.SelectedValue.ToString() == "")
+                {
                     oStr.sFill = null;
-                else oStr.sFill = cmbFillSt.SelectedValue.ToString();
+                }
+                else
+                {
+                    oStr.sFill = cmbFillSt.SelectedValue.ToString();
+                }
 
                 if (txtNumberSt.Text.ToString() == "")
+                {
                     oStr.dNumber = null;
-                else oStr.dNumber = double.Parse(txtNumberSt.Text.ToString());
+                }
+                else
+                {
+                    oStr.dNumber = double.Parse(txtNumberSt.Text.ToString());
+                }
 
                 if (cmbFillSt2.SelectedValue.ToString() == "-1" || cmbFillSt2.SelectedValue.ToString() == "")
+                {
                     oStr.sFill2 = null;
-                else oStr.sFill2 = cmbFillSt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oStr.sFill2 = cmbFillSt2.SelectedValue.ToString();
+                }
 
                 if (cmbFillSt3.SelectedValue.ToString() == "-1" || cmbFillSt3.SelectedValue.ToString() == "")
+                {
                     oStr.sFill3 = null;
-                else oStr.sFill3 = cmbFillSt3.SelectedValue.ToString();
+                }
+                else
+                {
+                    oStr.sFill3 = cmbFillSt3.SelectedValue.ToString();
+                }
 
                 if (cmbFillSt4.SelectedValue.ToString() == "-1" || cmbFillSt4.SelectedValue.ToString() == "")
+                {
                     oStr.sFill4 = null;
-                else oStr.sFill4 = cmbFillSt4.SelectedValue.ToString();
+                }
+                else
+                {
+                    oStr.sFill4 = cmbFillSt4.SelectedValue.ToString();
+                }
 
                 clsDH_Structures.sStaticFrom = txtToSt.Text.ToString();
 
@@ -3139,7 +3305,7 @@ namespace LogginColombiaGold
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
             }
         }
 
@@ -3266,7 +3432,7 @@ namespace LogginColombiaGold
 
 
         #endregion
-        
+
 
         #region Mineralization
 
@@ -3316,7 +3482,7 @@ namespace LogginColombiaGold
                 CargarCombosMin(dtMineral, cmbM1Z2);
                 CargarCombosMin(dtMineral, cmbM1Z3);
 
-                CargarCombosMin(dtMineral,cmbMineral1Dens);
+                CargarCombosMin(dtMineral, cmbMineral1Dens);
                 CargarCombosMin(dtMineral, cmbMineral2Dens);
 
                 CargarCombosMin(dtMineral, cmbM2Z1);
@@ -3412,12 +3578,12 @@ namespace LogginColombiaGold
                     //return sresp = "From or To must be greater than zero (0)";
                 }
 
-               
+
                 if (txtMinPerc1.Text != "")
                 {
                     if (double.Parse(txtMinPerc1.Text) > 100)
                     {
-                        sresp ="Percentage 1 isn´t more than 100";
+                        sresp = "Percentage 1 isn´t more than 100";
                         return sresp;
                     }
                 }
@@ -3439,8 +3605,8 @@ namespace LogginColombiaGold
                         return sresp;
                     }
                 }
-                
-               
+
+
                 if (cmbM1Z1.SelectedValue.ToString() == "-1")
                 {
                     sresp = "Selected an option Mineral 1";
@@ -3458,7 +3624,7 @@ namespace LogginColombiaGold
                 //    sresp = "Selected an option Style 1";
                 //    return sresp;
                 //}
-                
+
 
 
 
@@ -3519,9 +3685,12 @@ namespace LogginColombiaGold
                     return;
                 }
 
-                if (sEditMiner == "1"){
-                    oMiner.sOpcion = "2"; }
-                else {
+                if (sEditMiner == "1")
+                {
+                    oMiner.sOpcion = "2";
+                }
+                else
+                {
 
                     DataTable dtValidRange = new DataTable();
                     oMiner.dFrom = double.Parse(txtFromMin.Text.ToString());
@@ -3535,11 +3704,11 @@ namespace LogginColombiaGold
                     }
 
                     oMiner.iDHMinID = 0;
-                    oMiner.sOpcion = "1"; 
+                    oMiner.sOpcion = "1";
                 }
-                
+
                 if (dgMineraliz.Rows.Count <= 1)
-                { oMiner.dFrom = 0;  }
+                { oMiner.dFrom = 0; }
                 else { oMiner.dFrom = double.Parse(txtFromMin.Text.ToString()); }
 
                 //Se valida si el mineral elegido es Crystalline quartz
@@ -3560,80 +3729,166 @@ namespace LogginColombiaGold
                 else oStr.dUpAngle = double.Parse(txtUpAngleSt.Text.ToString());*/
 
                 if (cmbM1Z2.SelectedValue.ToString() == "-1" || cmbM1Z2.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ1Mineral2 = null;
-                else oMiner.sMZ1Mineral2 = cmbM1Z2.SelectedValue.ToString();
-                
+                }
+                else
+                {
+                    oMiner.sMZ1Mineral2 = cmbM1Z2.SelectedValue.ToString();
+                }
+
                 if (cmbM1Z3.SelectedValue.ToString() == "-1" || cmbM1Z3.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ1Mineral3 = null;
-                else oMiner.sMZ1Mineral3 = cmbM1Z3.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ1Mineral3 = cmbM1Z3.SelectedValue.ToString();
+                }
 
                 if (txtMinPerc1.Text.ToString() == "")
+                {
                     oMiner.dMZ1Perc = null;
-                else oMiner.dMZ1Perc = double.Parse(txtMinPerc1.Text.ToString());
+                }
+                else
+                {
+                    oMiner.dMZ1Perc = double.Parse(txtMinPerc1.Text.ToString());
+                }
 
                 if (cmbStyleM1.SelectedValue.ToString() == "-1" || cmbStyleM1.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ1Style = null;
-                else oMiner.sMZ1Style = cmbStyleM1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ1Style = cmbStyleM1.SelectedValue.ToString();
+                }
 
                 if (cmbM2Z1.SelectedValue.ToString() == "-1" || cmbM2Z1.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ2Mineral = null;
-                else oMiner.sMZ2Mineral = cmbM2Z1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ2Mineral = cmbM2Z1.SelectedValue.ToString();
+                }
 
                 if (cmbM2Z2.SelectedValue.ToString() == "-1" || cmbM2Z2.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ2Mineral2 = null;
-                else oMiner.sMZ2Mineral2 = cmbM2Z2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ2Mineral2 = cmbM2Z2.SelectedValue.ToString();
+                }
 
                 if (cmbM2Z3.SelectedValue.ToString() == "-1" || cmbM2Z3.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ2Mineral3 = null;
-                else oMiner.sMZ2Mineral3 = cmbM2Z3.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ2Mineral3 = cmbM2Z3.SelectedValue.ToString();
+                }
 
                 if (txtMinPerc2.Text.ToString() == "")
+                {
                     oMiner.dMZ2Perc = null;
-                else oMiner.dMZ2Perc = double.Parse(txtMinPerc2.Text.ToString());
+                }
+                else
+                {
+                    oMiner.dMZ2Perc = double.Parse(txtMinPerc2.Text.ToString());
+                }
 
                 if (cmbStyleM2.SelectedValue.ToString() == "-1" || cmbStyleM2.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ2Style = null;
-                else oMiner.sMZ2Style = cmbStyleM2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ2Style = cmbStyleM2.SelectedValue.ToString();
+                }
 
                 if (cmbM3Z1.SelectedValue.ToString() == "-1" || cmbM3Z1.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ3Mineral = null;
-                else oMiner.sMZ3Mineral = cmbM3Z1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ3Mineral = cmbM3Z1.SelectedValue.ToString();
+                }
 
                 if (cmbM3Z2.SelectedValue.ToString() == "-1" || cmbM3Z2.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ3Mineral2 = null;
-                else oMiner.sMZ3Mineral2 = cmbM3Z2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ3Mineral2 = cmbM3Z2.SelectedValue.ToString();
+                }
 
                 if (cmbM3Z3.SelectedValue.ToString() == "-1" || cmbM3Z3.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ3Mineral3 = null;
-                else oMiner.sMZ3Mineral3 = cmbM3Z3.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ3Mineral3 = cmbM3Z3.SelectedValue.ToString();
+                }
 
                 if (txtMinPerc3.Text.ToString() == "")
+                {
                     oMiner.dMZ3Perc = null;
-                else oMiner.dMZ3Perc = double.Parse(txtMinPerc3.Text.ToString());
+                }
+                else
+                {
+                    oMiner.dMZ3Perc = double.Parse(txtMinPerc3.Text.ToString());
+                }
 
                 if (cmbStyleM3.SelectedValue.ToString() == "-1" || cmbStyleM3.SelectedValue.ToString() == "")
+                {
                     oMiner.sMZ3Style = null;
-                else oMiner.sMZ3Style = cmbStyleM3.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sMZ3Style = cmbStyleM3.SelectedValue.ToString();
+                }
 
                 if (txtCommentsMin.Text.ToString() == "")
+                {
                     oMiner.sComments = null;
-                else oMiner.sComments = txtCommentsMin.Text.ToString();
-
-
+                }
+                else
+                {
+                    oMiner.sComments = txtCommentsMin.Text.ToString();
+                }
 
                 if (cmbGSizeMin1.SelectedValue.ToString() == "-1" || cmbGSizeMin1.SelectedValue.ToString() == "")
+                {
                     oMiner.sGSize1 = null;
-                else oMiner.sGSize1 = cmbGSizeMin1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sGSize1 = cmbGSizeMin1.SelectedValue.ToString();
+                }
 
                 if (cmbGSizeMin2.SelectedValue.ToString() == "-1" || cmbGSizeMin2.SelectedValue.ToString() == "")
+                {
                     oMiner.sGSize2 = null;
-                else oMiner.sGSize2 = cmbGSizeMin2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oMiner.sGSize2 = cmbGSizeMin2.SelectedValue.ToString();
+                }
 
                 if (cmbGSizeMin3.SelectedValue.ToString() == "-1" || cmbGSizeMin3.SelectedValue.ToString() == "")
+                {
                     oMiner.sGSize3 = null;
-                else oMiner.sGSize3 = cmbGSizeMin3.SelectedValue.ToString();
-
-
+                }
+                else
+                {
+                    oMiner.sGSize3 = cmbGSizeMin3.SelectedValue.ToString();
+                }
 
                 clsDHMineraliz.sStaticFrom = txtToMin.Text.ToString();
 
@@ -3679,7 +3934,7 @@ namespace LogginColombiaGold
                 {
                     MessageBox.Show("Error Insert: " + sRespMin.ToString(), "Mineralizations", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                
+
                 sEditMiner = "0";
             }
             catch (Exception ex)
@@ -3690,7 +3945,7 @@ namespace LogginColombiaGold
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
             }
         }
 
@@ -3770,14 +4025,14 @@ namespace LogginColombiaGold
                 cmbStyleM3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Style"].Value.ToString() == "" ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Style"].Value.ToString();
 
-               txtMinPerc1.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString() == "" ?
-                    "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString();
+                txtMinPerc1.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString() == "" ?
+                     "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString();
 
-               txtMinPerc2.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString() == "" ?
-                    "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString();
+                txtMinPerc2.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString() == "" ?
+                     "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString();
 
-               txtMinPerc3.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString() == "" ?
-                    "": dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString();
+                txtMinPerc3.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString() == "" ?
+                     "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString();
 
                 txtCommentsMin.Text = dgMineraliz.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == "" ?
                     "" : dgMineraliz.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
@@ -3818,9 +4073,9 @@ namespace LogginColombiaGold
 
 
                 cmbM1Z1.SelectedValue = "-1";
-                cmbM1Z2.SelectedValue = "-1"; 
+                cmbM1Z2.SelectedValue = "-1";
                 cmbM1Z3.SelectedValue = "-1";
-                cmbM2Z1.SelectedValue = "-1"; 
+                cmbM2Z1.SelectedValue = "-1";
                 cmbM2Z2.SelectedValue = "-1";
                 cmbM2Z3.SelectedValue = "-1";
                 cmbM3Z1.SelectedValue = "-1";
@@ -3835,9 +4090,9 @@ namespace LogginColombiaGold
                 cmbGSizeMin2.SelectedValue = "-1";
                 cmbGSizeMin3.SelectedValue = "-1";
                 //cmbHoleIdMin.SelectedValue = "Select an option..";
-                
+
                 txtToMin.Text = "";
-                
+
             }
             catch (Exception ex)
             {
@@ -3992,7 +4247,7 @@ namespace LogginColombiaGold
                     MessageBox.Show("Empty Depth", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtFromSt.Focus();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -4001,12 +4256,12 @@ namespace LogginColombiaGold
         }
 
         private void txtRec_mGeo_Leave(object sender, EventArgs e)
-            {
+        {
             try
             {
                 if (txtRec_mGeo.Text.ToString() != "")
                 {
-                    txtRec_PorcGeo.Text = (double.Parse(txtRec_mGeo.Text.ToString()) / 
+                    txtRec_PorcGeo.Text = (double.Parse(txtRec_mGeo.Text.ToString()) /
                         double.Parse(txtDifferGeo.Text.ToString()) * 100).ToString();
                 }
                 if (txtRec_mGeo.Text.ToString() == "-99")
@@ -4215,7 +4470,7 @@ namespace LogginColombiaGold
 
         private bool Keypress(KeyPressEventArgs e)
         {
-            
+
             if (Char.IsNumber(e.KeyChar))
             {
                 return false;
@@ -4312,7 +4567,7 @@ namespace LogginColombiaGold
                     sresp = " 'From' greater than 'To'";
                     return sresp;
                 }
-               
+
 
 
                 oCollars.sHoleID = cmbHoleIDBox.SelectedValue.ToString();
@@ -4377,25 +4632,49 @@ namespace LogginColombiaGold
                 oBox.iBox = int.Parse(txtNoBox.Text.ToString());
 
                 if (txtStand.Text.ToString() == "")
-                    oBox.iStand =   null;
-                else oBox.iStand = int.Parse(txtStand.Text.ToString());
+                {
+                    oBox.iStand = null;
+                }
+                else
+                {
+                    oBox.iStand = int.Parse(txtStand.Text.ToString());
+                }
 
                 if (txtColumnBox.Text.ToString() == "")
+                {
                     oBox.sColumn = null;
-                else oBox.sColumn = txtColumnBox.Text.ToString();
+                }
+                else
+                {
+                    oBox.sColumn = txtColumnBox.Text.ToString();
+                }
 
                 if (txtRowBox.Text.ToString() == "")
+                {
                     oBox.sRow = null;
-                else oBox.sRow = txtRowBox.Text.ToString();
+                }
+                else
+                {
+                    oBox.sRow = txtRowBox.Text.ToString();
+                }
 
                 if (txtPhotoBox.Text.ToString() == "")
+                {
                     oBox.iPhoto = null;
-                else oBox.iPhoto = int.Parse(txtPhotoBox.Text.ToString());
+                }
+                else
+                {
+                    oBox.iPhoto = int.Parse(txtPhotoBox.Text.ToString());
+                }
 
                 if (txtEditPhotoBox.Text.ToString() == "")
+                {
                     oBox.iEditPhoto = null;
-                else oBox.iEditPhoto = int.Parse(txtEditPhotoBox.Text.ToString());
-
+                }
+                else
+                {
+                    oBox.iEditPhoto = int.Parse(txtEditPhotoBox.Text.ToString());
+                }
 
                 string sAddBox = oBox.DH_Box_Add();
                 if (sAddBox == "OK")
@@ -4416,7 +4695,7 @@ namespace LogginColombiaGold
 
                     //sEditBox = "0";
                     clsDHBox.sStaticFrom = txtToBox.Text.ToString();
-                    
+
                     CleanControlsBox();
 
                     txtFromBox.Text = clsDHBox.sStaticFrom.ToString();
@@ -4432,11 +4711,11 @@ namespace LogginColombiaGold
             {
                 if (ex.GetType().ToString() != "System.NullReferenceException")
                 {
-                    MessageBox.Show("Add Box Error: "+ ex.Message);
+                    MessageBox.Show("Add Box Error: " + ex.Message);
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
             }
         }
 
@@ -4447,7 +4726,7 @@ namespace LogginColombiaGold
                 oBox.iSKDHBox = 0;
                 sEditBox = "0";
 
-                txtToBox.Text ="";
+                txtToBox.Text = "";
                 txtNoBox.Text = "";
                 txtStand.Text = "";
                 txtColumnBox.Text = "";
@@ -4708,10 +4987,10 @@ namespace LogginColombiaGold
                     return sresp;
                 }
 
-                if (cmbTypeAlt.SelectedValue.ToString() == "-1" ) //||
-                    //cmbIntAlt.SelectedValue.ToString() == "-1" ||
-                    //cmbMin1Alt.SelectedValue.ToString() == "-1" ||
-                    //cmbStyleAlt1.SelectedValue.ToString() == "-1")
+                if (cmbTypeAlt.SelectedValue.ToString() == "-1") //||
+                                                                 //cmbIntAlt.SelectedValue.ToString() == "-1" ||
+                                                                 //cmbMin1Alt.SelectedValue.ToString() == "-1" ||
+                                                                 //cmbStyleAlt1.SelectedValue.ToString() == "-1")
                 {
                     sresp = "You must fill Alteration 1";
                     return sresp;
@@ -4809,64 +5088,134 @@ namespace LogginColombiaGold
 
 
                 oAlt.sA1Type = cmbTypeAlt.SelectedValue.ToString();
-                
-                
-                
+
+
+
                 if (cmbTypeAlt2.SelectedValue.ToString() == "-1" || cmbTypeAlt2.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Type = null;
-                else oAlt.sA2Type = cmbTypeAlt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Type = cmbTypeAlt2.SelectedValue.ToString();
+                }
 
                 if (cmbIntAlt.SelectedValue.ToString() == "-1" || cmbIntAlt.SelectedValue.ToString() == "")
+                {
                     oAlt.sA1Int = null;
-                else oAlt.sA1Int = cmbIntAlt.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA1Int = cmbIntAlt.SelectedValue.ToString();
+                }
 
                 if (cmbIntAlt2.SelectedValue.ToString() == "-1" || cmbIntAlt2.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Int = null;
-                else oAlt.sA2Int = cmbIntAlt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Int = cmbIntAlt2.SelectedValue.ToString();
+                }
 
                 if (cmbStyleAlt1.SelectedValue.ToString() == "-1" || cmbStyleAlt1.SelectedValue.ToString() == "")
+                {
                     oAlt.sA1Style = null;
-                else oAlt.sA1Style = cmbStyleAlt1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA1Style = cmbStyleAlt1.SelectedValue.ToString();
+                }
 
                 if (cmbStyleAlt2.SelectedValue.ToString() == "-1" || cmbStyleAlt2.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Style = null;
-                else oAlt.sA2Style = cmbStyleAlt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Style = cmbStyleAlt2.SelectedValue.ToString();
+                }
 
                 if (cmbMin1Alt.SelectedValue.ToString() == "-1" || cmbMin1Alt.SelectedValue.ToString() == "")
+                {
                     oAlt.sA1Min = null;
-                else oAlt.sA1Min = cmbMin1Alt.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA1Min = cmbMin1Alt.SelectedValue.ToString();
+                }
 
                 if (cmbMin1Alt2.SelectedValue.ToString() == "-1" || cmbMin1Alt2.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Min = null;
-                else oAlt.sA2Min = cmbMin1Alt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Min = cmbMin1Alt2.SelectedValue.ToString();
+                }
 
                 if (txtCommentsAlt.Text.ToString() == "")
+                {
                     oAlt.sComments = null;
-                else oAlt.sComments = oAlt.sComments = txtCommentsAlt.Text.ToString();
+                }
+                else
+                {
+                    oAlt.sComments = oAlt.sComments = txtCommentsAlt.Text.ToString();
+                }
 
                 if (cmbMin2Alt1.SelectedValue.ToString() == "-1" || cmbMin2Alt1.SelectedValue.ToString() == "")
+                {
                     oAlt.sA1Min2 = null;
-                else oAlt.sA1Min2 = cmbMin2Alt1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA1Min2 = cmbMin2Alt1.SelectedValue.ToString();
+                }
 
                 if (cmbMin2Alt2.SelectedValue.ToString() == "-1" || cmbMin2Alt2.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Min2 = null;
-                else oAlt.sA2Min2 = cmbMin2Alt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Min2 = cmbMin2Alt2.SelectedValue.ToString();
+                }
 
                 if (cmbStyleAlt12.SelectedValue.ToString() == "-1" || cmbStyleAlt12.SelectedValue.ToString() == "")
+                {
                     oAlt.sA1Style2 = null;
-                else oAlt.sA1Style2 = cmbStyleAlt12.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA1Style2 = cmbStyleAlt12.SelectedValue.ToString();
+                }
 
                 if (cmbStyleAlt22.SelectedValue.ToString() == "-1" || cmbStyleAlt22.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Style2 = null;
-                else oAlt.sA2Style2 = cmbStyleAlt22.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Style2 = cmbStyleAlt22.SelectedValue.ToString();
+                }
 
                 if (cmbMin3Alt1.SelectedValue.ToString() == "-1" || cmbMin3Alt1.SelectedValue.ToString() == "")
+                {
                     oAlt.sA1Min3 = null;
-                else oAlt.sA1Min3 = cmbMin3Alt1.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA1Min3 = cmbMin3Alt1.SelectedValue.ToString();
+                }
 
                 if (cmbMin3Alt2.SelectedValue.ToString() == "-1" || cmbMin3Alt2.SelectedValue.ToString() == "")
+                {
                     oAlt.sA2Min3 = null;
-                else oAlt.sA2Min3 = cmbMin3Alt2.SelectedValue.ToString();
+                }
+                else
+                {
+                    oAlt.sA2Min3 = cmbMin3Alt2.SelectedValue.ToString();
+                }
 
                 clsDHAlterations.sStaticFrom = txtToAlt.Text.ToString();
 
@@ -4874,7 +5223,7 @@ namespace LogginColombiaGold
                 if (sRespAltAdd.ToString() == "OK")
                 {
                     FilldgAlterations("2");
-                    
+
                     //sEditAlt = "0";
 
                     //Insertar el registro para el historial de transacciones por usuario
@@ -4921,7 +5270,7 @@ namespace LogginColombiaGold
                 }
                 else
                 { MessageBox.Show("You must enter all required records", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-                
+
             }
         }
 
@@ -5191,41 +5540,42 @@ namespace LogginColombiaGold
             {
 
                 DataTable dtAlterations = (DataTable)dgAlterations.DataSource;
+                _oSheet.Cells[4, 3] = dtAlterations.Rows[0]["HoleID"].ToString();
 
-                int iInicial = 3;
+                int iInicial = 6;
                 for (int i = 0; i < dtAlterations.Rows.Count - 1; i++)
                 {
+                    _oSheet.Cells[iInicial, 1] = dtAlterations.Rows[i]["From"].ToString();
+                    _oSheet.Cells[iInicial, 2] = dtAlterations.Rows[i]["To"].ToString();
+                    _oSheet.Cells[iInicial, 3] = dtAlterations.Rows[i]["A1Type"].ToString();
+                    _oSheet.Cells[iInicial, 4] = dtAlterations.Rows[i]["A1Int"].ToString();
+                    _oSheet.Cells[iInicial, 5] = dtAlterations.Rows[i]["A1Style"].ToString();
 
-                    _oSheet.Cells[iInicial, 1] = dtAlterations.Rows[i]["HoleID"].ToString();
-                    _oSheet.Cells[iInicial, 2] = dtAlterations.Rows[i]["From"].ToString();
-                    _oSheet.Cells[iInicial, 3] = dtAlterations.Rows[i]["To"].ToString();
-                    _oSheet.Cells[iInicial, 4] = dtAlterations.Rows[i]["A1Type"].ToString();
-                    _oSheet.Cells[iInicial, 5] = dtAlterations.Rows[i]["A1Int"].ToString();
-                    _oSheet.Cells[iInicial, 6] = dtAlterations.Rows[i]["A1Style"].ToString();
-                    _oSheet.Cells[iInicial, 7] = dtAlterations.Rows[i]["A1Style2"].ToString()
+
+                    _oSheet.Cells[iInicial, 6] = dtAlterations.Rows[i]["A1Style2"].ToString()
                            == "-1" ? "" : dtAlterations.Rows[i]["A1Style2"].ToString();
-                    _oSheet.Cells[iInicial, 8] = dtAlterations.Rows[i]["A1Min"].ToString()
+                    _oSheet.Cells[iInicial, 7] = dtAlterations.Rows[i]["A1Min"].ToString()
                         == "-1" ? "" : dtAlterations.Rows[i]["A1Min"].ToString();
-                    _oSheet.Cells[iInicial, 9] = dtAlterations.Rows[i]["A1Min2"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min2"].ToString(); 
-                    _oSheet.Cells[iInicial, 10] = dtAlterations.Rows[i]["A1Min3"].ToString()
+                    _oSheet.Cells[iInicial, 8] = dtAlterations.Rows[i]["A1Min2"].ToString()
+                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min2"].ToString();
+                    _oSheet.Cells[iInicial, 9] = dtAlterations.Rows[i]["A1Min3"].ToString()
                         == "-1" ? "" : dtAlterations.Rows[i]["A1Min3"].ToString();
-                    _oSheet.Cells[iInicial, 11] = dtAlterations.Rows[i]["A2Type"].ToString()
+                    _oSheet.Cells[iInicial, 10] = dtAlterations.Rows[i]["A2Type"].ToString()
                         == "-1" ? "" : dtAlterations.Rows[i]["A2Type"].ToString();
-                    _oSheet.Cells[iInicial, 12] = dtAlterations.Rows[i]["A2Int"].ToString()
+                    _oSheet.Cells[iInicial, 11] = dtAlterations.Rows[i]["A2Int"].ToString()
                         == "-1" ? "" : dtAlterations.Rows[i]["A2Int"].ToString();
-                    _oSheet.Cells[iInicial, 13] = dtAlterations.Rows[i]["A2Style"].ToString()
+                    _oSheet.Cells[iInicial, 12] = dtAlterations.Rows[i]["A2Style"].ToString()
                          == "-1" ? "" : dtAlterations.Rows[i]["A2Style"].ToString();
-                    _oSheet.Cells[iInicial, 14] = dtAlterations.Rows[i]["A2Style2"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Style2"].ToString(); 
-                    _oSheet.Cells[iInicial, 15] = dtAlterations.Rows[i]["A2Min"].ToString()
+                    _oSheet.Cells[iInicial, 13] = dtAlterations.Rows[i]["A2Style2"].ToString()
+                         == "-1" ? "" : dtAlterations.Rows[i]["A2Style2"].ToString();
+                    _oSheet.Cells[iInicial, 14] = dtAlterations.Rows[i]["A2Min"].ToString()
                          == "-1" ? "" : dtAlterations.Rows[i]["A2Min"].ToString();
-                    _oSheet.Cells[iInicial, 16] = dtAlterations.Rows[i]["A2Min"].ToString()
+                    _oSheet.Cells[iInicial, 15] = dtAlterations.Rows[i]["A2Min"].ToString()
                          == "-1" ? "" : dtAlterations.Rows[i]["A2Min2"].ToString();
-                    _oSheet.Cells[iInicial, 17] = dtAlterations.Rows[i]["A2Min3"].ToString()
+                    _oSheet.Cells[iInicial, 16] = dtAlterations.Rows[i]["A2Min3"].ToString()
                          == "-1" ? "" : dtAlterations.Rows[i]["A2Min3"].ToString();
 
-                    _oSheet.Cells[iInicial, 18] = dtAlterations.Rows[i]["Comments"].ToString();
+                    _oSheet.Cells[iInicial, 17] = dtAlterations.Rows[i]["Comments"].ToString();
 
                     iInicial += 1;
                 }
@@ -5242,21 +5592,21 @@ namespace LogginColombiaGold
             {
 
                 DataTable dtStr = (DataTable)dgStructure.DataSource;
+                _oSheet.Cells[4, 3] = dtStr.Rows[0]["HoleID"].ToString();
 
-                int iInicial = 2;
+                int iInicial = 6;
                 for (int i = 0; i < dtStr.Rows.Count - 1; i++)
                 {
+                    _oSheet.Cells[iInicial, 1] = dtStr.Rows[i]["From"].ToString();
+                    _oSheet.Cells[iInicial, 2] = dtStr.Rows[i]["To"].ToString(); ;
+                    _oSheet.Cells[iInicial, 3] = dtStr.Rows[i]["Type"].ToString();
+                    _oSheet.Cells[iInicial, 4] = dtStr.Rows[i]["AngleToAxis"].ToString();
+                    _oSheet.Cells[iInicial, 5] = dtStr.Rows[i]["Fill"].ToString();
+                    _oSheet.Cells[iInicial, 7] = dtStr.Rows[i]["UpAngle"].ToString();
 
-                    _oSheet.Cells[iInicial, 1] = dtStr.Rows[i]["HoleID"].ToString();
-                    _oSheet.Cells[iInicial, 2] = dtStr.Rows[i]["From"].ToString();
-                    _oSheet.Cells[iInicial, 3] = dtStr.Rows[i]["To"].ToString(); ;
-                    _oSheet.Cells[iInicial, 4] = dtStr.Rows[i]["Type"].ToString();
-                    _oSheet.Cells[iInicial, 5] = dtStr.Rows[i]["AngleToAxis"].ToString();
-                    _oSheet.Cells[iInicial, 6] = dtStr.Rows[i]["UpAngle"].ToString();
+                    _oSheet.Cells[iInicial, 8] = dtStr.Rows[i]["BtonAngle"].ToString();
+                    _oSheet.Cells[iInicial, 9] = dtStr.Rows[i]["AppThick"].ToString();
 
-                    _oSheet.Cells[iInicial, 7] = dtStr.Rows[i]["BtonAngle"].ToString();
-                    _oSheet.Cells[iInicial, 8] = dtStr.Rows[i]["AppThick"].ToString();
-                    _oSheet.Cells[iInicial, 9] = dtStr.Rows[i]["Fill"].ToString();
                     _oSheet.Cells[iInicial, 10] = dtStr.Rows[i]["Fill2"].ToString();
                     _oSheet.Cells[iInicial, 11] = dtStr.Rows[i]["Fill3"].ToString();
                     _oSheet.Cells[iInicial, 12] = dtStr.Rows[i]["Fill4"].ToString();
@@ -5278,54 +5628,55 @@ namespace LogginColombiaGold
             try
             {
                 DataTable dtMiner = (DataTable)dgMineraliz.DataSource;
+                _oSheet.Cells[4, 3] = dtMiner.Rows[0]["HoleID"].ToString();
 
-                int iInicial = 3;
+                int iInicial = 6;
                 for (int i = 0; i < dtMiner.Rows.Count - 1; i++)
                 {
 
                     /*Gsize, GSize2, GSize3*/
-                    _oSheet.Cells[iInicial, 1] = dtMiner.Rows[i]["HoleID"].ToString();
-                    _oSheet.Cells[iInicial, 2] = dtMiner.Rows[i]["From"].ToString();
-                    _oSheet.Cells[iInicial, 3] = dtMiner.Rows[i]["To"].ToString();
-                    _oSheet.Cells[iInicial, 4] = dtMiner.Rows[i]["MZ1Mineral"].ToString();
-                    _oSheet.Cells[iInicial, 5] = dtMiner.Rows[i]["MZ1Mineral2"].ToString();
-                    _oSheet.Cells[iInicial, 6] = dtMiner.Rows[i]["MZ1Mineral3"].ToString();
-                    _oSheet.Cells[iInicial, 7] = dtMiner.Rows[i]["MZ1Style"].ToString();
-                    _oSheet.Cells[iInicial, 8] = dtMiner.Rows[i]["MZ1Perc"].ToString();
 
-                    _oSheet.Cells[iInicial, 9] = dtMiner.Rows[i]["Gsize"].ToString()
+                    _oSheet.Cells[iInicial, 1] = dtMiner.Rows[i]["From"].ToString();
+                    _oSheet.Cells[iInicial, 2] = dtMiner.Rows[i]["To"].ToString();
+                    _oSheet.Cells[iInicial, 3] = dtMiner.Rows[i]["MZ1Mineral"].ToString();
+                    _oSheet.Cells[iInicial, 4] = dtMiner.Rows[i]["MZ1Perc"].ToString();
+                    _oSheet.Cells[iInicial, 5] = dtMiner.Rows[i]["MZ1Style"].ToString();
+
+                    _oSheet.Cells[iInicial, 6] = dtMiner.Rows[i]["MZ1Mineral2"].ToString();
+                    _oSheet.Cells[iInicial, 7] = dtMiner.Rows[i]["MZ1Mineral3"].ToString();
+                    _oSheet.Cells[iInicial, 8] = dtMiner.Rows[i]["Gsize"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["Gsize"].ToString();
 
                     //sEditGeo == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
-                    _oSheet.Cells[iInicial, 10] = dtMiner.Rows[i]["MZ2Mineral"].ToString()
+                    _oSheet.Cells[iInicial, 9] = dtMiner.Rows[i]["MZ2Mineral"].ToString()
                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral"].ToString();
-                    _oSheet.Cells[iInicial, 11] = dtMiner.Rows[i]["MZ2Mineral2"].ToString()
+                    _oSheet.Cells[iInicial, 10] = dtMiner.Rows[i]["MZ2Mineral2"].ToString()
                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral2"].ToString();
-                    _oSheet.Cells[iInicial, 12] = dtMiner.Rows[i]["MZ2Mineral3"].ToString()
+                    _oSheet.Cells[iInicial, 11] = dtMiner.Rows[i]["MZ2Mineral3"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral3"].ToString();
-                    _oSheet.Cells[iInicial, 13] = dtMiner.Rows[i]["MZ2Style"].ToString()
+                    _oSheet.Cells[iInicial, 12] = dtMiner.Rows[i]["MZ2Style"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["MZ2Style"].ToString();
-                    _oSheet.Cells[iInicial, 14] = dtMiner.Rows[i]["MZ2Perc"].ToString()
+                    _oSheet.Cells[iInicial, 13] = dtMiner.Rows[i]["MZ2Perc"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["MZ2Perc"].ToString();
 
-                    _oSheet.Cells[iInicial, 15] = dtMiner.Rows[i]["GSize2"].ToString()
+                    _oSheet.Cells[iInicial, 14] = dtMiner.Rows[i]["GSize2"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["GSize2"].ToString();
 
-                    _oSheet.Cells[iInicial, 16] = dtMiner.Rows[i]["MZ3Mineral"].ToString()
+                    _oSheet.Cells[iInicial, 15] = dtMiner.Rows[i]["MZ3Mineral"].ToString()
                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral"].ToString();
-                    _oSheet.Cells[iInicial, 17] = dtMiner.Rows[i]["MZ3Mineral2"].ToString()
+                    _oSheet.Cells[iInicial, 16] = dtMiner.Rows[i]["MZ3Mineral2"].ToString()
                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral2"].ToString();
-                    _oSheet.Cells[iInicial, 18] = dtMiner.Rows[i]["MZ3Mineral3"].ToString()
+                    _oSheet.Cells[iInicial, 17] = dtMiner.Rows[i]["MZ3Mineral3"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral3"].ToString();
-                    _oSheet.Cells[iInicial, 19] = dtMiner.Rows[i]["MZ3Style"].ToString()
+                    _oSheet.Cells[iInicial, 18] = dtMiner.Rows[i]["MZ3Style"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["MZ3Style"].ToString();
-                    _oSheet.Cells[iInicial, 20] = dtMiner.Rows[i]["MZ3Perc"].ToString()
+                    _oSheet.Cells[iInicial, 19] = dtMiner.Rows[i]["MZ3Perc"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["MZ3Perc"].ToString();
 
-                    _oSheet.Cells[iInicial, 21] = dtMiner.Rows[i]["GSize3"].ToString()
+                    _oSheet.Cells[iInicial, 20] = dtMiner.Rows[i]["GSize3"].ToString()
                          == "-1" ? "" : dtMiner.Rows[i]["GSize3"].ToString();
 
-                    _oSheet.Cells[iInicial, 22] = dtMiner.Rows[i]["Comments"].ToString();
+                    _oSheet.Cells[iInicial, 21] = dtMiner.Rows[i]["Comments"].ToString();
 
                     iInicial += 1;
                 }
@@ -5342,17 +5693,17 @@ namespace LogginColombiaGold
             {
                 DataTable dtLitho = (DataTable)dgLithology.DataSource;
 
-                int iInicial = 2;
+                int iInicial = 6;
                 for (int i = 0; i < dtLitho.Rows.Count - 1; i++)
                 {
                     _oSheet.Cells[iInicial, 1] = dtLitho.Rows[i]["HoleID"].ToString();
                     _oSheet.Cells[iInicial, 2] = dtLitho.Rows[i]["From"].ToString();
                     _oSheet.Cells[iInicial, 3] = dtLitho.Rows[i]["To"].ToString();
                     _oSheet.Cells[iInicial, 4] = dtLitho.Rows[i]["Litho"].ToString();
-                    
+
                     _oSheet.Cells[iInicial, 5] = dtLitho.Rows[i]["Textures"].ToString();
                     _oSheet.Cells[iInicial, 6] = dtLitho.Rows[i]["GSize"].ToString();
-                    
+
                     _oSheet.Cells[iInicial, 7] = dtLitho.Rows[i]["Observation"].ToString();
                     iInicial += 1;
                 }
@@ -5369,17 +5720,17 @@ namespace LogginColombiaGold
             {
 
                 DataTable dtGeo = (DataTable)dgGeotech.DataSource;
+                _oSheet.Cells[4, 3] = dtGeo.Rows[0]["HoleID"].ToString();
 
-                int iInicial = 2;
+                int iInicial = 6;
                 for (int i = 0; i < dtGeo.Rows.Count - 1; i++)
                 {
-                    _oSheet.Cells[iInicial, 1] = dtGeo.Rows[i]["HoleID"].ToString();
-                    _oSheet.Cells[iInicial, 2] = dtGeo.Rows[i]["From"].ToString();
-                    _oSheet.Cells[iInicial, 3] = dtGeo.Rows[i]["To"].ToString();
-                    _oSheet.Cells[iInicial, 4] = dtGeo.Rows[i]["LithCod"].ToString();
-                    _oSheet.Cells[iInicial, 5] = dtGeo.Rows[i]["Recm"].ToString();
-                    
-                    _oSheet.Cells[iInicial, 6] = dtGeo.Rows[i]["RQDcm"].ToString();
+                    _oSheet.Cells[iInicial, 1] = dtGeo.Rows[i]["From"].ToString();
+                    _oSheet.Cells[iInicial, 2] = dtGeo.Rows[i]["To"].ToString();
+                    _oSheet.Cells[iInicial, 3] = dtGeo.Rows[i]["LithCod"].ToString();
+                    _oSheet.Cells[iInicial, 4] = dtGeo.Rows[i]["Recm"].ToString();
+                    _oSheet.Cells[iInicial, 5] = dtGeo.Rows[i]["RQDcm"].ToString();
+
                     _oSheet.Cells[iInicial, 7] = dtGeo.Rows[i]["NoOfFract"].ToString();
                     _oSheet.Cells[iInicial, 8] = dtGeo.Rows[i]["JointCond"].ToString();
                     _oSheet.Cells[iInicial, 9] = dtGeo.Rows[i]["Jn"].ToString();
@@ -5389,7 +5740,7 @@ namespace LogginColombiaGold
                     _oSheet.Cells[iInicial, 13] = dtGeo.Rows[i]["Hardness"].ToString();
                     _oSheet.Cells[iInicial, 14] = dtGeo.Rows[i]["Comments"].ToString();
                     _oSheet.Cells[iInicial, 15] = dtGeo.Rows[i]["AltWeath"].ToString();
-            
+
 
                     iInicial += 1;
                 }
@@ -5417,7 +5768,7 @@ namespace LogginColombiaGold
                     _oSheet.Cells[iInicial, 5] = dtBox.Rows[i]["Stand"].ToString();
                     _oSheet.Cells[iInicial, 6] = dtBox.Rows[i]["column"].ToString();
                     _oSheet.Cells[iInicial, 7] = dtBox.Rows[i]["row"].ToString();
-                    
+
                     iInicial += 1;
                 }
             }
@@ -5492,22 +5843,19 @@ namespace LogginColombiaGold
                 Excel.Range oRng;
 
                 string _sSheetExcel = SheetExcel;
-
                 oXL = new Excel.Application();
                 //oXL.Visible = true;
 
-                oWB = oXL.Workbooks.Open(ConfigurationSettings.AppSettings["Ruta_LoggingAll"].ToString(),
-                    0, false, 5,
+                oWB = oXL.Workbooks.Open(Path.Combine(Application.StartupPath, string.Concat("GZC_120316_Template_Valid", _sSheetExcel, ".xls")), 0, false, 5,
                 Type.Missing, Type.Missing, false, Type.Missing, Type.Missing, true, false,
                 Type.Missing, false, false, false);
 
-
-                oSheet = (Excel._Worksheet)oWB.Sheets[_sSheetExcel];//(Excel._Worksheet)oWB.ActiveSheet;
+                oSheet = (Excel._Worksheet)oWB.ActiveSheet;//(Excel._Worksheet)oWB.Sheets[_sSheetExcel];//(Excel._Worksheet)oWB.ActiveSheet;
 
                 switch (_sSheetExcel)
                 {
                     case "Alterations":
-                        ExcelGenerateAlterations(oSheet); ;
+                        ExcelGenerateAlterations(oSheet);
                         break;
                     case "Geotech":
                         ExcelGenerateGeotech(oSheet);
@@ -5525,8 +5873,6 @@ namespace LogginColombiaGold
                         ExcelGenerateWeathering(oSheet);
                         break;
                 }
-
-
 
                 oXL.Visible = true;
                 oXL.UserControl = true;
@@ -5702,7 +6048,7 @@ namespace LogginColombiaGold
 
 
 
-        # region Oxidation
+        #region Oxidation
 
         //private void FillCmbOxidation()
         //{
@@ -5716,7 +6062,7 @@ namespace LogginColombiaGold
         //        cmbHoleIDOx.ValueMember = "HoleID";
         //        cmbHoleIDOx.DataSource = dtCollars;
         //        cmbHoleIDOx.SelectedValue = "Select an option..";
-                
+
         //        DataTable dtOxidationPerc = oRf.getRfOxides_List();
         //        DataRow drOx = dtOxidationPerc.NewRow();
         //        drOx[0] = "-1";
@@ -6160,7 +6506,7 @@ namespace LogginColombiaGold
 
                 gdLoggin.DataSource = dtResult;
 
-                
+
 
                 //Exportar a excel los resultados de from to overlaps y from to next
 
@@ -6245,7 +6591,7 @@ namespace LogginColombiaGold
                     oXL.Visible = true;
                     oXL.UserControl = true;
 
-               
+
                 }
 
 
@@ -6296,7 +6642,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                
+
                 dgWeathering.DataSource = dtResult;
 
                 oWeat.sHoleID = cmbHoleIdWeat.SelectedValue.ToString();
@@ -6352,7 +6698,7 @@ namespace LogginColombiaGold
                     oXL.Visible = true;
                     oXL.UserControl = true;
 
-               
+
 
 
                 }
@@ -6450,7 +6796,7 @@ namespace LogginColombiaGold
                     oXL.Visible = true;
                     oXL.UserControl = true;
 
-                    
+
                 }
 
 
@@ -6497,7 +6843,7 @@ namespace LogginColombiaGold
 
                 oAlt.sHoleID = cmbHoleIDAlt.SelectedValue.ToString();
                 DataTable dtAlterFromToNext = oAlt.getDHAlterationsValidFromToNext();
-                if (dtResult.Rows.Count > 0 || dtAlterFromToNext.Rows.Count>0)
+                if (dtResult.Rows.Count > 0 || dtAlterFromToNext.Rows.Count > 0)
                 {
                     Excel.Application oXL;
                     Excel._Workbook oWB;
@@ -6514,7 +6860,7 @@ namespace LogginColombiaGold
 
 
                     oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-                    
+
                     oSheet.Cells[4, 3] = cmbHoleIDAlt.SelectedValue.ToString();
 
                     int iInicial = 6;
@@ -6592,7 +6938,7 @@ namespace LogginColombiaGold
                 oStr.sHoleID = cmbHoleIDSt.SelectedValue.ToString();
                 DataTable dtStrucFromToNext = oStr.getDH_StructuresValidFromToNext();
 
-                if (dtResult.Rows.Count > 0 || dtStrucFromToNext.Rows.Count> 0)
+                if (dtResult.Rows.Count > 0 || dtStrucFromToNext.Rows.Count > 0)
                 {
                     Excel.Application oXL;
                     Excel._Workbook oWB;
@@ -6639,7 +6985,7 @@ namespace LogginColombiaGold
 
                     oXL.Visible = true;
                     oXL.UserControl = true;
-                    
+
                 }
             }
             catch (Exception ex)
@@ -6730,7 +7076,7 @@ namespace LogginColombiaGold
 
                     oXL.Visible = true;
                     oXL.UserControl = true;
-                    
+
                 }
 
 
@@ -6752,7 +7098,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                
+
                 DataTable dtResult = new DataTable();
                 oBox.dFrom = 0; oBox.dTo = 0; oBox.sHoleID = "0"; oBox.iSKDHBox = 0;
                 dtResult = oBox.getDHBoxValidExport();
@@ -6812,7 +7158,7 @@ namespace LogginColombiaGold
 
 
                 }
-                else 
+                else
                 {
                     MessageBox.Show("No overlaps");
                 }
@@ -6907,9 +7253,9 @@ namespace LogginColombiaGold
 
                     oXL.Visible = true;
                     oXL.UserControl = true;
-                    
-                    
-                    
+
+
+
                 }
 
             }
@@ -6940,7 +7286,7 @@ namespace LogginColombiaGold
                 oXL = new Excel.Application();
                 //oXL.Visible = true;
 
-                oWB = oXL.Workbooks.Open(ConfigurationSettings.AppSettings["Ruta_LoggingAll"].ToString(),
+                oWB = oXL.Workbooks.Open(Path.Combine(Application.StartupPath, "GZC_102302_Template_Login_JFP.xls"),
                     0, false, 5,
                 Type.Missing, Type.Missing, false, Type.Missing, Type.Missing, true, false,
                 Type.Missing, false, false, false);
@@ -6987,7 +7333,7 @@ namespace LogginColombiaGold
                 DataTable dtWeathering = (DataTable)dgWeathering.DataSource;
 
                 iInicial = 2;
-                for (int i = 0; i < dtWeathering.Rows.Count ; i++)
+                for (int i = 0; i < dtWeathering.Rows.Count; i++)
                 {
                     oSheet.Cells[iInicial, 1] = dtWeathering.Rows[i]["HoleID"].ToString();
                     oSheet.Cells[iInicial, 2] = dtWeathering.Rows[i]["From"].ToString();
@@ -7261,7 +7607,7 @@ namespace LogginColombiaGold
                         oSheet.Cells[16, 10] = dtData.Rows[0]["RigUsed"].ToString();
                     }
                 }
-                
+
                 #endregion
 
                 //oXL.Visible = true;
@@ -7280,7 +7626,7 @@ namespace LogginColombiaGold
             }
         }
 
-        
+
 
         private void btnExporExcelAll_Click(object sender, EventArgs e)
         {
@@ -7316,36 +7662,36 @@ namespace LogginColombiaGold
 
             }
             catch (Exception ex)
-            {    
+            {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
-        
+
         private void bgw_DoWork(object sender, DoWorkEventArgs e)
         {
-                Thread.Sleep(100);
-                
-                DateTime start = DateTime.Now;
-                e.Result = "";
-                for (int i = 0; i < 100; i++)
+            Thread.Sleep(100);
+
+            DateTime start = DateTime.Now;
+            e.Result = "";
+            for (int i = 0; i < 100; i++)
+            {
+                System.Threading.Thread.Sleep(50);
+
+                bgw.ReportProgress(i, DateTime.Now);
+
+
+                if (bgw.CancellationPending)
                 {
-                    System.Threading.Thread.Sleep(50); 
-
-                    bgw.ReportProgress(i, DateTime.Now);
-
-
-                    if (bgw.CancellationPending)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
+                    e.Cancel = true;
+                    return;
                 }
+            }
 
-                TimeSpan duration = DateTime.Now - start;
-              
-                e.Result = "Duration: " + duration.TotalMilliseconds.ToString() + " ms.";
-                
+            TimeSpan duration = DateTime.Now - start;
+
+            e.Result = "Duration: " + duration.TotalMilliseconds.ToString() + " ms.";
+
         }
 
         private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -7371,9 +7717,9 @@ namespace LogginColombiaGold
             }
             catch (Exception ex)
             {
-                
+
                 MessageBox.Show(ex.Message);
-            }  
+            }
 
         }
 
@@ -7415,7 +7761,7 @@ namespace LogginColombiaGold
                         Console.WriteLine("Default case");
                         break;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -7569,7 +7915,7 @@ namespace LogginColombiaGold
                     return sresp;
                 }
 
-                if (txtSampleNoDens.ToString() == "" )
+                if (txtSampleNoDens.ToString() == "")
                 {
                     sresp = " Empty Sample";
                     return sresp;
@@ -7604,7 +7950,7 @@ namespace LogginColombiaGold
                 {
                     oDens.sOpcion = "2";
                 }
-                
+
                 oDens.sHoleID = cmbHoleIdDens.SelectedValue.ToString();
                 oDens.sBox = txtBoxDens.Text.ToString();
                 oDens.dFrom = double.Parse(txtFromDens.Text.ToString());
@@ -7642,7 +7988,7 @@ namespace LogginColombiaGold
                             DataRow[] myRow = dtDens.Select(@"SKDHDensity = '" + oDens.iSKDHDensity + "'");
                             int rowindex = dtDens.Rows.IndexOf(myRow[0]);
                             dgDensity.Rows[rowindex].Selected = true;
-                            dgDensity.CurrentCell = dgDensity.Rows[rowindex].Cells[1] ;
+                            dgDensity.CurrentCell = dgDensity.Rows[rowindex].Cells[1];
                         }
                     }
 
@@ -7654,7 +8000,7 @@ namespace LogginColombiaGold
                 else
                 {
                     MessageBox.Show("Insert error:" + sRespAdd.ToString());
-                }           
+                }
 
 
             }
@@ -7838,7 +8184,7 @@ namespace LogginColombiaGold
             }
         }
 
-        
+
 
         private void btnAddDensM_Click(object sender, EventArgs e)
         {
@@ -7864,7 +8210,7 @@ namespace LogginColombiaGold
                 {
                     oDens.sOpcionM = "2";
                 }
-                
+
                 oDens.sLab = cmbLabDensM.SelectedValue.ToString();
                 oDens.dDrySamp = double.Parse(txtDrySampDensM.Text.ToString());
                 oDens.dImmersedSamp = double.Parse(txtInmersedDensM.Text.ToString());
@@ -7976,7 +8322,7 @@ namespace LogginColombiaGold
                 }
 
 
-                
+
             }
             catch (Exception ex)
             {
@@ -8004,7 +8350,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                
+
                 Excel.Application oXL;
                 Excel._Workbook oWB;
                 Excel._Worksheet oSheet;
@@ -8018,7 +8364,7 @@ namespace LogginColombiaGold
                 //oWB = oXL.Workbooks.Open(@"D:/Template_Shipment_Sgs.xls", 0, true, 5,
 
 
-                oWB = oXL.Workbooks.Open(ConfigurationSettings.AppSettings["Ruta_ValidBox"].ToString(),
+                oWB = oXL.Workbooks.Open(Path.Combine(Application.StartupPath, "GZC_120528_Report_Validate_Box.xls"),
                     0, false, 5,
                 Type.Missing, Type.Missing, false, Type.Missing, Type.Missing, true, false,
                 Type.Missing, false, false, false);
@@ -8048,10 +8394,10 @@ namespace LogginColombiaGold
             catch (Exception ex)
             {
 
-                 MessageBox.Show("Error: " + ex.Message, "Box", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                MessageBox.Show("Error: " + ex.Message, "Box", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-        
+
         }
 
         private void txtPhotoBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -8078,7 +8424,7 @@ namespace LogginColombiaGold
                 //CargarCombosAlt(dtMinAlt, cmbMin1Alt);
                 //CargarCombosAlt(dtMinAlt, cmbMin2Alt1);
                 //CargarCombosAlt(dtMinAlt, cmbMin3Alt1);
-                
+
             }
             catch (Exception ex)
             {
@@ -8086,7 +8432,7 @@ namespace LogginColombiaGold
             }
         }
 
-        
+
 
         private void cmbTypeAlt2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -8203,10 +8549,10 @@ namespace LogginColombiaGold
         //        throw new Exception(ex.Message);
         //    }
         //}
-    
 
-        
-     
+
+
+
 
     }
 }

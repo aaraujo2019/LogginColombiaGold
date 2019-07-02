@@ -1,4 +1,6 @@
-﻿namespace LogginColombiaGold
+﻿using System.Drawing;
+
+namespace LogginColombiaGold
 {
     partial class frmLoggin
     {
@@ -80,15 +82,7 @@
             this.tbSamples = new System.Windows.Forms.TabPage();
             this.tbBox = new System.Windows.Forms.TabPage();
             this.groupBox15 = new System.Windows.Forms.GroupBox();
-            this.txtEditPhotoBox = new System.Windows.Forms.TextBox();
-            this.label122 = new System.Windows.Forms.Label();
-            this.txtPhotoBox = new System.Windows.Forms.TextBox();
-            this.label146 = new System.Windows.Forms.Label();
             this.btnCancelBox = new System.Windows.Forms.Button();
-            this.txtRowBox = new System.Windows.Forms.TextBox();
-            this.label67 = new System.Windows.Forms.Label();
-            this.txtColumnBox = new System.Windows.Forms.TextBox();
-            this.label68 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
             this.cmbHoleIDBox = new System.Windows.Forms.ComboBox();
@@ -99,40 +93,17 @@
             this.label71 = new System.Windows.Forms.Label();
             this.txtFromBox = new System.Windows.Forms.TextBox();
             this.label72 = new System.Windows.Forms.Label();
+            this.dgBox = new System.Windows.Forms.DataGridView();
+            this.txtEditPhotoBox = new System.Windows.Forms.TextBox();
+            this.label122 = new System.Windows.Forms.Label();
+            this.txtPhotoBox = new System.Windows.Forms.TextBox();
+            this.label146 = new System.Windows.Forms.Label();
+            this.txtRowBox = new System.Windows.Forms.TextBox();
+            this.label67 = new System.Windows.Forms.Label();
+            this.txtColumnBox = new System.Windows.Forms.TextBox();
+            this.label68 = new System.Windows.Forms.Label();
             this.txtStand = new System.Windows.Forms.TextBox();
             this.label73 = new System.Windows.Forms.Label();
-            this.dgBox = new System.Windows.Forms.DataGridView();
-            this.tbWeathering = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox21 = new System.Windows.Forms.GroupBox();
-            this.cmbMin4Oxid = new System.Windows.Forms.ComboBox();
-            this.label117 = new System.Windows.Forms.Label();
-            this.cmbMin3Oxid = new System.Windows.Forms.ComboBox();
-            this.cmbMin2Oxid = new System.Windows.Forms.ComboBox();
-            this.cmbMin1Oxid = new System.Windows.Forms.ComboBox();
-            this.label119 = new System.Windows.Forms.Label();
-            this.label120 = new System.Windows.Forms.Label();
-            this.label121 = new System.Windows.Forms.Label();
-            this.btnCancelWeat = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.txtObservWeat = new System.Windows.Forms.TextBox();
-            this.cmbSufixWeat = new System.Windows.Forms.ComboBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.cmbColourWeat = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.cmbHoleIdWeat = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.btnAddWeat = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cmbOxidationWeat = new System.Windows.Forms.ComboBox();
-            this.txtToWeat = new System.Windows.Forms.TextBox();
-            this.cmbWeatheringWeat = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txtFromWeat = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.dgWeathering = new System.Windows.Forms.DataGridView();
             this.tbLithology = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label91 = new System.Windows.Forms.Label();
@@ -326,6 +297,37 @@
             this.txtDifferGeo = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.dgGeotech = new System.Windows.Forms.DataGridView();
+            this.tbWeathering = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.cmbMin4Oxid = new System.Windows.Forms.ComboBox();
+            this.label117 = new System.Windows.Forms.Label();
+            this.cmbMin3Oxid = new System.Windows.Forms.ComboBox();
+            this.cmbMin2Oxid = new System.Windows.Forms.ComboBox();
+            this.cmbMin1Oxid = new System.Windows.Forms.ComboBox();
+            this.label119 = new System.Windows.Forms.Label();
+            this.label120 = new System.Windows.Forms.Label();
+            this.label121 = new System.Windows.Forms.Label();
+            this.btnCancelWeat = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txtObservWeat = new System.Windows.Forms.TextBox();
+            this.cmbSufixWeat = new System.Windows.Forms.ComboBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.cmbColourWeat = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cmbHoleIdWeat = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnAddWeat = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cmbOxidationWeat = new System.Windows.Forms.ComboBox();
+            this.txtToWeat = new System.Windows.Forms.TextBox();
+            this.cmbWeatheringWeat = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtFromWeat = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.dgWeathering = new System.Windows.Forms.DataGridView();
             this.tbDensity = new System.Windows.Forms.TabPage();
             this.TabDensity = new System.Windows.Forms.TabControl();
             this.tbDens = new System.Windows.Forms.TabPage();
@@ -421,6 +423,10 @@
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label105 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.cmbVeinStructureSamp = new System.Windows.Forms.ComboBox();
+            this.cmbVeinLocationSamp = new System.Windows.Forms.ComboBox();
+            this.label149 = new System.Windows.Forms.Label();
+            this.label150 = new System.Windows.Forms.Label();
             this.txtStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnValidSamples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnExcel)).BeginInit();
@@ -449,11 +455,6 @@
             this.tbBox.SuspendLayout();
             this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgBox)).BeginInit();
-            this.tbWeathering.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox21.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgWeathering)).BeginInit();
             this.tbLithology.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -480,6 +481,11 @@
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGeotech)).BeginInit();
+            this.tbWeathering.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox21.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgWeathering)).BeginInit();
             this.tbDensity.SuspendLayout();
             this.TabDensity.SuspendLayout();
             this.tbDens.SuspendLayout();
@@ -496,6 +502,10 @@
             // 
             // txtStart
             // 
+            this.txtStart.Controls.Add(this.label150);
+            this.txtStart.Controls.Add(this.label149);
+            this.txtStart.Controls.Add(this.cmbVeinLocationSamp);
+            this.txtStart.Controls.Add(this.cmbVeinStructureSamp);
             this.txtStart.Controls.Add(this.label136);
             this.txtStart.Controls.Add(this.txtCommentsSamp);
             this.txtStart.Controls.Add(this.btnCancelSamp);
@@ -541,7 +551,7 @@
             this.txtCommentsSamp.Location = new System.Drawing.Point(18, 129);
             this.txtCommentsSamp.Multiline = true;
             this.txtCommentsSamp.Name = "txtCommentsSamp";
-            this.txtCommentsSamp.Size = new System.Drawing.Size(364, 36);
+            this.txtCommentsSamp.Size = new System.Drawing.Size(245, 36);
             this.txtCommentsSamp.TabIndex = 9;
             // 
             // btnCancelSamp
@@ -761,7 +771,7 @@
             this.gdLoggin.Location = new System.Drawing.Point(18, 171);
             this.gdLoggin.Name = "gdLoggin";
             this.gdLoggin.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gdLoggin.Size = new System.Drawing.Size(679, 203);
+            this.gdLoggin.Size = new System.Drawing.Size(679, 210);
             this.gdLoggin.TabIndex = 12;
             this.gdLoggin.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gdLoggin_CellClick);
             this.gdLoggin.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gdLoggin_CellDoubleClick);
@@ -1100,44 +1110,6 @@
             this.groupBox15.TabIndex = 8;
             this.groupBox15.TabStop = false;
             // 
-            // txtEditPhotoBox
-            // 
-            this.txtEditPhotoBox.Location = new System.Drawing.Point(350, 361);
-            this.txtEditPhotoBox.Name = "txtEditPhotoBox";
-            this.txtEditPhotoBox.Size = new System.Drawing.Size(56, 20);
-            this.txtEditPhotoBox.TabIndex = 9;
-            this.txtEditPhotoBox.Visible = false;
-            this.txtEditPhotoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEditPhotoBox_KeyPress);
-            // 
-            // label122
-            // 
-            this.label122.AutoSize = true;
-            this.label122.Location = new System.Drawing.Point(347, 344);
-            this.label122.Name = "label122";
-            this.label122.Size = new System.Drawing.Size(56, 13);
-            this.label122.TabIndex = 52;
-            this.label122.Text = "Edit Photo";
-            this.label122.Visible = false;
-            // 
-            // txtPhotoBox
-            // 
-            this.txtPhotoBox.Location = new System.Drawing.Point(633, 361);
-            this.txtPhotoBox.Name = "txtPhotoBox";
-            this.txtPhotoBox.Size = new System.Drawing.Size(56, 20);
-            this.txtPhotoBox.TabIndex = 8;
-            this.txtPhotoBox.Visible = false;
-            this.txtPhotoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhotoBox_KeyPress);
-            // 
-            // label146
-            // 
-            this.label146.AutoSize = true;
-            this.label146.Location = new System.Drawing.Point(630, 344);
-            this.label146.Name = "label146";
-            this.label146.Size = new System.Drawing.Size(35, 13);
-            this.label146.TabIndex = 51;
-            this.label146.Text = "Photo";
-            this.label146.Visible = false;
-            // 
             // btnCancelBox
             // 
             this.btnCancelBox.Location = new System.Drawing.Point(510, 33);
@@ -1147,44 +1119,6 @@
             this.btnCancelBox.Text = "Cancel";
             this.btnCancelBox.UseVisualStyleBackColor = true;
             this.btnCancelBox.Click += new System.EventHandler(this.btnCancelBox_Click);
-            // 
-            // txtRowBox
-            // 
-            this.txtRowBox.Location = new System.Drawing.Point(571, 361);
-            this.txtRowBox.Name = "txtRowBox";
-            this.txtRowBox.Size = new System.Drawing.Size(56, 20);
-            this.txtRowBox.TabIndex = 7;
-            this.txtRowBox.Visible = false;
-            this.txtRowBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowBox_KeyPress);
-            // 
-            // label67
-            // 
-            this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(568, 344);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(29, 13);
-            this.label67.TabIndex = 46;
-            this.label67.Text = "Row";
-            this.label67.Visible = false;
-            // 
-            // txtColumnBox
-            // 
-            this.txtColumnBox.Location = new System.Drawing.Point(507, 361);
-            this.txtColumnBox.Name = "txtColumnBox";
-            this.txtColumnBox.Size = new System.Drawing.Size(56, 20);
-            this.txtColumnBox.TabIndex = 6;
-            this.txtColumnBox.Visible = false;
-            this.txtColumnBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtColumnBox_KeyPress);
-            // 
-            // label68
-            // 
-            this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(504, 344);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(42, 13);
-            this.label68.TabIndex = 45;
-            this.label68.Text = "Column";
-            this.label68.Visible = false;
             // 
             // label46
             // 
@@ -1276,6 +1210,94 @@
             this.label72.TabIndex = 23;
             this.label72.Text = "From";
             // 
+            // dgBox
+            // 
+            this.dgBox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgBox.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgBox.Location = new System.Drawing.Point(7, 83);
+            this.dgBox.Name = "dgBox";
+            this.dgBox.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgBox.Size = new System.Drawing.Size(690, 291);
+            this.dgBox.TabIndex = 12;
+            this.dgBox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBox_CellClick);
+            this.dgBox.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBox_CellDoubleClick);
+            // 
+            // txtEditPhotoBox
+            // 
+            this.txtEditPhotoBox.Location = new System.Drawing.Point(350, 361);
+            this.txtEditPhotoBox.Name = "txtEditPhotoBox";
+            this.txtEditPhotoBox.Size = new System.Drawing.Size(56, 20);
+            this.txtEditPhotoBox.TabIndex = 9;
+            this.txtEditPhotoBox.Visible = false;
+            this.txtEditPhotoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtEditPhotoBox_KeyPress);
+            // 
+            // label122
+            // 
+            this.label122.AutoSize = true;
+            this.label122.Location = new System.Drawing.Point(347, 344);
+            this.label122.Name = "label122";
+            this.label122.Size = new System.Drawing.Size(56, 13);
+            this.label122.TabIndex = 52;
+            this.label122.Text = "Edit Photo";
+            this.label122.Visible = false;
+            // 
+            // txtPhotoBox
+            // 
+            this.txtPhotoBox.Location = new System.Drawing.Point(633, 361);
+            this.txtPhotoBox.Name = "txtPhotoBox";
+            this.txtPhotoBox.Size = new System.Drawing.Size(56, 20);
+            this.txtPhotoBox.TabIndex = 8;
+            this.txtPhotoBox.Visible = false;
+            this.txtPhotoBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhotoBox_KeyPress);
+            // 
+            // label146
+            // 
+            this.label146.AutoSize = true;
+            this.label146.Location = new System.Drawing.Point(630, 344);
+            this.label146.Name = "label146";
+            this.label146.Size = new System.Drawing.Size(35, 13);
+            this.label146.TabIndex = 51;
+            this.label146.Text = "Photo";
+            this.label146.Visible = false;
+            // 
+            // txtRowBox
+            // 
+            this.txtRowBox.Location = new System.Drawing.Point(571, 361);
+            this.txtRowBox.Name = "txtRowBox";
+            this.txtRowBox.Size = new System.Drawing.Size(56, 20);
+            this.txtRowBox.TabIndex = 7;
+            this.txtRowBox.Visible = false;
+            this.txtRowBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRowBox_KeyPress);
+            // 
+            // label67
+            // 
+            this.label67.AutoSize = true;
+            this.label67.Location = new System.Drawing.Point(568, 344);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(29, 13);
+            this.label67.TabIndex = 46;
+            this.label67.Text = "Row";
+            this.label67.Visible = false;
+            // 
+            // txtColumnBox
+            // 
+            this.txtColumnBox.Location = new System.Drawing.Point(507, 361);
+            this.txtColumnBox.Name = "txtColumnBox";
+            this.txtColumnBox.Size = new System.Drawing.Size(56, 20);
+            this.txtColumnBox.TabIndex = 6;
+            this.txtColumnBox.Visible = false;
+            this.txtColumnBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtColumnBox_KeyPress);
+            // 
+            // label68
+            // 
+            this.label68.AutoSize = true;
+            this.label68.Location = new System.Drawing.Point(504, 344);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(42, 13);
+            this.label68.TabIndex = 45;
+            this.label68.Text = "Column";
+            this.label68.Visible = false;
+            // 
             // txtStand
             // 
             this.txtStand.Location = new System.Drawing.Point(412, 361);
@@ -1294,350 +1316,6 @@
             this.label73.TabIndex = 21;
             this.label73.Text = "Stand";
             this.label73.Visible = false;
-            // 
-            // dgBox
-            // 
-            this.dgBox.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgBox.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgBox.Location = new System.Drawing.Point(7, 83);
-            this.dgBox.Name = "dgBox";
-            this.dgBox.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgBox.Size = new System.Drawing.Size(690, 291);
-            this.dgBox.TabIndex = 12;
-            this.dgBox.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBox_CellClick);
-            this.dgBox.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBox_CellDoubleClick);
-            // 
-            // tbWeathering
-            // 
-            this.tbWeathering.Controls.Add(this.groupBox1);
-            this.tbWeathering.Location = new System.Drawing.Point(4, 22);
-            this.tbWeathering.Name = "tbWeathering";
-            this.tbWeathering.Padding = new System.Windows.Forms.Padding(3);
-            this.tbWeathering.Size = new System.Drawing.Size(715, 405);
-            this.tbWeathering.TabIndex = 1;
-            this.tbWeathering.Text = "Weathering";
-            this.tbWeathering.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnValidWeath);
-            this.groupBox1.Controls.Add(this.groupBox21);
-            this.groupBox1.Controls.Add(this.btnCancelWeat);
-            this.groupBox1.Controls.Add(this.groupBox6);
-            this.groupBox1.Controls.Add(this.cmbSufixWeat);
-            this.groupBox1.Controls.Add(this.label35);
-            this.groupBox1.Controls.Add(this.cmbColourWeat);
-            this.groupBox1.Controls.Add(this.btnExporExcelWeath);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.cmbHoleIdWeat);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.btnAddWeat);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.cmbOxidationWeat);
-            this.groupBox1.Controls.Add(this.txtToWeat);
-            this.groupBox1.Controls.Add(this.cmbWeatheringWeat);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.label15);
-            this.groupBox1.Controls.Add(this.txtFromWeat);
-            this.groupBox1.Controls.Add(this.label16);
-            this.groupBox1.Controls.Add(this.dgWeathering);
-            this.groupBox1.Location = new System.Drawing.Point(6, 7);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(703, 387);
-            this.groupBox1.TabIndex = 8;
-            this.groupBox1.TabStop = false;
-            // 
-            // groupBox21
-            // 
-            this.groupBox21.Controls.Add(this.cmbMin4Oxid);
-            this.groupBox21.Controls.Add(this.label117);
-            this.groupBox21.Controls.Add(this.cmbMin3Oxid);
-            this.groupBox21.Controls.Add(this.cmbMin2Oxid);
-            this.groupBox21.Controls.Add(this.cmbMin1Oxid);
-            this.groupBox21.Controls.Add(this.label119);
-            this.groupBox21.Controls.Add(this.label120);
-            this.groupBox21.Controls.Add(this.label121);
-            this.groupBox21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox21.Location = new System.Drawing.Point(18, 82);
-            this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(418, 61);
-            this.groupBox21.TabIndex = 155;
-            this.groupBox21.TabStop = false;
-            this.groupBox21.Text = "Minerals";
-            // 
-            // cmbMin4Oxid
-            // 
-            this.cmbMin4Oxid.DropDownWidth = 200;
-            this.cmbMin4Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMin4Oxid.FormattingEnabled = true;
-            this.cmbMin4Oxid.Location = new System.Drawing.Point(309, 30);
-            this.cmbMin4Oxid.Name = "cmbMin4Oxid";
-            this.cmbMin4Oxid.Size = new System.Drawing.Size(93, 21);
-            this.cmbMin4Oxid.TabIndex = 159;
-            this.cmbMin4Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin4Oxid_KeyPress);
-            // 
-            // label117
-            // 
-            this.label117.AutoSize = true;
-            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label117.Location = new System.Drawing.Point(306, 16);
-            this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(50, 13);
-            this.label117.TabIndex = 54;
-            this.label117.Text = "Mineral 4";
-            // 
-            // cmbMin3Oxid
-            // 
-            this.cmbMin3Oxid.DropDownWidth = 200;
-            this.cmbMin3Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMin3Oxid.FormattingEnabled = true;
-            this.cmbMin3Oxid.Location = new System.Drawing.Point(210, 30);
-            this.cmbMin3Oxid.Name = "cmbMin3Oxid";
-            this.cmbMin3Oxid.Size = new System.Drawing.Size(93, 21);
-            this.cmbMin3Oxid.TabIndex = 158;
-            this.cmbMin3Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin3Oxid_KeyPress);
-            // 
-            // cmbMin2Oxid
-            // 
-            this.cmbMin2Oxid.DropDownWidth = 200;
-            this.cmbMin2Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMin2Oxid.FormattingEnabled = true;
-            this.cmbMin2Oxid.Location = new System.Drawing.Point(104, 30);
-            this.cmbMin2Oxid.Name = "cmbMin2Oxid";
-            this.cmbMin2Oxid.Size = new System.Drawing.Size(93, 21);
-            this.cmbMin2Oxid.TabIndex = 157;
-            this.cmbMin2Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin2Oxid_KeyPress);
-            // 
-            // cmbMin1Oxid
-            // 
-            this.cmbMin1Oxid.DropDownWidth = 200;
-            this.cmbMin1Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbMin1Oxid.FormattingEnabled = true;
-            this.cmbMin1Oxid.Location = new System.Drawing.Point(6, 30);
-            this.cmbMin1Oxid.Name = "cmbMin1Oxid";
-            this.cmbMin1Oxid.Size = new System.Drawing.Size(93, 21);
-            this.cmbMin1Oxid.TabIndex = 156;
-            this.cmbMin1Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin1Oxid_KeyPress);
-            // 
-            // label119
-            // 
-            this.label119.AutoSize = true;
-            this.label119.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label119.Location = new System.Drawing.Point(207, 16);
-            this.label119.Name = "label119";
-            this.label119.Size = new System.Drawing.Size(50, 13);
-            this.label119.TabIndex = 45;
-            this.label119.Text = "Mineral 3";
-            // 
-            // label120
-            // 
-            this.label120.AutoSize = true;
-            this.label120.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label120.Location = new System.Drawing.Point(6, 16);
-            this.label120.Name = "label120";
-            this.label120.Size = new System.Drawing.Size(50, 13);
-            this.label120.TabIndex = 43;
-            this.label120.Text = "Mineral 1";
-            // 
-            // label121
-            // 
-            this.label121.AutoSize = true;
-            this.label121.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label121.Location = new System.Drawing.Point(101, 15);
-            this.label121.Name = "label121";
-            this.label121.Size = new System.Drawing.Size(50, 13);
-            this.label121.TabIndex = 44;
-            this.label121.Text = "Mineral 2";
-            // 
-            // btnCancelWeat
-            // 
-            this.btnCancelWeat.Location = new System.Drawing.Point(617, 197);
-            this.btnCancelWeat.Name = "btnCancelWeat";
-            this.btnCancelWeat.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelWeat.TabIndex = 165;
-            this.btnCancelWeat.Text = "Cancel";
-            this.btnCancelWeat.UseVisualStyleBackColor = true;
-            this.btnCancelWeat.Click += new System.EventHandler(this.btnCancelWeat_Click);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.txtObservWeat);
-            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox6.Location = new System.Drawing.Point(18, 149);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(171, 77);
-            this.groupBox6.TabIndex = 162;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Observation";
-            // 
-            // txtObservWeat
-            // 
-            this.txtObservWeat.Location = new System.Drawing.Point(6, 18);
-            this.txtObservWeat.Multiline = true;
-            this.txtObservWeat.Name = "txtObservWeat";
-            this.txtObservWeat.Size = new System.Drawing.Size(159, 53);
-            this.txtObservWeat.TabIndex = 163;
-            this.txtObservWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtObservWeat_KeyPress);
-            // 
-            // cmbSufixWeat
-            // 
-            this.cmbSufixWeat.FormattingEnabled = true;
-            this.cmbSufixWeat.Location = new System.Drawing.Point(442, 112);
-            this.cmbSufixWeat.Name = "cmbSufixWeat";
-            this.cmbSufixWeat.Size = new System.Drawing.Size(127, 21);
-            this.cmbSufixWeat.TabIndex = 161;
-            this.cmbSufixWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbSufixWeat_KeyPress);
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(562, 17);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(43, 13);
-            this.label35.TabIndex = 44;
-            this.label35.Text = "Colour1";
-            // 
-            // cmbColourWeat
-            // 
-            this.cmbColourWeat.FormattingEnabled = true;
-            this.cmbColourWeat.Location = new System.Drawing.Point(565, 33);
-            this.cmbColourWeat.Name = "cmbColourWeat";
-            this.cmbColourWeat.Size = new System.Drawing.Size(127, 21);
-            this.cmbColourWeat.TabIndex = 160;
-            this.cmbColourWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbColourWeat_KeyPress);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.Color.Blue;
-            this.label9.Location = new System.Drawing.Point(153, 57);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(122, 13);
-            this.label9.TabIndex = 41;
-            this.label9.Text = "2 Decimals From and To";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(15, 18);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(43, 13);
-            this.label10.TabIndex = 40;
-            this.label10.Text = "Hole ID";
-            // 
-            // cmbHoleIdWeat
-            // 
-            this.cmbHoleIdWeat.FormattingEnabled = true;
-            this.cmbHoleIdWeat.Location = new System.Drawing.Point(18, 34);
-            this.cmbHoleIdWeat.Name = "cmbHoleIdWeat";
-            this.cmbHoleIdWeat.Size = new System.Drawing.Size(127, 21);
-            this.cmbHoleIdWeat.TabIndex = 150;
-            this.cmbHoleIdWeat.SelectedIndexChanged += new System.EventHandler(this.cmbHoleIdWeat_SelectedIndexChanged);
-            this.cmbHoleIdWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbHoleIdWeat_KeyPress);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(439, 96);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(36, 13);
-            this.label11.TabIndex = 37;
-            this.label11.Text = "Sufix1";
-            // 
-            // btnAddWeat
-            // 
-            this.btnAddWeat.Location = new System.Drawing.Point(536, 197);
-            this.btnAddWeat.Name = "btnAddWeat";
-            this.btnAddWeat.Size = new System.Drawing.Size(75, 23);
-            this.btnAddWeat.TabIndex = 164;
-            this.btnAddWeat.Text = "Add";
-            this.btnAddWeat.UseVisualStyleBackColor = true;
-            this.btnAddWeat.Click += new System.EventHandler(this.btnAddWeat_Click);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(429, 17);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(51, 13);
-            this.label12.TabIndex = 33;
-            this.label12.Text = "Oxidation";
-            // 
-            // cmbOxidationWeat
-            // 
-            this.cmbOxidationWeat.FormattingEnabled = true;
-            this.cmbOxidationWeat.Location = new System.Drawing.Point(432, 33);
-            this.cmbOxidationWeat.Name = "cmbOxidationWeat";
-            this.cmbOxidationWeat.Size = new System.Drawing.Size(127, 21);
-            this.cmbOxidationWeat.TabIndex = 154;
-            this.cmbOxidationWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbOxidationWeat_KeyPress);
-            // 
-            // txtToWeat
-            // 
-            this.txtToWeat.Location = new System.Drawing.Point(219, 34);
-            this.txtToWeat.Name = "txtToWeat";
-            this.txtToWeat.Size = new System.Drawing.Size(56, 20);
-            this.txtToWeat.TabIndex = 152;
-            this.txtToWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToWeat_KeyPress);
-            this.txtToWeat.Leave += new System.EventHandler(this.txtToWeat_Leave);
-            // 
-            // cmbWeatheringWeat
-            // 
-            this.cmbWeatheringWeat.FormattingEnabled = true;
-            this.cmbWeatheringWeat.Location = new System.Drawing.Point(286, 33);
-            this.cmbWeatheringWeat.Name = "cmbWeatheringWeat";
-            this.cmbWeatheringWeat.Size = new System.Drawing.Size(140, 21);
-            this.cmbWeatheringWeat.TabIndex = 153;
-            this.cmbWeatheringWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbWeatheringWeat_KeyPress);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(283, 17);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(62, 13);
-            this.label14.TabIndex = 27;
-            this.label14.Text = "Weathering";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(216, 17);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(20, 13);
-            this.label15.TabIndex = 25;
-            this.label15.Text = "To";
-            // 
-            // txtFromWeat
-            // 
-            this.txtFromWeat.Location = new System.Drawing.Point(155, 34);
-            this.txtFromWeat.Name = "txtFromWeat";
-            this.txtFromWeat.Size = new System.Drawing.Size(56, 20);
-            this.txtFromWeat.TabIndex = 151;
-            this.txtFromWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFromWeat_KeyPress);
-            this.txtFromWeat.Leave += new System.EventHandler(this.txtFromWeat_Leave);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(152, 17);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(30, 13);
-            this.label16.TabIndex = 23;
-            this.label16.Text = "From";
-            // 
-            // dgWeathering
-            // 
-            this.dgWeathering.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgWeathering.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgWeathering.Location = new System.Drawing.Point(18, 232);
-            this.dgWeathering.Name = "dgWeathering";
-            this.dgWeathering.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgWeathering.Size = new System.Drawing.Size(674, 142);
-            this.dgWeathering.TabIndex = 180;
-            this.dgWeathering.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeathering_CellClick);
-            this.dgWeathering.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeathering_CellDoubleClick);
             // 
             // tbLithology
             // 
@@ -3690,6 +3368,338 @@
             this.dgGeotech.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgGeotech_CellClick);
             this.dgGeotech.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgGeotech_CellDoubleClick);
             // 
+            // tbWeathering
+            // 
+            this.tbWeathering.Controls.Add(this.groupBox1);
+            this.tbWeathering.Location = new System.Drawing.Point(4, 22);
+            this.tbWeathering.Name = "tbWeathering";
+            this.tbWeathering.Padding = new System.Windows.Forms.Padding(3);
+            this.tbWeathering.Size = new System.Drawing.Size(715, 405);
+            this.tbWeathering.TabIndex = 1;
+            this.tbWeathering.Text = "Weathering";
+            this.tbWeathering.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnValidWeath);
+            this.groupBox1.Controls.Add(this.groupBox21);
+            this.groupBox1.Controls.Add(this.btnCancelWeat);
+            this.groupBox1.Controls.Add(this.groupBox6);
+            this.groupBox1.Controls.Add(this.cmbSufixWeat);
+            this.groupBox1.Controls.Add(this.label35);
+            this.groupBox1.Controls.Add(this.cmbColourWeat);
+            this.groupBox1.Controls.Add(this.btnExporExcelWeath);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.cmbHoleIdWeat);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.btnAddWeat);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.cmbOxidationWeat);
+            this.groupBox1.Controls.Add(this.txtToWeat);
+            this.groupBox1.Controls.Add(this.cmbWeatheringWeat);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.txtFromWeat);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.dgWeathering);
+            this.groupBox1.Location = new System.Drawing.Point(6, 7);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(703, 387);
+            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.cmbMin4Oxid);
+            this.groupBox21.Controls.Add(this.label117);
+            this.groupBox21.Controls.Add(this.cmbMin3Oxid);
+            this.groupBox21.Controls.Add(this.cmbMin2Oxid);
+            this.groupBox21.Controls.Add(this.cmbMin1Oxid);
+            this.groupBox21.Controls.Add(this.label119);
+            this.groupBox21.Controls.Add(this.label120);
+            this.groupBox21.Controls.Add(this.label121);
+            this.groupBox21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox21.Location = new System.Drawing.Point(18, 82);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(418, 61);
+            this.groupBox21.TabIndex = 155;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "Minerals";
+            // 
+            // cmbMin4Oxid
+            // 
+            this.cmbMin4Oxid.DropDownWidth = 200;
+            this.cmbMin4Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMin4Oxid.FormattingEnabled = true;
+            this.cmbMin4Oxid.Location = new System.Drawing.Point(309, 30);
+            this.cmbMin4Oxid.Name = "cmbMin4Oxid";
+            this.cmbMin4Oxid.Size = new System.Drawing.Size(93, 21);
+            this.cmbMin4Oxid.TabIndex = 159;
+            this.cmbMin4Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin4Oxid_KeyPress);
+            // 
+            // label117
+            // 
+            this.label117.AutoSize = true;
+            this.label117.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label117.Location = new System.Drawing.Point(306, 16);
+            this.label117.Name = "label117";
+            this.label117.Size = new System.Drawing.Size(50, 13);
+            this.label117.TabIndex = 54;
+            this.label117.Text = "Mineral 4";
+            // 
+            // cmbMin3Oxid
+            // 
+            this.cmbMin3Oxid.DropDownWidth = 200;
+            this.cmbMin3Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMin3Oxid.FormattingEnabled = true;
+            this.cmbMin3Oxid.Location = new System.Drawing.Point(210, 30);
+            this.cmbMin3Oxid.Name = "cmbMin3Oxid";
+            this.cmbMin3Oxid.Size = new System.Drawing.Size(93, 21);
+            this.cmbMin3Oxid.TabIndex = 158;
+            this.cmbMin3Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin3Oxid_KeyPress);
+            // 
+            // cmbMin2Oxid
+            // 
+            this.cmbMin2Oxid.DropDownWidth = 200;
+            this.cmbMin2Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMin2Oxid.FormattingEnabled = true;
+            this.cmbMin2Oxid.Location = new System.Drawing.Point(104, 30);
+            this.cmbMin2Oxid.Name = "cmbMin2Oxid";
+            this.cmbMin2Oxid.Size = new System.Drawing.Size(93, 21);
+            this.cmbMin2Oxid.TabIndex = 157;
+            this.cmbMin2Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin2Oxid_KeyPress);
+            // 
+            // cmbMin1Oxid
+            // 
+            this.cmbMin1Oxid.DropDownWidth = 200;
+            this.cmbMin1Oxid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMin1Oxid.FormattingEnabled = true;
+            this.cmbMin1Oxid.Location = new System.Drawing.Point(6, 30);
+            this.cmbMin1Oxid.Name = "cmbMin1Oxid";
+            this.cmbMin1Oxid.Size = new System.Drawing.Size(93, 21);
+            this.cmbMin1Oxid.TabIndex = 156;
+            this.cmbMin1Oxid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbMin1Oxid_KeyPress);
+            // 
+            // label119
+            // 
+            this.label119.AutoSize = true;
+            this.label119.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label119.Location = new System.Drawing.Point(207, 16);
+            this.label119.Name = "label119";
+            this.label119.Size = new System.Drawing.Size(50, 13);
+            this.label119.TabIndex = 45;
+            this.label119.Text = "Mineral 3";
+            // 
+            // label120
+            // 
+            this.label120.AutoSize = true;
+            this.label120.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label120.Location = new System.Drawing.Point(6, 16);
+            this.label120.Name = "label120";
+            this.label120.Size = new System.Drawing.Size(50, 13);
+            this.label120.TabIndex = 43;
+            this.label120.Text = "Mineral 1";
+            // 
+            // label121
+            // 
+            this.label121.AutoSize = true;
+            this.label121.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label121.Location = new System.Drawing.Point(101, 15);
+            this.label121.Name = "label121";
+            this.label121.Size = new System.Drawing.Size(50, 13);
+            this.label121.TabIndex = 44;
+            this.label121.Text = "Mineral 2";
+            // 
+            // btnCancelWeat
+            // 
+            this.btnCancelWeat.Location = new System.Drawing.Point(617, 197);
+            this.btnCancelWeat.Name = "btnCancelWeat";
+            this.btnCancelWeat.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelWeat.TabIndex = 165;
+            this.btnCancelWeat.Text = "Cancel";
+            this.btnCancelWeat.UseVisualStyleBackColor = true;
+            this.btnCancelWeat.Click += new System.EventHandler(this.btnCancelWeat_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.txtObservWeat);
+            this.groupBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox6.Location = new System.Drawing.Point(18, 149);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(171, 77);
+            this.groupBox6.TabIndex = 162;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Observation";
+            // 
+            // txtObservWeat
+            // 
+            this.txtObservWeat.Location = new System.Drawing.Point(6, 18);
+            this.txtObservWeat.Multiline = true;
+            this.txtObservWeat.Name = "txtObservWeat";
+            this.txtObservWeat.Size = new System.Drawing.Size(159, 53);
+            this.txtObservWeat.TabIndex = 163;
+            this.txtObservWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtObservWeat_KeyPress);
+            // 
+            // cmbSufixWeat
+            // 
+            this.cmbSufixWeat.FormattingEnabled = true;
+            this.cmbSufixWeat.Location = new System.Drawing.Point(442, 112);
+            this.cmbSufixWeat.Name = "cmbSufixWeat";
+            this.cmbSufixWeat.Size = new System.Drawing.Size(127, 21);
+            this.cmbSufixWeat.TabIndex = 161;
+            this.cmbSufixWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbSufixWeat_KeyPress);
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(562, 17);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(43, 13);
+            this.label35.TabIndex = 44;
+            this.label35.Text = "Colour1";
+            // 
+            // cmbColourWeat
+            // 
+            this.cmbColourWeat.FormattingEnabled = true;
+            this.cmbColourWeat.Location = new System.Drawing.Point(565, 33);
+            this.cmbColourWeat.Name = "cmbColourWeat";
+            this.cmbColourWeat.Size = new System.Drawing.Size(127, 21);
+            this.cmbColourWeat.TabIndex = 160;
+            this.cmbColourWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbColourWeat_KeyPress);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.Blue;
+            this.label9.Location = new System.Drawing.Point(153, 57);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(122, 13);
+            this.label9.TabIndex = 41;
+            this.label9.Text = "2 Decimals From and To";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 18);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(43, 13);
+            this.label10.TabIndex = 40;
+            this.label10.Text = "Hole ID";
+            // 
+            // cmbHoleIdWeat
+            // 
+            this.cmbHoleIdWeat.FormattingEnabled = true;
+            this.cmbHoleIdWeat.Location = new System.Drawing.Point(18, 34);
+            this.cmbHoleIdWeat.Name = "cmbHoleIdWeat";
+            this.cmbHoleIdWeat.Size = new System.Drawing.Size(127, 21);
+            this.cmbHoleIdWeat.TabIndex = 150;
+            this.cmbHoleIdWeat.SelectedIndexChanged += new System.EventHandler(this.cmbHoleIdWeat_SelectedIndexChanged);
+            this.cmbHoleIdWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbHoleIdWeat_KeyPress);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(439, 96);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(36, 13);
+            this.label11.TabIndex = 37;
+            this.label11.Text = "Sufix1";
+            // 
+            // btnAddWeat
+            // 
+            this.btnAddWeat.Location = new System.Drawing.Point(536, 197);
+            this.btnAddWeat.Name = "btnAddWeat";
+            this.btnAddWeat.Size = new System.Drawing.Size(75, 23);
+            this.btnAddWeat.TabIndex = 164;
+            this.btnAddWeat.Text = "Add";
+            this.btnAddWeat.UseVisualStyleBackColor = true;
+            this.btnAddWeat.Click += new System.EventHandler(this.btnAddWeat_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(429, 17);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(51, 13);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "Oxidation";
+            // 
+            // cmbOxidationWeat
+            // 
+            this.cmbOxidationWeat.FormattingEnabled = true;
+            this.cmbOxidationWeat.Location = new System.Drawing.Point(432, 33);
+            this.cmbOxidationWeat.Name = "cmbOxidationWeat";
+            this.cmbOxidationWeat.Size = new System.Drawing.Size(127, 21);
+            this.cmbOxidationWeat.TabIndex = 154;
+            this.cmbOxidationWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbOxidationWeat_KeyPress);
+            // 
+            // txtToWeat
+            // 
+            this.txtToWeat.Location = new System.Drawing.Point(219, 34);
+            this.txtToWeat.Name = "txtToWeat";
+            this.txtToWeat.Size = new System.Drawing.Size(56, 20);
+            this.txtToWeat.TabIndex = 152;
+            this.txtToWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToWeat_KeyPress);
+            this.txtToWeat.Leave += new System.EventHandler(this.txtToWeat_Leave);
+            // 
+            // cmbWeatheringWeat
+            // 
+            this.cmbWeatheringWeat.FormattingEnabled = true;
+            this.cmbWeatheringWeat.Location = new System.Drawing.Point(286, 33);
+            this.cmbWeatheringWeat.Name = "cmbWeatheringWeat";
+            this.cmbWeatheringWeat.Size = new System.Drawing.Size(140, 21);
+            this.cmbWeatheringWeat.TabIndex = 153;
+            this.cmbWeatheringWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbWeatheringWeat_KeyPress);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(283, 17);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(62, 13);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "Weathering";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(216, 17);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(20, 13);
+            this.label15.TabIndex = 25;
+            this.label15.Text = "To";
+            // 
+            // txtFromWeat
+            // 
+            this.txtFromWeat.Location = new System.Drawing.Point(155, 34);
+            this.txtFromWeat.Name = "txtFromWeat";
+            this.txtFromWeat.Size = new System.Drawing.Size(56, 20);
+            this.txtFromWeat.TabIndex = 151;
+            this.txtFromWeat.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFromWeat_KeyPress);
+            this.txtFromWeat.Leave += new System.EventHandler(this.txtFromWeat_Leave);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(152, 17);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(30, 13);
+            this.label16.TabIndex = 23;
+            this.label16.Text = "From";
+            // 
+            // dgWeathering
+            // 
+            this.dgWeathering.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgWeathering.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgWeathering.Location = new System.Drawing.Point(18, 232);
+            this.dgWeathering.Name = "dgWeathering";
+            this.dgWeathering.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgWeathering.Size = new System.Drawing.Size(674, 142);
+            this.dgWeathering.TabIndex = 180;
+            this.dgWeathering.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeathering_CellClick);
+            this.dgWeathering.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgWeathering_CellDoubleClick);
+            // 
             // tbDensity
             // 
             this.tbDensity.Controls.Add(this.TabDensity);
@@ -4632,6 +4642,45 @@
             this.dataGridView1.Size = new System.Drawing.Size(606, 222);
             this.dataGridView1.TabIndex = 9;
             // 
+            // cmbVeinStructureSamp
+            // 
+            this.cmbVeinStructureSamp.FormattingEnabled = true;
+            this.cmbVeinStructureSamp.Location = new System.Drawing.Point(388, 129);
+            this.cmbVeinStructureSamp.Name = "cmbVeinStructureSamp";
+            this.cmbVeinStructureSamp.Size = new Size(107, 21);
+            this.cmbVeinStructureSamp.TabIndex = 66;
+            // 
+            // cmbVeinLocationSamp
+            // 
+            this.cmbVeinLocationSamp.FormattingEnabled = true;
+            this.cmbVeinLocationSamp.Items.AddRange(new object[]
+            {
+                "HW: Hanging-wall of vein",
+                "FW: Footwall of vein"
+            });
+            this.cmbVeinLocationSamp.Location = new System.Drawing.Point(275, 129);
+            this.cmbVeinLocationSamp.Name = "cmbVeinLocationSamp";
+            this.cmbVeinLocationSamp.Size = new Size(107, 21);
+            this.cmbVeinLocationSamp.TabIndex = 64;
+            // 
+            // label149
+            // 
+            this.label149.AutoSize = true;
+            this.label149.Location = new System.Drawing.Point(267, 113);
+            this.label149.Name = "label149";
+            this.label149.Size = new System.Drawing.Size(94, 13);
+            this.label149.TabIndex = 66;
+            this.label149.Text = "Structure Location";
+            // 
+            // label150
+            // 
+            this.label150.AutoSize = true;
+            this.label150.Location = new System.Drawing.Point(385, 113);
+            this.label150.Name = "label150";
+            this.label150.Size = new System.Drawing.Size(68, 13);
+            this.label150.TabIndex = 67;
+            this.label150.Text = "Vein-Struture";
+            // 
             // frmLoggin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4679,14 +4728,6 @@
             this.groupBox15.ResumeLayout(false);
             this.groupBox15.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgBox)).EndInit();
-            this.tbWeathering.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox21.ResumeLayout(false);
-            this.groupBox21.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgWeathering)).EndInit();
             this.tbLithology.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
@@ -4729,6 +4770,14 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGeotech)).EndInit();
+            this.tbWeathering.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgWeathering)).EndInit();
             this.tbDensity.ResumeLayout(false);
             this.TabDensity.ResumeLayout(false);
             this.tbDens.ResumeLayout(false);
@@ -5142,5 +5191,9 @@
         private System.Windows.Forms.TextBox txtMinPerc3;
         private System.Windows.Forms.TextBox txtMinPerc2;
         private System.Windows.Forms.TextBox txtMinPerc1;
+        private System.Windows.Forms.Label label150;
+        private System.Windows.Forms.Label label149;
+        private System.Windows.Forms.ComboBox cmbVeinLocationSamp;
+        private System.Windows.Forms.ComboBox cmbVeinStructureSamp;
     }
 }

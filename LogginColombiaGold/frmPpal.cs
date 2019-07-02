@@ -25,24 +25,24 @@ namespace LogginColombiaGold
             {
                 //***** Este fragmento es utilizado para realización de modificaciones y pruebas. AAA ****
 
-                //frmLoggin oLog = new frmLoggin();
-                //oLog.MdiParent = this;
-                //oLog.Show();
+                frmLoggin oLog = new frmLoggin();
+                oLog.MdiParent = this;
+                oLog.Show();
 
                 //****************************************************************
                 // Para pruebas se debe comentar el siguiente fragmento de codigo.
 
-                DataRow[] dato = dtFormsAllowed.Select("nombre_Real_Form = 'frmLoggin'");
-                if (dato.Length > 0)
-                {
-                    frmLoggin oLog = new frmLoggin();
-                    oLog.MdiParent = this;
-                    oLog.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Form is not allowed", "Shipment", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                //DataRow[] dato = dtFormsAllowed.Select("nombre_Real_Form = 'frmLoggin'");
+                //if (dato.Length > 0)
+                //{
+                //    frmLoggin oLog = new frmLoggin();
+                //    oLog.MdiParent = this;
+                //    oLog.Show();
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Form is not allowed", "Shipment", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}
             }
             catch (Exception ex)
             {
