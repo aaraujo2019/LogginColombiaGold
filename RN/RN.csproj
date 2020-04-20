@@ -72,6 +72,7 @@
     <Compile Include="clsDHCollars.cs" />
     <Compile Include="clsDHDensity.cs" />
     <Compile Include="clsDHGeotech.cs" />
+    <Compile Include="clsDHInfill.cs" />
     <Compile Include="clsDHLithology.cs" />
     <Compile Include="clsDHMineraliz.cs" />
     <Compile Include="clsDHOxides.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RN;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -21,6 +22,7 @@ namespace LogginColombiaGold
         private clsDH_Weathering oWeat = new clsDH_Weathering();
         private clsDH_Structures oStr = new clsDH_Structures();
         private clsDHMineraliz oMiner = new clsDHMineraliz();
+        private clsDHInfill oInfill = new clsDHInfill();
         private clsDHBox oBox = new clsDHBox();
         private clsDHAlterations oAlt = new clsDHAlterations();
         private clsDHOxides oOxid = new clsDHOxides();
@@ -38,10 +40,22 @@ namespace LogginColombiaGold
         private static string sEditAlt = "0";
         private static string sEditDens = "0";
         private static string sEditDensM = "0";
-        private static string sValidLogging = ""; //variable para saber que pestaña validar
+        private static string sValidLogging = string.Empty; //variable para saber que pestaña validar
 
-        private static string SheetExcel = "";
+        private static string SheetExcel = string.Empty;
         private Configuration conf = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+        private List<int> valores_permitidos = new List<int>() { 8, 13, 37, 38, 39, 40, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 46 };
+        private List<string> fromTosAdicionados = new List<string>();
+        private List<string> stagesAdicionados = new List<string>();
+        private string sEditInfill;
+        private bool swActualizarRegistro;
+        private int indexRegistroGrid;
+        private bool swConsulta;
+        private int SkDHInfill = 0;
+        private bool swActualizaParaInsertar;
+        private DataTable dtGeneralInfill = new DataTable();
+        private string sEditOxide;
+        private long iSKDHOxides;
 
         public frmLoggin()
         {
@@ -65,7 +79,81 @@ namespace LogginColombiaGold
             FillCmbAlt();
             FillCmbBox();
             FillCmbAlterations();
-            //FillCmbOxidation();
+            FillCmbOxides();
+            ColumnasGrid();
+        }
+
+        private void InhabilitarColumnasDataGrid()
+        {
+            dtgInfill.Columns[0].ReadOnly = true;
+            dtgInfill.Columns[1].ReadOnly = true;
+            dtgInfill.Columns[2].ReadOnly = true;
+            dtgInfill.Columns[3].ReadOnly = true;
+            dtgInfill.Columns[4].ReadOnly = true;
+            dtgInfill.Columns[5].ReadOnly = true;
+            dtgInfill.Columns[6].ReadOnly = true;
+            dtgInfill.Columns[7].ReadOnly = true;
+
+            dtgInfill.Columns[8].ReadOnly = true;
+            dtgInfill.Columns[9].ReadOnly = true;
+            dtgInfill.Columns[10].ReadOnly = true;
+            dtgInfill.Columns[11].ReadOnly = true;
+            dtgInfill.Columns[12].ReadOnly = true;
+            dtgInfill.Columns[13].ReadOnly = true;
+
+            dtgInfill.Columns[14].ReadOnly = true;
+            dtgInfill.Columns[15].ReadOnly = true;
+            dtgInfill.Columns[16].ReadOnly = true;
+            dtgInfill.Columns[17].ReadOnly = true;
+            dtgInfill.Columns[18].ReadOnly = true;
+            dtgInfill.Columns[19].ReadOnly = true;
+
+            dtgInfill.Columns[20].ReadOnly = true;
+            dtgInfill.Columns[21].ReadOnly = true;
+            dtgInfill.Columns[22].ReadOnly = true;
+            dtgInfill.Columns[23].ReadOnly = true;
+            dtgInfill.Columns[24].ReadOnly = true;
+            dtgInfill.Columns[25].ReadOnly = true;
+
+            dtgInfill.Columns[26].Visible = false;
+        }
+
+        private void ColumnasGrid()
+        {
+            dtgInfill.DataSource = null;
+            dtgInfill.Columns.Add("HoleId", "HoleId");
+            dtgInfill.Columns.Add("from", "From");
+            dtgInfill.Columns.Add("to", "To");
+            dtgInfill.Columns.Add("stage", "Stage");
+            dtgInfill.Columns.Add("Type", "Type Infill");
+            dtgInfill.Columns.Add("number", "Infill Number");
+            dtgInfill.Columns.Add("AToCore", "Angle to Core");
+            dtgInfill.Columns.Add("PorcStage", "% Stage");
+
+            dtgInfill.Columns.Add("gangueMin1", "Gangue Mineral 1");
+            dtgInfill.Columns.Add("textute1", "Texture 1");
+            dtgInfill.Columns.Add("PorGangueMin1", "Gangue Mineral 1 %");
+            dtgInfill.Columns.Add("OreMin1", "Ore Mineral 1");
+            dtgInfill.Columns.Add("style1", "Style 1");
+            dtgInfill.Columns.Add("oremin1", "Ore Mineral 1 %");
+
+            dtgInfill.Columns.Add("gangueMin2", "Gangue Mineral 2");
+            dtgInfill.Columns.Add("textute2", "Texture 2");
+            dtgInfill.Columns.Add("PorGangueMin2", "Gangue Mineral 2 %");
+            dtgInfill.Columns.Add("OreMin2", "Ore Mineral 2");
+            dtgInfill.Columns.Add("style2", "Style 2");
+            dtgInfill.Columns.Add("oremin2", "Ore Mineral 2 %");
+
+            dtgInfill.Columns.Add("gangueMin3", "Gangue Mineral 3");
+            dtgInfill.Columns.Add("textute3", "Texture 3");
+            dtgInfill.Columns.Add("PorGangueMin3", "Gangue Mineral 3 %");
+            dtgInfill.Columns.Add("OreMin3", "Ore Mineral 3 ");
+            dtgInfill.Columns.Add("style3", "Style 3");
+            dtgInfill.Columns.Add("oremin3", "Ore Mineral 3 %");
+
+            dtgInfill.Columns.Add("SKDHInfill", "SKDHInfill");
+            dtgInfill.AllowUserToDeleteRows = false;
+            InhabilitarColumnasDataGrid();
         }
 
         private void frmLoggin_Load(object sender, EventArgs e)
@@ -116,8 +204,8 @@ namespace LogginColombiaGold
                 }
 
                 /* No se usan solicitan quitarlos*/
-                TabPpal.TabPages.Remove(tbWeathering);
-                TabPpal.TabPages.Remove(tbDensity);
+                //TabPpal.TabPages.Remove(tbWeathering);
+                //TabPpal.TabPages.Remove(tbDensity);
 
                 //datoPest = clsRf.dsPermisos.Tables[0].Select("nombre_Real_Form = 'Weathering'");
                 //if (datoPest.Length == 0)
@@ -133,6 +221,7 @@ namespace LogginColombiaGold
             }
 
             //TabPpal.TabPages.Remove(tbDensity);
+            CargarCombos();
         }
 
         private void DisableControls()
@@ -142,11 +231,11 @@ namespace LogginColombiaGold
                 txtFrom.Enabled = false;
                 txtTo.Enabled = false;
 
-                txtFrom.Text = "";
-                txtTo.Text = "";
+                txtFrom.Text = string.Empty;
+                txtTo.Text = string.Empty;
                 cmbLithology.SelectedValue = "-1";
                 cmbSampleType.SelectedValue = "-1";
-                cmbVeinLocationSamp.Text = "";
+                cmbVeinLocationSamp.Text = string.Empty;
                 cmbVeinStructureSamp.SelectedValue = "-1";
             }
             catch (Exception ex)
@@ -173,7 +262,7 @@ namespace LogginColombiaGold
             try
             {
                 //cmbHoleIDForm
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
                 DataRow drC = dtCollars.NewRow();
@@ -183,12 +272,22 @@ namespace LogginColombiaGold
                 cmbHoleIDForm.ValueMember = "HoleID";
                 cmbHoleIDForm.DataSource = dtCollars;
                 cmbHoleIDForm.SelectedValue = "Select an option..";
-
-
+                
                 cmbHoleIdDens.DisplayMember = "HoleID";
                 cmbHoleIdDens.ValueMember = "HoleID";
                 cmbHoleIdDens.DataSource = dtCollars.Copy();
                 cmbHoleIdDens.SelectedValue = "Select an option..";
+
+
+
+                DataTable rfVeinsCodes = oRf.getRfVeinsCodes();
+                DataRow dataRow2 = rfVeinsCodes.NewRow();
+                dataRow2[0] = "Select an option..";
+                rfVeinsCodes.Rows.Add(dataRow2);
+                cmbOreZone.DisplayMember = "Code";
+                cmbOreZone.ValueMember = "Code";
+                cmbOreZone.DataSource = rfVeinsCodes;
+                cmbOreZone.SelectedValue = "Select an option..";
 
             }
             catch (Exception ex)
@@ -229,7 +328,7 @@ namespace LogginColombiaGold
                 cmbLithology.SelectedValue = -1;
 
 
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
                 DataRow drC = dtCollars.NewRow();
@@ -241,7 +340,7 @@ namespace LogginColombiaGold
                 cmbHoleID.SelectedValue = "Select an option..";
 
 
-                DataTable dtLocation = oRf.getLocation("");
+                DataTable dtLocation = oRf.getLocation(string.Empty);
                 DataRow drLoc = dtLocation.NewRow();
                 drLoc[1] = "Select an option...";
                 dtLocation.Rows.Add(drLoc);
@@ -257,7 +356,7 @@ namespace LogginColombiaGold
                 cmbLabDensM.SelectedValue = ConfigurationSettings.AppSettings["IDProjectGC"].ToString();
 
                 DataTable dtVeinStrutureSamp = new DataTable();
-                dtVeinStrutureSamp = oRf.getTarget("");
+                dtVeinStrutureSamp = oRf.getTarget(string.Empty);
                 DataRow dataRow3 = dtVeinStrutureSamp.NewRow();
                 dataRow3[0] = "-1";
                 dataRow3[1] = "Select an option..";
@@ -363,13 +462,14 @@ namespace LogginColombiaGold
             try
             {
                 sEdit = "0";
-                txtTo.Text = "";
+                txtTo.Text = string.Empty;
                 cmbSampleType.SelectedValue = "-1";
-                txtDupDe.Text = "";
+                txtDupDe.Text = string.Empty;
                 cmbLithology.SelectedValue = "-1";
-                txtCommentsSamp.Text = "";
-                cmbVeinLocationSamp.Text = "";
+                txtCommentsSamp.Text = string.Empty;
+                cmbVeinLocationSamp.Text = string.Empty;
                 cmbVeinStructureSamp.SelectedValue = "-1";
+                cmbOreZone.SelectedValue = "-1";
                 EnableControls();
             }
             catch (Exception ex)
@@ -442,17 +542,17 @@ namespace LogginColombiaGold
 
 
                 //validar lithology si se elige original
-                string sLith = "";
+                string sLith = string.Empty;
                 DataTable dtOri = dtOriginal();
                 DataRow[] datoLith = dtOri.Select("Value = '" + cmbSampleType.SelectedValue.ToString() + "'");
                 if (datoLith.Length > 0)
                 {
 
-                    if (cmbLithology.SelectedValue.ToString() == "-1" || cmbLithology.SelectedValue.ToString() == "")
-                    {
-                        MessageBox.Show("Selected an option Lithology", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    //if (cmbLithology.SelectedValue.ToString() == "-1" || cmbLithology.SelectedValue.ToString() == string.Empty)
+                    //{
+                    //    MessageBox.Show("Selected an option Lithology", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //    return;
+                    //}
 
                     //Valida que to sea mayor que el from
                     if (double.Parse(sTo.ToString()) == double.Parse(sFrom.ToString()))
@@ -547,11 +647,12 @@ namespace LogginColombiaGold
                     //Fin. Valida que el rango sea valido para el pozo
 
 
-                    //if (cmbLithology.SelectedValue.ToString() == "-1" || cmbLithology.SelectedValue.ToString() == "")
+                    //if (cmbLithology.SelectedValue.ToString() == "-1" || cmbLithology.SelectedValue.ToString() == string.Empty)
                     //    sLith = null;
                     //else 
 
-                    sLith = cmbLithology.SelectedValue.ToString();
+                    //sLith = cmbLithology.SelectedValue.ToString();
+                    sLith = string.Empty;
 
                     clsDHSamples.sStaticFrom = txtTo.Text.ToString();
 
@@ -562,7 +663,7 @@ namespace LogginColombiaGold
                     txtFrom.Text = "-99";
                     txtTo.Text = "-99";
 
-                    sLith = "";
+                    sLith = string.Empty;
                     clsDHSamples.sStaticFrom = "0";
                 }
 
@@ -600,22 +701,22 @@ namespace LogginColombiaGold
                     oSamp.sDupDe = txtDupDe.Text.ToString();
                     oSamp.sComments = txtCommentsSamp.Text.ToString();
                     oSamp.iDHSampID = Int64.Parse(sDHSamplesID.ToString());
-
+                    oSamp.sVnMod = cmbOreZone.SelectedValue.ToString();
                     oSamp.sLith = sLith; //cmbLithology.SelectedValue.ToString();
 
-                    string text3 = "";
-                    if (this.cmbVeinLocationSamp.Text.ToString() == "HW: Hanging-wall of vein")
-                    {
-                        text3 = "HW";
-                    }
-                    else
-                    {
-                        if (this.cmbVeinLocationSamp.Text.ToString() == "FW: Footwall of vein")
-                        {
-                            text3 = "FW";
-                        }
-                    }
-                    oSamp.sVeinLocation = ((text3.ToString() == "") ? null : text3.ToString());
+                    string text3 = string.Empty;
+                    //if (this.cmbVeinLocationSamp.Text.ToString() == "HW: Hanging-wall of vein")
+                    //{
+                    //    text3 = "HW";
+                    //}
+                    //else
+                    //{
+                    //    if (this.cmbVeinLocationSamp.Text.ToString() == "FW: Footwall of vein")
+                    //    {
+                    //        text3 = "FW";
+                    //    }
+                    //}
+                    oSamp.sVeinLocation = ((text3.ToString() == string.Empty) ? null : text3.ToString());
                     oSamp.sVein = ((this.cmbVeinStructureSamp.SelectedValue.ToString() == "-1") ? null : this.cmbVeinStructureSamp.SelectedValue.ToString());
 
                     string sResp = oSamp.DHSamples_AddLoggin();
@@ -673,9 +774,10 @@ namespace LogginColombiaGold
                                 + sCons;
                             clsDHSamples.sConsLoggin = txtSampNo.Text.ToString();
 
-                            txtTo.Text = "";
+                            txtTo.Text = string.Empty;
                             txtFrom.Text = clsDHSamples.sStaticFrom.ToString();
                             txtTo.Focus();
+                            cmbOreZone.SelectedValue = "-1";
                             EnableControls();
 
                         }
@@ -713,8 +815,8 @@ namespace LogginColombiaGold
         //{
         //    try
         //    {
-        //        txtTo.Text = "";
-        //        txtFrom.Text = "";
+        //        txtTo.Text = string.Empty;
+        //        txtFrom.Text = string.Empty;
         //    }
         //    catch (Exception ex)
         //    {
@@ -730,11 +832,11 @@ namespace LogginColombiaGold
 
 
                 //Valida que no este vacio
-                if (txtSampNoIni.Text != "")
+                if (txtSampNoIni.Text != string.Empty)
                 {
                     EnableControls();
                 }
-                else if (txtSampNoIni.Text == "")
+                else if (txtSampNoIni.Text == string.Empty)
                 {
                     MessageBox.Show("Empty Sample No. Init ", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     DisableControls();
@@ -850,7 +952,7 @@ namespace LogginColombiaGold
 
                 oSamp.sOpcion = "2";
                 FillLoggin();
-
+                cmbOreZone.SelectedValue = "-1";
 
                 if (sEdit == "1")
                 {
@@ -884,11 +986,11 @@ namespace LogginColombiaGold
 
 
                 //    //Valida que no este vacio
-                //    if (txtSampNoIni.Text != "")
+                //    if (txtSampNoIni.Text != string.Empty)
                 //    {
                 //        EnableControls();
                 //    }
-                //    else if (txtSampNoIni.Text == "")
+                //    else if (txtSampNoIni.Text == string.Empty)
                 //    {
                 //        DisableControls(); 
                 //        return;
@@ -1026,7 +1128,7 @@ namespace LogginColombiaGold
                 }
                 else
                 {
-                    txtDupDe.Text = "";
+                    txtDupDe.Text = string.Empty;
                 }
             }
             catch (Exception ex)
@@ -1133,31 +1235,31 @@ namespace LogginColombiaGold
                     txtTo.Text = gdLoggin.Rows[e.RowIndex].Cells["To"].Value.ToString();
                     txtDupDe.Text = gdLoggin.Rows[e.RowIndex].Cells["DupDe"].Value.ToString();
                     txtCommentsSamp.Text = gdLoggin.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
-                    cmbLithology.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString() == ""
+                    cmbLithology.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString() == string.Empty
                             ? "-1" : gdLoggin.Rows[e.RowIndex].Cells["Lithology"].Value.ToString();
 
                     cmbSampleType.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["SampleType"].Value.ToString();
                     cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
 
-                    if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "HW")
-                    {
-                        this.cmbVeinLocationSamp.Text = "HW: Hanging-wall of vein";
-                    }
-                    else
-                    {
-                        if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "FW")
-                        {
-                            this.cmbVeinLocationSamp.Text = "FW: Footwall of vein";
-                        }
-                        else
-                        {
-                            if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "")
-                            {
-                                this.cmbVeinLocationSamp.Text = "";
-                            }
-                        }
-                    }
-                    this.cmbVeinStructureSamp.SelectedValue = ((this.gdLoggin.Rows[e.RowIndex].Cells["Vein"].Value.ToString() == "") ? "-1" : this.gdLoggin.Rows[e.RowIndex].Cells["Vein"].Value.ToString());
+                    //if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "HW")
+                    //{
+                    //    this.cmbVeinLocationSamp.Text = "HW: Hanging-wall of vein";
+                    //}
+                    //else
+                    //{
+                    //    if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "FW")
+                    //    {
+                    //        this.cmbVeinLocationSamp.Text = "FW: Footwall of vein";
+                    //    }
+                    //    else
+                    //    {
+                    //        if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == string.Empty)
+                    //        {
+                    //            this.cmbVeinLocationSamp.Text = string.Empty;
+                    //        }
+                    //    }
+                    //}
+                    //this.cmbVeinStructureSamp.SelectedValue = ((this.gdLoggin.Rows[e.RowIndex].Cells["Vein"].Value.ToString() == string.Empty) ? "-1" : this.gdLoggin.Rows[e.RowIndex].Cells["Vein"].Value.ToString());
                 }
                 else
                 {
@@ -1323,7 +1425,7 @@ namespace LogginColombiaGold
             try
             {
                 //cmbHoleIdGeo
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
                 DataRow drCGeo = dtCollars.NewRow();
@@ -1398,14 +1500,14 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 if (cmbHoleIdGeo.SelectedValue.ToString() == "Select an option..")
                 {
                     sresp = "Selected an option Hole ID";
                     return sresp;
                 }
-                if (txtFromGeo.Text == "" || txtToGeo.Text == "")
+                if (txtFromGeo.Text == string.Empty || txtToGeo.Text == string.Empty)
                 {
                     sresp = "Empty From or To";
                     return sresp;
@@ -1435,7 +1537,7 @@ namespace LogginColombiaGold
 
 
 
-                //if (txtJoinCondition.Text.ToString() == "")
+                //if (txtJoinCondition.Text.ToString() == string.Empty)
                 //{ txtJoinCondition.Text = "0"; }
 
                 //if (double.Parse(txtJoinCondition.Text.ToString()) < 0
@@ -1444,7 +1546,7 @@ namespace LogginColombiaGold
                 //    sresp = "Join Condition less than 0 or greater than 25";
                 //    return sresp;
                 //}
-                //if (txtRec_mGeo.Text == "" || txtRQD_cmGeo.Text == "")
+                //if (txtRec_mGeo.Text == string.Empty || txtRQD_cmGeo.Text == string.Empty)
                 //{
                 //    sresp = "Empty Rec m or RQD cm";
                 //    return sresp;
@@ -1458,13 +1560,13 @@ namespace LogginColombiaGold
                 //if (double.Parse(txtRec_PorcGeo.Text.ToString()) > 110)
                 //{
                 //    sresp = "Illegal value Perc Rec cm";
-                //    txtRQD_cmGeo.Text = "";
+                //    txtRQD_cmGeo.Text = string.Empty;
                 //    return sresp;
                 //}
                 //if (double.Parse(txtRQD_PorcGeo.Text.ToString()) > 110)
                 //{
                 //    sresp = "Illegal value Perc RQD cm";
-                //    txtRQD_cmGeo.Text = "";
+                //    txtRQD_cmGeo.Text = string.Empty;
                 //    return sresp;
                 //}
 
@@ -1474,12 +1576,12 @@ namespace LogginColombiaGold
                 //    (double.Parse(txtRec_mGeo.Text.ToString()) * 110))
                 //{
                 //    sresp = "Illegal value RQD cm";
-                //    txtRQD_cmGeo.Text = "";
+                //    txtRQD_cmGeo.Text = string.Empty;
                 //    return sresp;
                 //}
 
 
-                if (txtRQD_cmGeo.Text.ToString() != "")
+                if (txtRQD_cmGeo.Text.ToString() != string.Empty)
                 {
                     if (txtRQD_cmGeo.Text.ToString() == "-99")
                     {
@@ -1489,7 +1591,7 @@ namespace LogginColombiaGold
                     && double.Parse(txtRQD_cmGeo.Text.ToString()) > 0)
                     {
                         sresp = "Illegal value RQD cm. less than ten (10)";
-                        txtRQD_cmGeo.Text = "";
+                        txtRQD_cmGeo.Text = string.Empty;
                         return sresp;
                     }
 
@@ -1522,7 +1624,7 @@ namespace LogginColombiaGold
                     return;
                 }
 
-                if (txtRec_mGeo.Text.ToString() != "")
+                if (txtRec_mGeo.Text.ToString() != string.Empty)
                 {
                     double porc = (double.Parse(txtRec_mGeo.Text.ToString()) /
                         double.Parse(txtDifferGeo.Text.ToString()) * 100);
@@ -1544,7 +1646,7 @@ namespace LogginColombiaGold
                 }
 
 
-                if (txtRQD_cmGeo.Text.ToString() != "")
+                if (txtRQD_cmGeo.Text.ToString() != string.Empty)
                 {
                     double porcRQ = (double.Parse(txtRQD_cmGeo.Text.ToString()) /
                         double.Parse(txtDifferGeo.Text.ToString()));
@@ -1562,7 +1664,7 @@ namespace LogginColombiaGold
                 }
 
                 string sResp = ControlsValidate().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "GeoTech", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -1634,7 +1736,7 @@ namespace LogginColombiaGold
                 else { oGeo.iFrom = double.Parse(txtFromGeo.Text.ToString()); }
                 oGeo.iTo = double.Parse(txtToGeo.Text.ToString());
 
-                if (cmbLithGeo.SelectedValue.ToString() == "-1" || cmbLithGeo.SelectedValue.ToString() == "")
+                if (cmbLithGeo.SelectedValue.ToString() == "-1" || cmbLithGeo.SelectedValue.ToString() == string.Empty)
                 {
                     oGeo.sLithCod = null;
                 }
@@ -1643,7 +1745,7 @@ namespace LogginColombiaGold
                     oGeo.sLithCod = cmbLithGeo.SelectedValue.ToString();
                 }
 
-                if (txtRec_mGeo.Text.ToString() == "")
+                if (txtRec_mGeo.Text.ToString() == string.Empty)
                 {
                     oGeo.dRecm = null;
                 }
@@ -1652,8 +1754,8 @@ namespace LogginColombiaGold
                     oGeo.dRecm = double.Parse(txtRec_mGeo.Text.ToString());
                 }
 
-                //oGeo.dRecm = txtRec_mGeo.Text.ToString() == "" ? null : double.Parse(txtRec_mGeo.Text.ToString());
-                if (txtRQD_cmGeo.Text.ToString() == "")
+                //oGeo.dRecm = txtRec_mGeo.Text.ToString() == string.Empty ? null : double.Parse(txtRec_mGeo.Text.ToString());
+                if (txtRQD_cmGeo.Text.ToString() == string.Empty)
                 {
                     oGeo.dRQDcm = null;
                 }
@@ -1662,7 +1764,7 @@ namespace LogginColombiaGold
                     oGeo.dRQDcm = double.Parse(txtRQD_cmGeo.Text.ToString());
                 }
 
-                if (txtNumOfFact.Text.ToString() == "")
+                if (txtNumOfFact.Text.ToString() == string.Empty)
                 {
                     oGeo.dNoOfFract = null;
                 }
@@ -1671,7 +1773,7 @@ namespace LogginColombiaGold
                     oGeo.dNoOfFract = double.Parse(txtNumOfFact.Text.ToString());
                 }
 
-                if (txtJoinCondition.Text.ToString() == "")
+                if (txtJoinCondition.Text.ToString() == string.Empty)
                 {
                     oGeo.dJoinCond = null;
                 }
@@ -1680,7 +1782,7 @@ namespace LogginColombiaGold
                     oGeo.dJoinCond = double.Parse(txtJoinCondition.Text.ToString());
                 }
 
-                if (txtJrGeo.Text.ToString() == "")
+                if (txtJrGeo.Text.ToString() == string.Empty)
                 {
                     oGeo.dJr = null;
                 }
@@ -1689,7 +1791,7 @@ namespace LogginColombiaGold
                     oGeo.dJr = double.Parse(txtJrGeo.Text.ToString());
                 }
 
-                if (txtJnGeo.Text.ToString() == "")
+                if (txtJnGeo.Text.ToString() == string.Empty)
                 {
                     oGeo.dJn = null;
                 }
@@ -1698,7 +1800,7 @@ namespace LogginColombiaGold
                     oGeo.dJn = double.Parse(txtJnGeo.Text.ToString());
                 }
 
-                if (txtJaGeo.Text.ToString() == "")
+                if (txtJaGeo.Text.ToString() == string.Empty)
                 {
                     oGeo.dJa = null;
                 }
@@ -1707,7 +1809,7 @@ namespace LogginColombiaGold
                     oGeo.dJa = double.Parse(txtJaGeo.Text.ToString());
                 }
 
-                if (cmbDegreeBreak.SelectedValue.ToString() == "-1" || cmbDegreeBreak.SelectedValue.ToString() == "")
+                if (cmbDegreeBreak.SelectedValue.ToString() == "-1" || cmbDegreeBreak.SelectedValue.ToString() == string.Empty)
                 {
                     oGeo.sDegBreak = null;
                 }
@@ -1716,7 +1818,7 @@ namespace LogginColombiaGold
                     oGeo.sDegBreak = cmbDegreeBreak.SelectedValue.ToString();
                 }
 
-                if (cmbHardness.SelectedValue.ToString() == "-1" || cmbHardness.SelectedValue.ToString() == "")
+                if (cmbHardness.SelectedValue.ToString() == "-1" || cmbHardness.SelectedValue.ToString() == string.Empty)
                 {
                     oGeo.sHardness = null;
                 }
@@ -1725,7 +1827,7 @@ namespace LogginColombiaGold
                     oGeo.sHardness = cmbHardness.SelectedValue.ToString();
                 }
 
-                if (txtComments.Text.ToString() == "-1" || txtComments.Text.ToString() == "")
+                if (txtComments.Text.ToString() == "-1" || txtComments.Text.ToString() == string.Empty)
                 {
                     oGeo.sComments = null;
                 }
@@ -1749,16 +1851,16 @@ namespace LogginColombiaGold
                         "Hole ID: " + cmbHoleIdGeo.SelectedValue.ToString() + "." +
                         " From: " + txtFromGeo.Text.ToString() + "." +
                         " To: " + txtToGeo.Text.ToString() + "." +
-                        " Lithology: " + cmbLithGeo.SelectedValue.ToString() == "Select an option.." || cmbLithGeo.SelectedValue.ToString() == ""
-                            ? "" : cmbLithGeo.SelectedValue.ToString() + "." +
+                        " Lithology: " + cmbLithGeo.SelectedValue.ToString() == "Select an option.." || cmbLithGeo.SelectedValue.ToString() == string.Empty
+                            ? string.Empty : cmbLithGeo.SelectedValue.ToString() + "." +
                         " dRecm: " + txtRec_mGeo.Text.ToString() + "." +
                         " dRQDcm: " + txtRQD_cmGeo.Text.ToString() + "." +
                         " dNoFact: " + txtNumOfFact.Text.ToString() + "." +
                         " Join Condition: " + txtJoinCondition.Text.ToString() + "." +
-                        " Degree BreakagD: " + cmbDegreeBreak.SelectedValue.ToString() == "Select an option.." || cmbDegreeBreak.SelectedValue.ToString() == ""
-                            ? "" : cmbDegreeBreak.SelectedValue.ToString() + "." +
-                        " Hardness: " + cmbHardness.SelectedValue.ToString() == "Select an option.." || cmbHardness.SelectedValue.ToString() == ""
-                               ? "" : cmbHardness.SelectedValue.ToString());
+                        " Degree BreakagD: " + cmbDegreeBreak.SelectedValue.ToString() == "Select an option.." || cmbDegreeBreak.SelectedValue.ToString() == string.Empty
+                            ? string.Empty : cmbDegreeBreak.SelectedValue.ToString() + "." +
+                        " Hardness: " + cmbHardness.SelectedValue.ToString() == "Select an option.." || cmbHardness.SelectedValue.ToString() == string.Empty
+                               ? string.Empty : cmbHardness.SelectedValue.ToString());
 
 
                     sEditGeo = "0";
@@ -1801,11 +1903,12 @@ namespace LogginColombiaGold
                 cmbHoleIDBox.SelectedValue = cmbHoleIDForm.SelectedValue.ToString();
                 cmbHoleIDAlt.SelectedValue = cmbHoleIDForm.SelectedValue.ToString();
                 cmbHoleIdDens.SelectedValue = cmbHoleIDForm.SelectedValue.ToString();
-                //cmbHoleIDOx.SelectedValue = cmbHoleIDForm.SelectedValue.ToString();
+                cmbHoleIdInfill.SelectedValue = cmbHoleIDForm.SelectedValue.ToString();
+                cmbHoleIdOxide.SelectedValue = cmbHoleIDForm.SelectedValue.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message); ;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -1845,20 +1948,20 @@ namespace LogginColombiaGold
         {
             try
             {
-                //cmbHoleIdGeo.SelectedValue = "";
-                //txtFrom.Text = "";
-                txtToGeo.Text = "";
+                //cmbHoleIdGeo.SelectedValue = string.Empty;
+                //txtFrom.Text = string.Empty;
+                txtToGeo.Text = string.Empty;
                 //cmbLithGeo.SelectedValue = "Select an option..";
-                txtRec_mGeo.Text = "";
-                txtRQD_cmGeo.Text = "";
-                txtNumOfFact.Text = "";
-                txtJoinCondition.Text = "";
-                txtJrGeo.Text = "";
-                txtJnGeo.Text = "";
-                txtJaGeo.Text = "";
+                txtRec_mGeo.Text = string.Empty;
+                txtRQD_cmGeo.Text = string.Empty;
+                txtNumOfFact.Text = string.Empty;
+                txtJoinCondition.Text = string.Empty;
+                txtJrGeo.Text = string.Empty;
+                txtJnGeo.Text = string.Empty;
+                txtJaGeo.Text = string.Empty;
                 cmbDegreeBreak.SelectedValue = "-1";
                 cmbHardness.SelectedValue = "-1";
-                txtComments.Text = "";
+                txtComments.Text = string.Empty;
             }
             catch (Exception ex)
             {
@@ -1885,11 +1988,11 @@ namespace LogginColombiaGold
                 txtJaGeo.Text = dgGeotech.Rows[e.RowIndex].Cells["Ja"].Value.ToString();
                 txtComments.Text = dgGeotech.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
 
-                cmbLithGeo.SelectedValue = dgGeotech.Rows[e.RowIndex].Cells["LithCod"].Value.ToString() == ""
+                cmbLithGeo.SelectedValue = dgGeotech.Rows[e.RowIndex].Cells["LithCod"].Value.ToString() == string.Empty
                     ? "-1" : dgGeotech.Rows[e.RowIndex].Cells["LithCod"].Value.ToString();
-                cmbDegreeBreak.SelectedValue = dgGeotech.Rows[e.RowIndex].Cells["DegBreak"].Value.ToString() == ""
+                cmbDegreeBreak.SelectedValue = dgGeotech.Rows[e.RowIndex].Cells["DegBreak"].Value.ToString() == string.Empty
                     ? "-1" : dgGeotech.Rows[e.RowIndex].Cells["DegBreak"].Value.ToString();
-                cmbHardness.SelectedValue = dgGeotech.Rows[e.RowIndex].Cells["Hardness"].Value.ToString() == ""
+                cmbHardness.SelectedValue = dgGeotech.Rows[e.RowIndex].Cells["Hardness"].Value.ToString() == string.Empty
                     ? "-1" : dgGeotech.Rows[e.RowIndex].Cells["Hardness"].Value.ToString();
 
                 GetDifferGeo();
@@ -2036,7 +2139,7 @@ namespace LogginColombiaGold
             try
             {
                 //cmbHoleIdGeo
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
                 DataRow drCGeo = dtCollars.NewRow();
@@ -2077,7 +2180,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 oCollars.sHoleID = cmbHoleIdLit.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
@@ -2093,7 +2196,7 @@ namespace LogginColombiaGold
                     sresp = "Selected an option Hole ID";
                     return sresp;
                 }
-                if (txtFromLit.Text == "" || txtToLit.Text == "")
+                if (txtFromLit.Text == string.Empty || txtToLit.Text == string.Empty)
                 {
                     sresp = "Empty From or To";
                     return sresp;
@@ -2148,7 +2251,7 @@ namespace LogginColombiaGold
             try
             {
                 string sResp = ControlsValidateLit().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Lithology", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -2184,7 +2287,7 @@ namespace LogginColombiaGold
                 oLit.sHoleID = cmbHoleIdLit.SelectedValue.ToString();
 
 
-                if (txtObservLit.Text.ToString() == "")
+                if (txtObservLit.Text.ToString() == string.Empty)
                 {
                     oLit.sObservation = null;
                 }
@@ -2202,7 +2305,7 @@ namespace LogginColombiaGold
                 oLit.sLithCode = cmbLithologyLit.SelectedValue.ToString();
 
                 //oLit.sGSize = cmbGsizeLith.SelectedValue != null ? cmbGsizeLith.SelectedValue.ToString() : "-1";
-                if (cmbGsizeLith.SelectedValue.ToString() == "-1" || cmbGsizeLith.SelectedValue.ToString() == "")
+                if (cmbGsizeLith.SelectedValue.ToString() == "-1" || cmbGsizeLith.SelectedValue.ToString() == string.Empty)
                 {
                     oLit.sGSize = null;
                 }
@@ -2212,7 +2315,7 @@ namespace LogginColombiaGold
                 }
 
                 //oLit.sTextures = cmbTexturesLith.SelectedValue.ToString() != null ? cmbTexturesLith.SelectedValue.ToString() : "-1";
-                if (cmbTexturesLith.SelectedValue.ToString() == "-1" || cmbTexturesLith.SelectedValue.ToString() == "")
+                if (cmbTexturesLith.SelectedValue.ToString() == "-1" || cmbTexturesLith.SelectedValue.ToString() == string.Empty)
                 {
                     oLit.sTextures = null;
                 }
@@ -2221,9 +2324,9 @@ namespace LogginColombiaGold
                     oLit.sTextures = cmbTexturesLith.SelectedValue.ToString();
                 }
 
-                if (cmbLithologyLit.SelectedValue.ToString() == "-1" || cmbLithologyLit.SelectedValue.ToString() == "")
+                if (cmbLithologyLit.SelectedValue.ToString() == "-1" || cmbLithologyLit.SelectedValue.ToString() == string.Empty)
                 {
-                    oLit.sLithCode = "";
+                    oLit.sLithCode = string.Empty;
                 }
                 else
                 {
@@ -2273,7 +2376,7 @@ namespace LogginColombiaGold
                     //Insertar el registro para el historial de transacciones por usuario
                     oRf.InsertTrans("DH_Lithology", sEditLit == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
                         "Hole ID: " + cmbHoleIdLit.SelectedValue.ToString() + "." +
-                        //" sGSize :" + cmbGsizeLith.Text != "" ? cmbGsizeLith.SelectedValue.ToString() : "-1" + "." +
+                        //" sGSize :" + cmbGsizeLith.Text != string.Empty ? cmbGsizeLith.SelectedValue.ToString() : "-1" + "." +
                         " From: " + txtFromLit.Text.ToString() + "." +
                         " To: " + txtToLit.Text.ToString() + "." +
                         " TexturD: " + cmbTexturesLith.SelectedValue.ToString());
@@ -2310,7 +2413,7 @@ namespace LogginColombiaGold
             try
             {
                 txtToLit.Text = "0";
-                txtObservLit.Text = "";
+                txtObservLit.Text = string.Empty;
                 cmbLithologyLit.SelectedValue = "-1";
             }
             catch (Exception ex)
@@ -2356,9 +2459,9 @@ namespace LogginColombiaGold
                 txtToLit.Text = dgLithology.Rows[e.RowIndex].Cells["To"].Value.ToString();
                 cmbLithologyLit.SelectedValue = dgLithology.Rows[e.RowIndex].Cells["Litho"].Value.ToString();
 
-                cmbGsizeLith.SelectedValue = dgLithology.Rows[e.RowIndex].Cells["GSize"].Value.ToString() == "" ?
+                cmbGsizeLith.SelectedValue = dgLithology.Rows[e.RowIndex].Cells["GSize"].Value.ToString() == string.Empty ?
                     "-1" : dgLithology.Rows[e.RowIndex].Cells["GSize"].Value.ToString();
-                cmbTexturesLith.SelectedValue = dgLithology.Rows[e.RowIndex].Cells["Textures"].Value.ToString() == "" ?
+                cmbTexturesLith.SelectedValue = dgLithology.Rows[e.RowIndex].Cells["Textures"].Value.ToString() == string.Empty ?
                     "-1" : dgLithology.Rows[e.RowIndex].Cells["Textures"].Value.ToString();
 
             }
@@ -2416,7 +2519,7 @@ namespace LogginColombiaGold
             try
             {
                 //cmbHoleIdGeo
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
                 DataRow drCGeo = dtCollars.NewRow();
@@ -2426,6 +2529,11 @@ namespace LogginColombiaGold
                 cmbHoleIdWeat.ValueMember = "HoleID";
                 cmbHoleIdWeat.DataSource = dtCollars;
                 cmbHoleIdWeat.SelectedValue = "Select an option..";
+                                
+                cmbHoleIdOxide.DisplayMember = "HoleID";
+                cmbHoleIdOxide.ValueMember = "HoleID";
+                cmbHoleIdOxide.DataSource = dtCollars;
+                cmbHoleIdOxide.SelectedValue = "Select an option..";
 
                 DataTable dtWeathering = new DataTable();
                 dtWeathering = oRf.getWeathering();
@@ -2553,7 +2661,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 oCollars.sHoleID = cmbHoleIdWeat.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
@@ -2569,7 +2677,7 @@ namespace LogginColombiaGold
                     sresp = "Selected an option Hole ID";
                     return sresp;
                 }
-                if (txtFromWeat.Text == "" || txtToWeat.Text == "")
+                if (txtFromWeat.Text == string.Empty || txtToWeat.Text == string.Empty)
                 {
                     sresp = "Empty From or To";
                     return sresp;
@@ -2608,7 +2716,7 @@ namespace LogginColombiaGold
             {
 
                 string sResp = ControlsValidateWeat().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Weathering", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -2651,7 +2759,7 @@ namespace LogginColombiaGold
                 oWeat.sWeathering = cmbWeatheringWeat.SelectedValue.ToString();
 
 
-                if (cmbOxidationWeat.SelectedValue.ToString() == "" || cmbOxidationWeat.SelectedValue.ToString() == "-1")
+                if (cmbOxidationWeat.SelectedValue.ToString() == string.Empty || cmbOxidationWeat.SelectedValue.ToString() == "-1")
                 {
                     oWeat.dOxidation = null;
                 }
@@ -2660,7 +2768,7 @@ namespace LogginColombiaGold
                     oWeat.dOxidation = double.Parse(cmbOxidationWeat.SelectedValue.ToString());
                 }
 
-                if (cmbColourWeat.SelectedValue.ToString() == "" || cmbColourWeat.SelectedValue.ToString() == "-1")
+                if (cmbColourWeat.SelectedValue.ToString() == string.Empty || cmbColourWeat.SelectedValue.ToString() == "-1")
                 {
                     oWeat.sColour1 = null;
                 }
@@ -2669,7 +2777,7 @@ namespace LogginColombiaGold
                     oWeat.sColour1 = cmbColourWeat.SelectedValue.ToString();
                 }
 
-                if (cmbSufixWeat.SelectedValue.ToString() == "" || cmbSufixWeat.SelectedValue.ToString() == "-1")
+                if (cmbSufixWeat.SelectedValue.ToString() == string.Empty || cmbSufixWeat.SelectedValue.ToString() == "-1")
                 {
                     oWeat.sSufix1 = null;
                 }
@@ -2682,7 +2790,7 @@ namespace LogginColombiaGold
                 oWeat.sSufix2 = null;
 
 
-                if (txtObservWeat.Text.ToString() == "")
+                if (txtObservWeat.Text.ToString() == string.Empty)
                 {
                     oWeat.sObservation = null;
                 }
@@ -2691,7 +2799,7 @@ namespace LogginColombiaGold
                     oWeat.sObservation = txtObservWeat.Text.ToString();
                 }
 
-                if (cmbMin1Oxid.SelectedValue.ToString() == "" || cmbMin1Oxid.SelectedValue.ToString() == "-1")
+                if (cmbMin1Oxid.SelectedValue.ToString() == string.Empty || cmbMin1Oxid.SelectedValue.ToString() == "-1")
                 {
                     oWeat.sMineral1 = null;
                 }
@@ -2700,7 +2808,7 @@ namespace LogginColombiaGold
                     oWeat.sMineral1 = cmbMin1Oxid.SelectedValue.ToString();
                 }
 
-                if (cmbMin2Oxid.SelectedValue.ToString() == "" || cmbMin2Oxid.SelectedValue.ToString() == "-1")
+                if (cmbMin2Oxid.SelectedValue.ToString() == string.Empty || cmbMin2Oxid.SelectedValue.ToString() == "-1")
                 {
                     oWeat.sMineral2 = null;
                 }
@@ -2709,7 +2817,7 @@ namespace LogginColombiaGold
                     oWeat.sMineral2 = cmbMin2Oxid.SelectedValue.ToString();
                 }
 
-                if (cmbMin3Oxid.SelectedValue.ToString() == "" || cmbMin3Oxid.SelectedValue.ToString() == "-1")
+                if (cmbMin3Oxid.SelectedValue.ToString() == string.Empty || cmbMin3Oxid.SelectedValue.ToString() == "-1")
                 {
                     oWeat.sMineral3 = null;
                 }
@@ -2718,7 +2826,7 @@ namespace LogginColombiaGold
                     oWeat.sMineral3 = cmbMin3Oxid.SelectedValue.ToString();
                 }
 
-                if (cmbMin4Oxid.SelectedValue.ToString() == "" || cmbMin4Oxid.SelectedValue.ToString() == "-1")
+                if (cmbMin4Oxid.SelectedValue.ToString() == string.Empty || cmbMin4Oxid.SelectedValue.ToString() == "-1")
                 {
                     oWeat.sMineral4 = null;
                 }
@@ -2799,27 +2907,27 @@ namespace LogginColombiaGold
                 txtToWeat.Text = dgWeathering.Rows[e.RowIndex].Cells["To"].Value.ToString();
                 cmbWeatheringWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Weathering"].Value.ToString();
 
-                cmbOxidationWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Oxidation"].Value.ToString() == ""
+                cmbOxidationWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Oxidation"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Oxidation"].Value.ToString();
 
-                cmbColourWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Colour1"].Value.ToString() == ""
+                cmbColourWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Colour1"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Colour1"].Value.ToString();
 
-                cmbSufixWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Sufix1"].Value.ToString() == ""
+                cmbSufixWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Sufix1"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Sufix1"].Value.ToString();
 
                 txtObservWeat.Text = dgWeathering.Rows[e.RowIndex].Cells["Observation"].Value.ToString();
 
-                cmbMin1Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral1"].Value.ToString() == ""
+                cmbMin1Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral1"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Mineral1"].Value.ToString();
 
-                cmbMin2Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral2"].Value.ToString() == ""
+                cmbMin2Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral2"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Mineral2"].Value.ToString();
 
-                cmbMin3Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral3"].Value.ToString() == ""
+                cmbMin3Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral3"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Mineral3"].Value.ToString();
 
-                cmbMin4Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral4"].Value.ToString() == ""
+                cmbMin4Oxid.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["Mineral4"].Value.ToString() == string.Empty
                     ? "-1" : dgWeathering.Rows[e.RowIndex].Cells["Mineral4"].Value.ToString();
 
             }
@@ -2840,12 +2948,12 @@ namespace LogginColombiaGold
             {
                 //cmbHoleIdWeat.SelectedValue = dgWeathering.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
                 //txtFromWeat.Text = dgWeathering.Rows[e.RowIndex].Cells["From"].Value.ToString();
-                txtToWeat.Text = "";
+                txtToWeat.Text = string.Empty;
                 cmbWeatheringWeat.SelectedValue = "-1";
                 cmbOxidationWeat.SelectedValue = "-1";
                 cmbColourWeat.SelectedValue = "-1";
                 cmbSufixWeat.SelectedValue = "-1";
-                txtObservWeat.Text = "";
+                txtObservWeat.Text = string.Empty;
                 cmbMin1Oxid.SelectedValue = "-1";
                 cmbMin2Oxid.SelectedValue = "-1";
                 cmbMin3Oxid.SelectedValue = "-1";
@@ -2911,7 +3019,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 oCollars.sHoleID = cmbHoleIDSt.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
@@ -2934,13 +3042,13 @@ namespace LogginColombiaGold
                     return sresp;
                 }
 
-                //if (txtAngleToCorest.Text == "")
+                //if (txtAngleToCorest.Text == string.Empty)
                 //{
                 //    sresp = "Angle To Axis must greater than zero (0)";
                 //    return sresp;
                 //}
 
-                if (txtAngleToCorest.Text != "")
+                if (txtAngleToCorest.Text != string.Empty)
                 {
                     if (double.Parse(txtAngleToCorest.Text.ToString()) < 0
                     || double.Parse(txtAngleToCorest.Text.ToString()) > 90)
@@ -2950,7 +3058,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                if (txtUpAngleSt.Text != "")
+                if (txtUpAngleSt.Text != string.Empty)
                 {
                     if (double.Parse(txtUpAngleSt.Text.ToString()) < 0)
                     {
@@ -2959,7 +3067,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                if (txtBtnAngleSt.Text != "")
+                if (txtBtnAngleSt.Text != string.Empty)
                 {
                     if (double.Parse(txtBtnAngleSt.Text.ToString()) < 0)
                     {
@@ -2968,7 +3076,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                if (txtAppThickSt.Text != "")
+                if (txtAppThickSt.Text != string.Empty)
                 {
                     if (double.Parse(txtAppThickSt.Text.ToString()) < 0)
                     {
@@ -2977,7 +3085,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                if (txtNumberSt.Text != "")
+                if (txtNumberSt.Text != string.Empty)
                 {
                     if (double.Parse(txtNumberSt.Text.ToString()) < 0)
                     {
@@ -3000,7 +3108,7 @@ namespace LogginColombiaGold
             try
             {
                 //cmbHoleIdGeo
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
                 DataRow drCGeo = dtCollars.NewRow();
@@ -3128,15 +3236,15 @@ namespace LogginColombiaGold
             {
                 string sResp = ControlsValidateStr().ToString();
 
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 DataTable dtValidRange = new DataTable();
-                oStr.iFrom = double.Parse(txtFromSt.Text.ToString());
-                oStr.iTo = double.Parse(txtToSt.Text.ToString());
+                oStr.iFrom = double.Parse(txtFromSt.Text);
+                oStr.iTo = double.Parse(txtToSt.Text);
                 oStr.sHoleID = cmbHoleIDSt.SelectedValue.ToString();
                 dtValidRange = oStr.getDH_StructuresValid();
                 if (dtValidRange.Rows.Count > 0)
@@ -3157,54 +3265,54 @@ namespace LogginColombiaGold
                 oStr.sType = cmbStructureTypeSt.SelectedValue.ToString();
 
 
-                if (txtAngleToCorest.Text.ToString() == "")
+                if (txtAngleToCorest.Text.ToString() == string.Empty)
                 {
                     oStr.dAngleToCore = null;
                 }
                 else
                 {
-                    oStr.dAngleToCore = double.Parse(txtAngleToCorest.Text.ToString());
+                    oStr.dAngleToCore = double.Parse(txtAngleToCorest.Text);
                 }
 
-                if (txtCommentsSt.Text.ToString() == "")
+                if (txtCommentsSt.Text.ToString() == string.Empty)
                 {
                     oStr.sComments = null;
                 }
                 else
                 {
-                    oStr.sComments = txtCommentsSt.Text.ToString();
+                    oStr.sComments = txtCommentsSt.Text;
                 }
 
                 oStr.dLenght = 0;
 
-                if (txtUpAngleSt.Text.ToString() == "")
+                if (txtUpAngleSt.Text.ToString() == string.Empty)
                 {
                     oStr.dUpAngle = null;
                 }
                 else
                 {
-                    oStr.dUpAngle = double.Parse(txtUpAngleSt.Text.ToString());
+                    oStr.dUpAngle = Convert.ToDouble(txtUpAngleSt.Text);
                 }
 
-                if (txtBtnAngleSt.Text.ToString() == "")
+                if (txtBtnAngleSt.Text.ToString() == string.Empty)
                 {
                     oStr.dBtonAngle = null;
                 }
                 else
                 {
-                    oStr.dBtonAngle = double.Parse(txtBtnAngleSt.Text.ToString());
+                    oStr.dBtonAngle = Convert.ToDouble(txtBtnAngleSt.Text);
                 }
 
-                if (txtAppThickSt.Text.ToString() == "")
+                if (txtAppThickSt.Text.ToString() == string.Empty)
                 {
                     oStr.dAppThick = null;
                 }
                 else
                 {
-                    oStr.dAppThick = double.Parse(txtAppThickSt.Text.ToString());
+                    oStr.dAppThick = Convert.ToDouble(txtAppThickSt.Text);
                 }
 
-                if (cmbFillSt.SelectedValue.ToString() == "-1" || cmbFillSt.SelectedValue.ToString() == "")
+                if (cmbFillSt.SelectedValue.ToString() == "-1" || cmbFillSt.SelectedValue.ToString() == string.Empty)
                 {
                     oStr.sFill = null;
                 }
@@ -3213,16 +3321,16 @@ namespace LogginColombiaGold
                     oStr.sFill = cmbFillSt.SelectedValue.ToString();
                 }
 
-                if (txtNumberSt.Text.ToString() == "")
+                if (txtNumberSt.Text.ToString() == string.Empty)
                 {
                     oStr.dNumber = null;
                 }
                 else
                 {
-                    oStr.dNumber = double.Parse(txtNumberSt.Text.ToString());
+                    oStr.dNumber = Convert.ToDouble(txtNumberSt.Text);
                 }
 
-                if (cmbFillSt2.SelectedValue.ToString() == "-1" || cmbFillSt2.SelectedValue.ToString() == "")
+                if (cmbFillSt2.SelectedValue.ToString() == "-1" || cmbFillSt2.SelectedValue.ToString() == string.Empty)
                 {
                     oStr.sFill2 = null;
                 }
@@ -3231,7 +3339,7 @@ namespace LogginColombiaGold
                     oStr.sFill2 = cmbFillSt2.SelectedValue.ToString();
                 }
 
-                if (cmbFillSt3.SelectedValue.ToString() == "-1" || cmbFillSt3.SelectedValue.ToString() == "")
+                if (cmbFillSt3.SelectedValue.ToString() == "-1" || cmbFillSt3.SelectedValue.ToString() == string.Empty)
                 {
                     oStr.sFill3 = null;
                 }
@@ -3240,7 +3348,7 @@ namespace LogginColombiaGold
                     oStr.sFill3 = cmbFillSt3.SelectedValue.ToString();
                 }
 
-                if (cmbFillSt4.SelectedValue.ToString() == "-1" || cmbFillSt4.SelectedValue.ToString() == "")
+                if (cmbFillSt4.SelectedValue.ToString() == "-1" || cmbFillSt4.SelectedValue.ToString() == string.Empty)
                 {
                     oStr.sFill4 = null;
                 }
@@ -3249,25 +3357,23 @@ namespace LogginColombiaGold
                     oStr.sFill4 = cmbFillSt4.SelectedValue.ToString();
                 }
 
-                clsDH_Structures.sStaticFrom = txtToSt.Text.ToString();
+                clsDH_Structures.sStaticFrom = txtToSt.Text;
 
                 string sRespStr = oStr.DH_Structures_Add();
                 if (sRespStr == "OK")
                 {
-                    //MessageBox.Show("Saved");
                     FilldtStruct("2");
-
                     //Insertar el registro para el historial de transacciones por usuario
                     oRf.InsertTrans("DH_Structures", sEditStruct == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
                         "Hole ID: " + cmbHoleIDSt.SelectedValue.ToString() + "." +
-                        " From: " + txtFromSt.Text.ToString() + "." +
-                        " To: " + txtToSt.Text.ToString() + "." +
+                        " From: " + txtFromSt.Text + "." +
+                        " To: " + txtToSt.Text + "." +
                         " Type St: " + cmbStructureTypeSt.SelectedValue.ToString() + "." +
-                        " Angle To Axis: " + txtAngleToCorest.Text.ToString() + "." +
-                        " Up AnglD: " + txtUpAngleSt.Text.ToString() + "." +
-                        " Btn AnglD: " + txtBtnAngleSt.Text.ToString() + "." +
-                        " App Thick: " + txtAppThickSt.Text.ToString() + "." +
-                        " Number: " + txtNumberSt.Text.ToString());
+                        " Angle To Axis: " + txtAngleToCorest.Text + "." +
+                        " Up AnglD: " + txtUpAngleSt.Text + "." +
+                        " Btn AnglD: " + txtBtnAngleSt.Text + "." +
+                        " App Thick: " + txtAppThickSt.Text + "." +
+                        " Number: " + txtNumberSt.Text);
 
 
                     if (sEditStruct == "1")
@@ -3314,13 +3420,13 @@ namespace LogginColombiaGold
             try
             {
                 sEditStruct = "0";
-                txtAngleToCorest.Text = "";
-                txtBtnAngleSt.Text = "";
-                txtUpAngleSt.Text = "";
-                txtAppThickSt.Text = "";
-                txtNumberSt.Text = "";
-                txtCommentsSt.Text = "";
-                txtToSt.Text = "";
+                txtAngleToCorest.Text = string.Empty;
+                txtBtnAngleSt.Text = string.Empty;
+                txtUpAngleSt.Text = string.Empty;
+                txtAppThickSt.Text = string.Empty;
+                txtNumberSt.Text = string.Empty;
+                txtCommentsSt.Text = string.Empty;
+                txtToSt.Text = string.Empty;
                 cmbStructureTypeSt.SelectedValue = "-1";
                 cmbFillSt.SelectedValue = "-1";
                 cmbFillSt2.SelectedValue = "-1";
@@ -3358,37 +3464,37 @@ namespace LogginColombiaGold
                 txtToSt.Text = dgStructure.Rows[e.RowIndex].Cells["To"].Value.ToString();
 
 
-                cmbStructureTypeSt.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Type"].Value.ToString() == "" ?
+                cmbStructureTypeSt.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Type"].Value.ToString() == string.Empty ?
                     "-1" : dgStructure.Rows[e.RowIndex].Cells["Type"].Value.ToString();
 
-                txtAngleToCorest.Text = dgStructure.Rows[e.RowIndex].Cells["AngleToAxis"].Value.ToString() == "" ?
-                    "" : dgStructure.Rows[e.RowIndex].Cells["AngleToAxis"].Value.ToString();
+                txtAngleToCorest.Text = dgStructure.Rows[e.RowIndex].Cells["AngleToAxis"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["AngleToAxis"].Value.ToString();
 
-                txtCommentsSt.Text = dgStructure.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == "" ?
-                    "" : dgStructure.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
+                txtCommentsSt.Text = dgStructure.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
 
-                txtUpAngleSt.Text = dgStructure.Rows[e.RowIndex].Cells["UpAngle"].Value.ToString() == "" ?
-                    "" : dgStructure.Rows[e.RowIndex].Cells["UpAngle"].Value.ToString();
+                txtUpAngleSt.Text = dgStructure.Rows[e.RowIndex].Cells["UpAngle"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["UpAngle"].Value.ToString();
 
-                txtBtnAngleSt.Text = dgStructure.Rows[e.RowIndex].Cells["BtonAngle"].Value.ToString() == "" ?
-                    "" : dgStructure.Rows[e.RowIndex].Cells["BtonAngle"].Value.ToString();
+                txtBtnAngleSt.Text = dgStructure.Rows[e.RowIndex].Cells["BtonAngle"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["BtonAngle"].Value.ToString();
 
-                txtAppThickSt.Text = dgStructure.Rows[e.RowIndex].Cells["AppThick"].Value.ToString() == "" ?
-                    "" : dgStructure.Rows[e.RowIndex].Cells["AppThick"].Value.ToString();
+                txtAppThickSt.Text = dgStructure.Rows[e.RowIndex].Cells["AppThick"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["AppThick"].Value.ToString();
 
-                cmbFillSt.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill"].Value.ToString() == "" ?
+                cmbFillSt.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill"].Value.ToString() == string.Empty ?
                     "-1" : dgStructure.Rows[e.RowIndex].Cells["Fill"].Value.ToString();
 
-                txtNumberSt.Text = dgStructure.Rows[e.RowIndex].Cells["Number"].Value.ToString() == "" ?
-                    "" : dgStructure.Rows[e.RowIndex].Cells["Number"].Value.ToString();
+                txtNumberSt.Text = dgStructure.Rows[e.RowIndex].Cells["Number"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["Number"].Value.ToString();
 
-                cmbFillSt2.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill2"].Value.ToString() == "" ?
+                cmbFillSt2.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill2"].Value.ToString() == string.Empty ?
                     "-1" : dgStructure.Rows[e.RowIndex].Cells["Fill2"].Value.ToString();
 
-                cmbFillSt3.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill3"].Value.ToString() == "" ?
+                cmbFillSt3.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill3"].Value.ToString() == string.Empty ?
                     "-1" : dgStructure.Rows[e.RowIndex].Cells["Fill3"].Value.ToString();
 
-                cmbFillSt4.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill4"].Value.ToString() == "" ?
+                cmbFillSt4.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill4"].Value.ToString() == string.Empty ?
                     "-1" : dgStructure.Rows[e.RowIndex].Cells["Fill4"].Value.ToString();
 
             }
@@ -3459,17 +3565,26 @@ namespace LogginColombiaGold
             try
             {
                 //getRfMinerMin_List
-                oCollars.sHoleID = "";
+                oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
-                DataTable dtCollars = oCollars.getDHCollarsLogged();
-                DataRow drCGeo = dtCollars.NewRow();
-                drCGeo[0] = "Select an option..";
-                dtCollars.Rows.Add(drCGeo);
+                DataTable dHCollarsLogged = this.oCollars.getDHCollarsLogged();
+                DataRow dataRow = dHCollarsLogged.NewRow();
+                dataRow[0] = "Select an option..";
+                dHCollarsLogged.Rows.Add(dataRow);
                 cmbHoleIdMin.DisplayMember = "HoleID";
                 cmbHoleIdMin.ValueMember = "HoleID";
-                cmbHoleIdMin.DataSource = dtCollars;
+                cmbHoleIdMin.DataSource = dHCollarsLogged;
                 cmbHoleIdMin.SelectedValue = "Select an option..";
 
+                cmbHoleIdInfill.DisplayMember = "HoleID";
+                cmbHoleIdInfill.ValueMember = "HoleID";
+                cmbHoleIdInfill.DataSource = dHCollarsLogged;
+                cmbHoleIdInfill.SelectedValue = "Select an option..";
+
+                cmbHoleIdOxide.DisplayMember = "HoleID";
+                cmbHoleIdOxide.ValueMember = "HoleID";
+                cmbHoleIdOxide.DataSource = dHCollarsLogged;
+                cmbHoleIdOxide.SelectedValue = "Select an option..";
 
                 DataTable dtMineral = new DataTable();
                 dtMineral = oRf.getRfMinerMin_List();
@@ -3526,7 +3641,6 @@ namespace LogginColombiaGold
                 CargarCombosMin(dtGSizeMin, cmbGSizeMin1);
                 CargarCombosMin(dtGSizeMin, cmbGSizeMin2);
                 CargarCombosMin(dtGSizeMin, cmbGSizeMin3);
-
             }
             catch (Exception ex)
             {
@@ -3538,7 +3652,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 oCollars.sHoleID = cmbHoleIdMin.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
@@ -3554,7 +3668,7 @@ namespace LogginColombiaGold
                     sresp = "Selected an option Hole ID";
                     return sresp;
                 }
-                if (txtFromMin.Text == "" || txtToMin.Text == "")
+                if (txtFromMin.Text == string.Empty || txtToMin.Text == string.Empty)
                 {
                     sresp = "Empty From or To";
                     return sresp;
@@ -3579,7 +3693,7 @@ namespace LogginColombiaGold
                 }
 
 
-                if (txtMinPerc1.Text != "")
+                if (txtMinPerc1.Text != string.Empty)
                 {
                     if (double.Parse(txtMinPerc1.Text) > 100)
                     {
@@ -3588,7 +3702,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                if (txtMinPerc2.Text != "")
+                if (txtMinPerc2.Text != string.Empty)
                 {
                     if (double.Parse(txtMinPerc2.Text) > 100)
                     {
@@ -3597,7 +3711,7 @@ namespace LogginColombiaGold
                     }
                 }
 
-                if (txtMinPerc3.Text != "")
+                if (txtMinPerc3.Text != string.Empty)
                 {
                     if (double.Parse(txtMinPerc3.Text) > 100)
                     {
@@ -3654,7 +3768,6 @@ namespace LogginColombiaGold
                     drDup["Value"] =
                         conf.AppSettings.Settings[conf.AppSettings.Settings.AllKeys[i].ToString()].Value.ToString();
                     dtCryst_QX.Rows.Add(drDup);
-
                 }
 
             }
@@ -3679,7 +3792,7 @@ namespace LogginColombiaGold
             try
             {
                 string sResp = ControlsValidateMin().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Mineralizations", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -3724,11 +3837,11 @@ namespace LogginColombiaGold
                 oMiner.sHoleID = cmbHoleIdMin.SelectedValue.ToString();
                 oMiner.sMZ1Mineral = cmbM1Z1.SelectedValue.ToString();
 
-                /*if (txtUpAngleSt.Text.ToString() == "")
+                /*if (txtUpAngleSt.Text.ToString() == string.Empty)
                     oStr.dUpAngle = null;
                 else oStr.dUpAngle = double.Parse(txtUpAngleSt.Text.ToString());*/
 
-                if (cmbM1Z2.SelectedValue.ToString() == "-1" || cmbM1Z2.SelectedValue.ToString() == "")
+                if (cmbM1Z2.SelectedValue.ToString() == "-1" || cmbM1Z2.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ1Mineral2 = null;
                 }
@@ -3737,7 +3850,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ1Mineral2 = cmbM1Z2.SelectedValue.ToString();
                 }
 
-                if (cmbM1Z3.SelectedValue.ToString() == "-1" || cmbM1Z3.SelectedValue.ToString() == "")
+                if (cmbM1Z3.SelectedValue.ToString() == "-1" || cmbM1Z3.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ1Mineral3 = null;
                 }
@@ -3746,7 +3859,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ1Mineral3 = cmbM1Z3.SelectedValue.ToString();
                 }
 
-                if (txtMinPerc1.Text.ToString() == "")
+                if (txtMinPerc1.Text.ToString() == string.Empty)
                 {
                     oMiner.dMZ1Perc = null;
                 }
@@ -3755,7 +3868,7 @@ namespace LogginColombiaGold
                     oMiner.dMZ1Perc = double.Parse(txtMinPerc1.Text.ToString());
                 }
 
-                if (cmbStyleM1.SelectedValue.ToString() == "-1" || cmbStyleM1.SelectedValue.ToString() == "")
+                if (cmbStyleM1.SelectedValue.ToString() == "-1" || cmbStyleM1.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ1Style = null;
                 }
@@ -3764,7 +3877,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ1Style = cmbStyleM1.SelectedValue.ToString();
                 }
 
-                if (cmbM2Z1.SelectedValue.ToString() == "-1" || cmbM2Z1.SelectedValue.ToString() == "")
+                if (cmbM2Z1.SelectedValue.ToString() == "-1" || cmbM2Z1.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ2Mineral = null;
                 }
@@ -3773,7 +3886,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ2Mineral = cmbM2Z1.SelectedValue.ToString();
                 }
 
-                if (cmbM2Z2.SelectedValue.ToString() == "-1" || cmbM2Z2.SelectedValue.ToString() == "")
+                if (cmbM2Z2.SelectedValue.ToString() == "-1" || cmbM2Z2.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ2Mineral2 = null;
                 }
@@ -3782,7 +3895,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ2Mineral2 = cmbM2Z2.SelectedValue.ToString();
                 }
 
-                if (cmbM2Z3.SelectedValue.ToString() == "-1" || cmbM2Z3.SelectedValue.ToString() == "")
+                if (cmbM2Z3.SelectedValue.ToString() == "-1" || cmbM2Z3.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ2Mineral3 = null;
                 }
@@ -3791,7 +3904,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ2Mineral3 = cmbM2Z3.SelectedValue.ToString();
                 }
 
-                if (txtMinPerc2.Text.ToString() == "")
+                if (txtMinPerc2.Text.ToString() == string.Empty)
                 {
                     oMiner.dMZ2Perc = null;
                 }
@@ -3800,7 +3913,7 @@ namespace LogginColombiaGold
                     oMiner.dMZ2Perc = double.Parse(txtMinPerc2.Text.ToString());
                 }
 
-                if (cmbStyleM2.SelectedValue.ToString() == "-1" || cmbStyleM2.SelectedValue.ToString() == "")
+                if (cmbStyleM2.SelectedValue.ToString() == "-1" || cmbStyleM2.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ2Style = null;
                 }
@@ -3809,7 +3922,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ2Style = cmbStyleM2.SelectedValue.ToString();
                 }
 
-                if (cmbM3Z1.SelectedValue.ToString() == "-1" || cmbM3Z1.SelectedValue.ToString() == "")
+                if (cmbM3Z1.SelectedValue.ToString() == "-1" || cmbM3Z1.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ3Mineral = null;
                 }
@@ -3818,7 +3931,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ3Mineral = cmbM3Z1.SelectedValue.ToString();
                 }
 
-                if (cmbM3Z2.SelectedValue.ToString() == "-1" || cmbM3Z2.SelectedValue.ToString() == "")
+                if (cmbM3Z2.SelectedValue.ToString() == "-1" || cmbM3Z2.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ3Mineral2 = null;
                 }
@@ -3827,7 +3940,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ3Mineral2 = cmbM3Z2.SelectedValue.ToString();
                 }
 
-                if (cmbM3Z3.SelectedValue.ToString() == "-1" || cmbM3Z3.SelectedValue.ToString() == "")
+                if (cmbM3Z3.SelectedValue.ToString() == "-1" || cmbM3Z3.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ3Mineral3 = null;
                 }
@@ -3836,7 +3949,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ3Mineral3 = cmbM3Z3.SelectedValue.ToString();
                 }
 
-                if (txtMinPerc3.Text.ToString() == "")
+                if (txtMinPerc3.Text.ToString() == string.Empty)
                 {
                     oMiner.dMZ3Perc = null;
                 }
@@ -3845,7 +3958,7 @@ namespace LogginColombiaGold
                     oMiner.dMZ3Perc = double.Parse(txtMinPerc3.Text.ToString());
                 }
 
-                if (cmbStyleM3.SelectedValue.ToString() == "-1" || cmbStyleM3.SelectedValue.ToString() == "")
+                if (cmbStyleM3.SelectedValue.ToString() == "-1" || cmbStyleM3.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sMZ3Style = null;
                 }
@@ -3854,7 +3967,7 @@ namespace LogginColombiaGold
                     oMiner.sMZ3Style = cmbStyleM3.SelectedValue.ToString();
                 }
 
-                if (txtCommentsMin.Text.ToString() == "")
+                if (txtCommentsMin.Text.ToString() == string.Empty)
                 {
                     oMiner.sComments = null;
                 }
@@ -3863,7 +3976,7 @@ namespace LogginColombiaGold
                     oMiner.sComments = txtCommentsMin.Text.ToString();
                 }
 
-                if (cmbGSizeMin1.SelectedValue.ToString() == "-1" || cmbGSizeMin1.SelectedValue.ToString() == "")
+                if (cmbGSizeMin1.SelectedValue.ToString() == "-1" || cmbGSizeMin1.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sGSize1 = null;
                 }
@@ -3872,7 +3985,7 @@ namespace LogginColombiaGold
                     oMiner.sGSize1 = cmbGSizeMin1.SelectedValue.ToString();
                 }
 
-                if (cmbGSizeMin2.SelectedValue.ToString() == "-1" || cmbGSizeMin2.SelectedValue.ToString() == "")
+                if (cmbGSizeMin2.SelectedValue.ToString() == "-1" || cmbGSizeMin2.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sGSize2 = null;
                 }
@@ -3881,7 +3994,7 @@ namespace LogginColombiaGold
                     oMiner.sGSize2 = cmbGSizeMin2.SelectedValue.ToString();
                 }
 
-                if (cmbGSizeMin3.SelectedValue.ToString() == "-1" || cmbGSizeMin3.SelectedValue.ToString() == "")
+                if (cmbGSizeMin3.SelectedValue.ToString() == "-1" || cmbGSizeMin3.SelectedValue.ToString() == string.Empty)
                 {
                     oMiner.sGSize3 = null;
                 }
@@ -3989,63 +4102,63 @@ namespace LogginColombiaGold
                 txtFromMin.Text = dgMineraliz.Rows[e.RowIndex].Cells["From"].Value.ToString();
                 txtToMin.Text = dgMineraliz.Rows[e.RowIndex].Cells["To"].Value.ToString();
 
-                cmbM1Z1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral"].Value.ToString() == "" ?
+                cmbM1Z1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral"].Value.ToString();
 
-                cmbM1Z2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral2"].Value.ToString() == "" ?
+                cmbM1Z2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral2"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral2"].Value.ToString();
 
-                cmbM1Z3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral3"].Value.ToString() == "" ?
+                cmbM1Z3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral3"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Mineral3"].Value.ToString();
 
-                cmbM2Z1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral"].Value.ToString() == "" ?
+                cmbM2Z1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral"].Value.ToString();
 
-                cmbM2Z2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral2"].Value.ToString() == "" ?
+                cmbM2Z2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral2"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral2"].Value.ToString();
 
-                cmbM2Z3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral3"].Value.ToString() == "" ?
+                cmbM2Z3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral3"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Mineral3"].Value.ToString();
 
-                cmbM3Z1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral"].Value.ToString() == "" ?
+                cmbM3Z1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral"].Value.ToString();
 
-                cmbM3Z2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral2"].Value.ToString() == "" ?
+                cmbM3Z2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral2"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral2"].Value.ToString();
 
-                cmbM3Z3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral3"].Value.ToString() == "" ?
+                cmbM3Z3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral3"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Mineral3"].Value.ToString();
 
-                cmbStyleM1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Style"].Value.ToString() == "" ?
+                cmbStyleM1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Style"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Style"].Value.ToString();
 
-                cmbStyleM2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Style"].Value.ToString() == "" ?
+                cmbStyleM2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Style"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Style"].Value.ToString();
 
-                cmbStyleM3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Style"].Value.ToString() == "" ?
+                cmbStyleM3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Style"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Style"].Value.ToString();
 
-                txtMinPerc1.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString() == "" ?
-                     "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString();
+                txtMinPerc1.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString() == string.Empty ?
+                     string.Empty : dgMineraliz.Rows[e.RowIndex].Cells["MZ1Perc"].Value.ToString();
 
-                txtMinPerc2.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString() == "" ?
-                     "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString();
+                txtMinPerc2.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString() == string.Empty ?
+                     string.Empty : dgMineraliz.Rows[e.RowIndex].Cells["MZ2Perc"].Value.ToString();
 
-                txtMinPerc3.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString() == "" ?
-                     "" : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString();
+                txtMinPerc3.Text = dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString() == string.Empty ?
+                     string.Empty : dgMineraliz.Rows[e.RowIndex].Cells["MZ3Perc"].Value.ToString();
 
-                txtCommentsMin.Text = dgMineraliz.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == "" ?
-                    "" : dgMineraliz.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
+                txtCommentsMin.Text = dgMineraliz.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == string.Empty ?
+                    string.Empty : dgMineraliz.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
 
 
 
-                cmbGSizeMin1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["Gsize"].Value.ToString() == "" ?
+                cmbGSizeMin1.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["Gsize"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["Gsize"].Value.ToString();
 
-                cmbGSizeMin2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["Gsize2"].Value.ToString() == "" ?
+                cmbGSizeMin2.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["Gsize2"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["Gsize2"].Value.ToString();
 
-                cmbGSizeMin3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["Gsize3"].Value.ToString() == "" ?
+                cmbGSizeMin3.SelectedValue = dgMineraliz.Rows[e.RowIndex].Cells["Gsize3"].Value.ToString() == string.Empty ?
                     "-1" : dgMineraliz.Rows[e.RowIndex].Cells["Gsize3"].Value.ToString();
             }
             catch (Exception ex)
@@ -4064,12 +4177,12 @@ namespace LogginColombiaGold
             try
             {
                 sEditMiner = "0";
-                txtToMin.Text = "";
-                txtCommentsMin.Text = "";
+                txtToMin.Text = string.Empty;
+                txtCommentsMin.Text = string.Empty;
 
-                txtMinPerc1.Text = "";
-                txtMinPerc2.Text = "";
-                txtMinPerc3.Text = "";
+                txtMinPerc1.Text = string.Empty;
+                txtMinPerc2.Text = string.Empty;
+                txtMinPerc3.Text = string.Empty;
 
 
                 cmbM1Z1.SelectedValue = "-1";
@@ -4091,7 +4204,7 @@ namespace LogginColombiaGold
                 cmbGSizeMin3.SelectedValue = "-1";
                 //cmbHoleIdMin.SelectedValue = "Select an option..";
 
-                txtToMin.Text = "";
+                txtToMin.Text = string.Empty;
 
             }
             catch (Exception ex)
@@ -4218,9 +4331,9 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sValid = "";
+                string sValid = string.Empty;
 
-                if (_sValor.ToString() == "")
+                if (_sValor.ToString() == string.Empty)
                 {
                     MessageBox.Show("Value must greater than zero (0)", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return sValid;
@@ -4242,7 +4355,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (txtFromSt.Text.ToString() == "")
+                if (txtFromSt.Text.ToString() == string.Empty)
                 {
                     MessageBox.Show("Empty Depth", "Structure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtFromSt.Focus();
@@ -4259,7 +4372,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (txtRec_mGeo.Text.ToString() != "")
+                if (txtRec_mGeo.Text.ToString() != string.Empty)
                 {
                     txtRec_PorcGeo.Text = (double.Parse(txtRec_mGeo.Text.ToString()) /
                         double.Parse(txtDifferGeo.Text.ToString()) * 100).ToString();
@@ -4279,7 +4392,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (txtRQD_cmGeo.Text.ToString() != "")
+                if (txtRQD_cmGeo.Text.ToString() != string.Empty)
                 {
                     txtRQD_PorcGeo.Text = (double.Parse(txtRQD_cmGeo.Text.ToString()) /
                         double.Parse(txtDifferGeo.Text.ToString())).ToString();
@@ -4306,7 +4419,7 @@ namespace LogginColombiaGold
                 }
 
 
-                if (txtFromLit.Text.ToString() == "")
+                if (txtFromLit.Text.ToString() == string.Empty)
                 {
                     MessageBox.Show("From must greater than zero (0)", "Lithology", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtFromLit.Focus();
@@ -4335,7 +4448,7 @@ namespace LogginColombiaGold
                     txtFromLit.Text = "-99";
                 }
 
-                //if (txtToLit.Text.ToString() == "")
+                //if (txtToLit.Text.ToString() == string.Empty)
                 //{
                 //    MessageBox.Show("To must greater than zero (0)", "Lithology", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //    txtToLit.Focus();
@@ -4364,7 +4477,7 @@ namespace LogginColombiaGold
                     txtToWeat.Text = "-99";
                 }
 
-                if (txtFromWeat.Text.ToString() == "")
+                if (txtFromWeat.Text.ToString() == string.Empty)
                 {
                     MessageBox.Show("From must greater than zero (0)", "Weathering", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtFromWeat.Focus();
@@ -4392,7 +4505,7 @@ namespace LogginColombiaGold
                     txtFromWeat.Text = "-99";
                 }
 
-                //if (txtToWeat.Text.ToString() == "")
+                //if (txtToWeat.Text.ToString() == string.Empty)
                 //{
                 //    MessageBox.Show("To must greater than zero (0)", "Weathering", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //    txtToWeat.Focus();
@@ -4420,7 +4533,7 @@ namespace LogginColombiaGold
                     txtToMin.Text = "-99";
                 }
 
-                //if (txtFromMin.Text.ToString() == "")
+                //if (txtFromMin.Text.ToString() == string.Empty)
                 //{
                 //    MessageBox.Show("From must greater than zero (0)", "Mineralizations", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //    txtFromMin.Focus();
@@ -4449,7 +4562,7 @@ namespace LogginColombiaGold
                     txtFromMin.Text = "-99";
                 }
 
-                //if (txtToMin.Text.ToString() == "")
+                //if (txtToMin.Text.ToString() == string.Empty)
                 //{
                 //    MessageBox.Show("To must greater than zero (0)", "Mineralizations", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //    txtToMin.Focus();
@@ -4542,7 +4655,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 if (cmbHoleIDBox.SelectedValue.ToString() == "Select an option..")
                 {
@@ -4550,7 +4663,7 @@ namespace LogginColombiaGold
                     return sresp;
                 }
 
-                if (txtFromBox.Text == "" || txtToBox.Text == "")
+                if (txtFromBox.Text == string.Empty || txtToBox.Text == string.Empty)
                 {
                     sresp = "Empty From or To";
                     return sresp;
@@ -4594,7 +4707,7 @@ namespace LogginColombiaGold
             {
 
                 string sResp = ControlsValidateBox().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Box", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -4631,7 +4744,7 @@ namespace LogginColombiaGold
                 oBox.sHoleID = cmbHoleIDBox.SelectedValue.ToString();
                 oBox.iBox = int.Parse(txtNoBox.Text.ToString());
 
-                if (txtStand.Text.ToString() == "")
+                if (txtStand.Text.ToString() == string.Empty)
                 {
                     oBox.iStand = null;
                 }
@@ -4640,7 +4753,7 @@ namespace LogginColombiaGold
                     oBox.iStand = int.Parse(txtStand.Text.ToString());
                 }
 
-                if (txtColumnBox.Text.ToString() == "")
+                if (txtColumnBox.Text.ToString() == string.Empty)
                 {
                     oBox.sColumn = null;
                 }
@@ -4649,7 +4762,7 @@ namespace LogginColombiaGold
                     oBox.sColumn = txtColumnBox.Text.ToString();
                 }
 
-                if (txtRowBox.Text.ToString() == "")
+                if (txtRowBox.Text.ToString() == string.Empty)
                 {
                     oBox.sRow = null;
                 }
@@ -4658,7 +4771,7 @@ namespace LogginColombiaGold
                     oBox.sRow = txtRowBox.Text.ToString();
                 }
 
-                if (txtPhotoBox.Text.ToString() == "")
+                if (txtPhotoBox.Text.ToString() == string.Empty)
                 {
                     oBox.iPhoto = null;
                 }
@@ -4667,7 +4780,7 @@ namespace LogginColombiaGold
                     oBox.iPhoto = int.Parse(txtPhotoBox.Text.ToString());
                 }
 
-                if (txtEditPhotoBox.Text.ToString() == "")
+                if (txtEditPhotoBox.Text.ToString() == string.Empty)
                 {
                     oBox.iEditPhoto = null;
                 }
@@ -4726,13 +4839,13 @@ namespace LogginColombiaGold
                 oBox.iSKDHBox = 0;
                 sEditBox = "0";
 
-                txtToBox.Text = "";
-                txtNoBox.Text = "";
-                txtStand.Text = "";
-                txtColumnBox.Text = "";
-                txtRowBox.Text = "";
-                txtPhotoBox.Text = "";
-                txtEditPhotoBox.Text = "";
+                txtToBox.Text = string.Empty;
+                txtNoBox.Text = string.Empty;
+                txtStand.Text = string.Empty;
+                txtColumnBox.Text = string.Empty;
+                txtRowBox.Text = string.Empty;
+                txtPhotoBox.Text = string.Empty;
+                txtEditPhotoBox.Text = string.Empty;
 
             }
             catch (Exception ex)
@@ -4887,6 +5000,7 @@ namespace LogginColombiaGold
 
                 CargarCombosAlt(dtAlt, cmbTypeAlt);
                 CargarCombosAlt(dtAlt, cmbTypeAlt2);
+                CargarCombosAlt(dtAlt, cmbTypeAlt3);
 
                 CargarCombosAlt(dtAlt, cmbAltTypeDens);
 
@@ -4899,6 +5013,7 @@ namespace LogginColombiaGold
 
                 CargarCombosAlt(dtIntensity, cmbIntAlt);
                 CargarCombosAlt(dtIntensity, cmbIntAlt2);
+                CargarCombosAlt(dtIntensity, cmbIntAlt3);
 
                 CargarCombosAlt(dtIntensity, cmbAltIntensityDens);
 
@@ -4911,11 +5026,13 @@ namespace LogginColombiaGold
 
                 CargarCombosAlt(dtMinAlt, cmbMin1Alt);
                 CargarCombosAlt(dtMinAlt, cmbMin1Alt2);
+                CargarCombosAlt(dtMinAlt, cmbMin1Alt3);
                 CargarCombosAlt(dtMinAlt, cmbMin2Alt1);
                 CargarCombosAlt(dtMinAlt, cmbMin2Alt2);
+                CargarCombosAlt(dtMinAlt, cmbMin2Alt3);
                 CargarCombosAlt(dtMinAlt, cmbMin3Alt1);
                 CargarCombosAlt(dtMinAlt, cmbMin3Alt2);
-
+                CargarCombosAlt(dtMinAlt, cmbMin3Alt3);
 
                 DataTable dtStyleAlt = new DataTable();
                 dtStyleAlt = oRf.getRfStyleAlt_List();
@@ -4926,9 +5043,10 @@ namespace LogginColombiaGold
 
                 CargarCombosAlt(dtStyleAlt, cmbStyleAlt1);
                 CargarCombosAlt(dtStyleAlt, cmbStyleAlt2);
+                CargarCombosAlt(dtStyleAlt, cmbStyleAlt3);
                 CargarCombosAlt(dtStyleAlt, cmbStyleAlt12);
                 CargarCombosAlt(dtStyleAlt, cmbStyleAlt22);
-
+                CargarCombosAlt(dtStyleAlt, cmbStyleAlt33);
 
             }
             catch (Exception ex)
@@ -4961,7 +5079,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 if (cmbHoleIDAlt.SelectedValue.ToString() == "Select an option..")
                 {
@@ -4969,7 +5087,7 @@ namespace LogginColombiaGold
                     return sresp;
                 }
 
-                if (txtFromAlt.Text == "" || txtToAlt.Text == "")
+                if (txtFromAlt.Text == string.Empty || txtToAlt.Text == string.Empty)
                 {
                     sresp = "Empty From or To";
                     return sresp;
@@ -5023,24 +5141,30 @@ namespace LogginColombiaGold
                 oAlt.iSHDHAlterarions = 0;
                 sEditAlt = "0";
 
-                txtToAlt.Text = "";
-                txtCommentsAlt.Text = "";
+                txtToAlt.Text = string.Empty;
+                txtCommentsAlt.Text = string.Empty;
 
                 cmbTypeAlt.SelectedValue = "-1";
                 cmbTypeAlt2.SelectedValue = "-1";
+                cmbTypeAlt3.SelectedValue = "-1";
                 cmbIntAlt.SelectedValue = "-1";
                 cmbIntAlt2.SelectedValue = "-1";
+                cmbIntAlt3.SelectedValue = "-1";
                 cmbStyleAlt1.SelectedValue = "-1";
                 cmbStyleAlt2.SelectedValue = "-1";
+                cmbStyleAlt3.SelectedValue = "-1";
                 cmbMin1Alt.SelectedValue = "-1";
                 cmbMin1Alt2.SelectedValue = "-1";
+                cmbMin1Alt3.SelectedValue = "-1";
                 cmbMin2Alt1.SelectedValue = "-1";
                 cmbStyleAlt12.SelectedValue = "-1";
                 cmbStyleAlt22.SelectedValue = "-1";
+                cmbStyleAlt33.SelectedValue = "-1";
                 cmbMin2Alt2.SelectedValue = "-1";
+                cmbMin2Alt3.SelectedValue = "-1";
                 cmbMin3Alt1.SelectedValue = "-1";
                 cmbMin3Alt2.SelectedValue = "-1";
-
+                cmbMin3Alt3.SelectedValue = "-1";
             }
             catch (Exception ex)
             {
@@ -5053,7 +5177,7 @@ namespace LogginColombiaGold
             try
             {
                 string sResp = ControlsValidateAlt().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Alterations", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -5091,7 +5215,7 @@ namespace LogginColombiaGold
 
 
 
-                if (cmbTypeAlt2.SelectedValue.ToString() == "-1" || cmbTypeAlt2.SelectedValue.ToString() == "")
+                if (cmbTypeAlt2.SelectedValue.ToString() == "-1" || cmbTypeAlt2.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Type = null;
                 }
@@ -5100,7 +5224,18 @@ namespace LogginColombiaGold
                     oAlt.sA2Type = cmbTypeAlt2.SelectedValue.ToString();
                 }
 
-                if (cmbIntAlt.SelectedValue.ToString() == "-1" || cmbIntAlt.SelectedValue.ToString() == "")
+                if (cmbTypeAlt3.SelectedValue.ToString() == "-1" || cmbTypeAlt3.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Type = null;
+                }
+                else
+                {
+                    oAlt.sA3Type = cmbTypeAlt3.SelectedValue.ToString();
+                }
+
+
+
+                if (cmbIntAlt.SelectedValue.ToString() == "-1" || cmbIntAlt.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA1Int = null;
                 }
@@ -5109,7 +5244,7 @@ namespace LogginColombiaGold
                     oAlt.sA1Int = cmbIntAlt.SelectedValue.ToString();
                 }
 
-                if (cmbIntAlt2.SelectedValue.ToString() == "-1" || cmbIntAlt2.SelectedValue.ToString() == "")
+                if (cmbIntAlt2.SelectedValue.ToString() == "-1" || cmbIntAlt2.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Int = null;
                 }
@@ -5118,7 +5253,18 @@ namespace LogginColombiaGold
                     oAlt.sA2Int = cmbIntAlt2.SelectedValue.ToString();
                 }
 
-                if (cmbStyleAlt1.SelectedValue.ToString() == "-1" || cmbStyleAlt1.SelectedValue.ToString() == "")
+                if (cmbIntAlt3.SelectedValue.ToString() == "-1" || cmbIntAlt3.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Int = null;
+                }
+                else
+                {
+                    oAlt.sA3Int = this.cmbIntAlt3.SelectedValue.ToString();
+                }
+
+
+
+                if (cmbStyleAlt1.SelectedValue.ToString() == "-1" || cmbStyleAlt1.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA1Style = null;
                 }
@@ -5127,7 +5273,7 @@ namespace LogginColombiaGold
                     oAlt.sA1Style = cmbStyleAlt1.SelectedValue.ToString();
                 }
 
-                if (cmbStyleAlt2.SelectedValue.ToString() == "-1" || cmbStyleAlt2.SelectedValue.ToString() == "")
+                if (cmbStyleAlt2.SelectedValue.ToString() == "-1" || cmbStyleAlt2.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Style = null;
                 }
@@ -5136,7 +5282,18 @@ namespace LogginColombiaGold
                     oAlt.sA2Style = cmbStyleAlt2.SelectedValue.ToString();
                 }
 
-                if (cmbMin1Alt.SelectedValue.ToString() == "-1" || cmbMin1Alt.SelectedValue.ToString() == "")
+                if (cmbStyleAlt3.SelectedValue.ToString() == "-1" || cmbStyleAlt3.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Style = null;
+                }
+                else
+                {
+                    oAlt.sA3Style = this.cmbStyleAlt3.SelectedValue.ToString();
+                }
+
+
+
+                if (cmbMin1Alt.SelectedValue.ToString() == "-1" || cmbMin1Alt.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA1Min = null;
                 }
@@ -5145,7 +5302,7 @@ namespace LogginColombiaGold
                     oAlt.sA1Min = cmbMin1Alt.SelectedValue.ToString();
                 }
 
-                if (cmbMin1Alt2.SelectedValue.ToString() == "-1" || cmbMin1Alt2.SelectedValue.ToString() == "")
+                if (cmbMin1Alt2.SelectedValue.ToString() == "-1" || cmbMin1Alt2.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Min = null;
                 }
@@ -5154,7 +5311,18 @@ namespace LogginColombiaGold
                     oAlt.sA2Min = cmbMin1Alt2.SelectedValue.ToString();
                 }
 
-                if (txtCommentsAlt.Text.ToString() == "")
+                if (cmbMin1Alt3.SelectedValue.ToString() == "-1" || cmbMin1Alt3.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Min = null;
+                }
+                else
+                {
+                    oAlt.sA3Min = this.cmbMin1Alt3.SelectedValue.ToString();
+                }
+
+
+
+                if (txtCommentsAlt.Text.ToString() == string.Empty)
                 {
                     oAlt.sComments = null;
                 }
@@ -5163,7 +5331,9 @@ namespace LogginColombiaGold
                     oAlt.sComments = oAlt.sComments = txtCommentsAlt.Text.ToString();
                 }
 
-                if (cmbMin2Alt1.SelectedValue.ToString() == "-1" || cmbMin2Alt1.SelectedValue.ToString() == "")
+
+
+                if (cmbMin2Alt1.SelectedValue.ToString() == "-1" || cmbMin2Alt1.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA1Min2 = null;
                 }
@@ -5172,7 +5342,7 @@ namespace LogginColombiaGold
                     oAlt.sA1Min2 = cmbMin2Alt1.SelectedValue.ToString();
                 }
 
-                if (cmbMin2Alt2.SelectedValue.ToString() == "-1" || cmbMin2Alt2.SelectedValue.ToString() == "")
+                if (cmbMin2Alt2.SelectedValue.ToString() == "-1" || cmbMin2Alt2.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Min2 = null;
                 }
@@ -5181,7 +5351,17 @@ namespace LogginColombiaGold
                     oAlt.sA2Min2 = cmbMin2Alt2.SelectedValue.ToString();
                 }
 
-                if (cmbStyleAlt12.SelectedValue.ToString() == "-1" || cmbStyleAlt12.SelectedValue.ToString() == "")
+                if (cmbMin2Alt3.SelectedValue.ToString() == "-1" || cmbMin2Alt3.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Min2 = null;
+                }
+                else
+                {
+                    oAlt.sA3Min2 = this.cmbMin2Alt3.SelectedValue.ToString();
+                }
+
+
+                if (cmbStyleAlt12.SelectedValue.ToString() == "-1" || cmbStyleAlt12.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA1Style2 = null;
                 }
@@ -5190,7 +5370,7 @@ namespace LogginColombiaGold
                     oAlt.sA1Style2 = cmbStyleAlt12.SelectedValue.ToString();
                 }
 
-                if (cmbStyleAlt22.SelectedValue.ToString() == "-1" || cmbStyleAlt22.SelectedValue.ToString() == "")
+                if (cmbStyleAlt22.SelectedValue.ToString() == "-1" || cmbStyleAlt22.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Style2 = null;
                 }
@@ -5199,7 +5379,18 @@ namespace LogginColombiaGold
                     oAlt.sA2Style2 = cmbStyleAlt22.SelectedValue.ToString();
                 }
 
-                if (cmbMin3Alt1.SelectedValue.ToString() == "-1" || cmbMin3Alt1.SelectedValue.ToString() == "")
+                if (cmbStyleAlt33.SelectedValue.ToString() == "-1" || cmbStyleAlt33.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Style2 = null;
+                }
+                else
+                {
+                    oAlt.sA3Style2 = cmbStyleAlt33.SelectedValue.ToString();
+                }
+
+
+
+                if (cmbMin3Alt1.SelectedValue.ToString() == "-1" || cmbMin3Alt1.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA1Min3 = null;
                 }
@@ -5208,7 +5399,7 @@ namespace LogginColombiaGold
                     oAlt.sA1Min3 = cmbMin3Alt1.SelectedValue.ToString();
                 }
 
-                if (cmbMin3Alt2.SelectedValue.ToString() == "-1" || cmbMin3Alt2.SelectedValue.ToString() == "")
+                if (cmbMin3Alt2.SelectedValue.ToString() == "-1" || cmbMin3Alt2.SelectedValue.ToString() == string.Empty)
                 {
                     oAlt.sA2Min3 = null;
                 }
@@ -5216,6 +5407,17 @@ namespace LogginColombiaGold
                 {
                     oAlt.sA2Min3 = cmbMin3Alt2.SelectedValue.ToString();
                 }
+
+                if (cmbMin3Alt3.SelectedValue.ToString() == "-1" || cmbMin3Alt3.SelectedValue.ToString() == string.Empty)
+                {
+                    oAlt.sA3Min3 = null;
+                }
+                else
+                {
+                    oAlt.sA3Min3 = this.cmbMin3Alt3.SelectedValue.ToString();
+                }
+
+
 
                 clsDHAlterations.sStaticFrom = txtToAlt.Text.ToString();
 
@@ -5299,47 +5501,47 @@ namespace LogginColombiaGold
                 txtToAlt.Text = dgAlterations.Rows[e.RowIndex].Cells["To"].Value.ToString();
                 cmbTypeAlt.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Type"].Value.ToString();
 
-                cmbTypeAlt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Type"].Value.ToString() == "" ?
+                cmbTypeAlt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Type"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Type"].Value.ToString();
 
-                cmbIntAlt.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Int"].Value.ToString() == "" ?
+                cmbIntAlt.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Int"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A1Int"].Value.ToString();
 
-                cmbIntAlt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Int"].Value.ToString() == "" ?
+                cmbIntAlt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Int"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Int"].Value.ToString();
 
-                cmbStyleAlt1.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Style"].Value.ToString() == "" ?
+                cmbStyleAlt1.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Style"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A1Style"].Value.ToString();
 
-                cmbStyleAlt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Style"].Value.ToString() == "" ?
+                cmbStyleAlt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Style"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Style"].Value.ToString();
 
-                cmbMin1Alt.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Min"].Value.ToString() == "" ?
+                cmbMin1Alt.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Min"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A1Min"].Value.ToString();
 
-                cmbMin1Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min"].Value.ToString() == "" ?
+                cmbMin1Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Min"].Value.ToString();
 
-                txtCommentsAlt.Text = dgAlterations.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == "" ?
-                    "" : dgAlterations.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
+                txtCommentsAlt.Text = dgAlterations.Rows[e.RowIndex].Cells["Comments"].Value.ToString() == string.Empty ?
+                    string.Empty : dgAlterations.Rows[e.RowIndex].Cells["Comments"].Value.ToString();
 
-                cmbMin2Alt1.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Min2"].Value.ToString() == "" ?
+                cmbMin2Alt1.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Min2"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A1Min2"].Value.ToString();
 
-                cmbMin2Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min2"].Value.ToString() == "" ?
+                cmbMin2Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min2"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Min2"].Value.ToString();
 
-                cmbStyleAlt12.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Style2"].Value.ToString() == "" ?
+                cmbStyleAlt12.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Style2"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A1Style2"].Value.ToString();
 
-                cmbStyleAlt22.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Style2"].Value.ToString() == "" ?
+                cmbStyleAlt22.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Style2"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Style2"].Value.ToString();
 
 
-                cmbMin3Alt1.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Min3"].Value.ToString() == "" ?
+                cmbMin3Alt1.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A1Min3"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A1Min3"].Value.ToString();
 
-                cmbMin3Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min3"].Value.ToString() == "" ?
+                cmbMin3Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min3"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Min3"].Value.ToString();
             }
             catch (Exception ex)
@@ -5553,27 +5755,27 @@ namespace LogginColombiaGold
 
 
                     _oSheet.Cells[iInicial, 6] = dtAlterations.Rows[i]["A1Style2"].ToString()
-                           == "-1" ? "" : dtAlterations.Rows[i]["A1Style2"].ToString();
+                           == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Style2"].ToString();
                     _oSheet.Cells[iInicial, 7] = dtAlterations.Rows[i]["A1Min"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Min"].ToString();
                     _oSheet.Cells[iInicial, 8] = dtAlterations.Rows[i]["A1Min2"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min2"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Min2"].ToString();
                     _oSheet.Cells[iInicial, 9] = dtAlterations.Rows[i]["A1Min3"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min3"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Min3"].ToString();
                     _oSheet.Cells[iInicial, 10] = dtAlterations.Rows[i]["A2Type"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A2Type"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Type"].ToString();
                     _oSheet.Cells[iInicial, 11] = dtAlterations.Rows[i]["A2Int"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A2Int"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Int"].ToString();
                     _oSheet.Cells[iInicial, 12] = dtAlterations.Rows[i]["A2Style"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Style"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Style"].ToString();
                     _oSheet.Cells[iInicial, 13] = dtAlterations.Rows[i]["A2Style2"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Style2"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Style2"].ToString();
                     _oSheet.Cells[iInicial, 14] = dtAlterations.Rows[i]["A2Min"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Min"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min"].ToString();
                     _oSheet.Cells[iInicial, 15] = dtAlterations.Rows[i]["A2Min"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Min2"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min2"].ToString();
                     _oSheet.Cells[iInicial, 16] = dtAlterations.Rows[i]["A2Min3"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Min3"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min3"].ToString();
 
                     _oSheet.Cells[iInicial, 17] = dtAlterations.Rows[i]["Comments"].ToString();
 
@@ -5645,36 +5847,36 @@ namespace LogginColombiaGold
                     _oSheet.Cells[iInicial, 6] = dtMiner.Rows[i]["MZ1Mineral2"].ToString();
                     _oSheet.Cells[iInicial, 7] = dtMiner.Rows[i]["MZ1Mineral3"].ToString();
                     _oSheet.Cells[iInicial, 8] = dtMiner.Rows[i]["Gsize"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["Gsize"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["Gsize"].ToString();
 
                     //sEditGeo == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
                     _oSheet.Cells[iInicial, 9] = dtMiner.Rows[i]["MZ2Mineral"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Mineral"].ToString();
                     _oSheet.Cells[iInicial, 10] = dtMiner.Rows[i]["MZ2Mineral2"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral2"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Mineral2"].ToString();
                     _oSheet.Cells[iInicial, 11] = dtMiner.Rows[i]["MZ2Mineral3"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral3"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Mineral3"].ToString();
                     _oSheet.Cells[iInicial, 12] = dtMiner.Rows[i]["MZ2Style"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Style"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Style"].ToString();
                     _oSheet.Cells[iInicial, 13] = dtMiner.Rows[i]["MZ2Perc"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Perc"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Perc"].ToString();
 
                     _oSheet.Cells[iInicial, 14] = dtMiner.Rows[i]["GSize2"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["GSize2"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["GSize2"].ToString();
 
                     _oSheet.Cells[iInicial, 15] = dtMiner.Rows[i]["MZ3Mineral"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Mineral"].ToString();
                     _oSheet.Cells[iInicial, 16] = dtMiner.Rows[i]["MZ3Mineral2"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral2"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Mineral2"].ToString();
                     _oSheet.Cells[iInicial, 17] = dtMiner.Rows[i]["MZ3Mineral3"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral3"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Mineral3"].ToString();
                     _oSheet.Cells[iInicial, 18] = dtMiner.Rows[i]["MZ3Style"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Style"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Style"].ToString();
                     _oSheet.Cells[iInicial, 19] = dtMiner.Rows[i]["MZ3Perc"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Perc"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Perc"].ToString();
 
                     _oSheet.Cells[iInicial, 20] = dtMiner.Rows[i]["GSize3"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["GSize3"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["GSize3"].ToString();
 
                     _oSheet.Cells[iInicial, 21] = dtMiner.Rows[i]["Comments"].ToString();
 
@@ -6581,7 +6783,7 @@ namespace LogginColombiaGold
                         oSheet.Cells[iInicial, 2] = filterTableSampLitho.Rows[iL]["From"].ToString();
                         oSheet.Cells[iInicial, 3] = filterTableSampLitho.Rows[iL]["To"].ToString();
                         oSheet.Cells[iInicial, 4] = filterTableSampLitho.Rows[iL]["SampleType"].ToString();
-                        oSheet.Cells[iInicial, 5] = ""; //dtFromToNext.Rows[iL]["DupDe"].ToString();
+                        oSheet.Cells[iInicial, 5] = string.Empty; //dtFromToNext.Rows[iL]["DupDe"].ToString();
                         oSheet.Cells[iInicial, 6] = filterTableSampLitho.Rows[iL]["Lithology"].ToString();
                         oSheet.Cells[iInicial, 7] = filterTableSampLitho.Rows[iL]["error"].ToString();
                         iInicial += 1;
@@ -7355,6 +7557,21 @@ namespace LogginColombiaGold
 
                 #endregion
 
+                #region Oxides
+                oSheet = (Excel._Worksheet)oWB.Sheets["Oxides"];
+                DataTable dataOxide = (DataTable)dtgOxides.DataSource;
+                iInicial = 4;
+                for (int k = 0; k < dataOxide.Rows.Count; k++)
+                {
+                    oSheet.Cells[iInicial, 1] = dataOxide.Rows[k]["HoleID"].ToString();
+                    oSheet.Cells[iInicial, 2] = dataOxide.Rows[k]["From"].ToString();
+                    oSheet.Cells[iInicial, 3] = dataOxide.Rows[k]["To"].ToString();
+                    oSheet.Cells[iInicial, 4] = dataOxide.Rows[k]["Oxides"].ToString();
+                    oSheet.Cells[iInicial, 5] = dataOxide.Rows[k]["Rate"].ToString();
+                    iInicial++;
+                }
+                #endregion
+
                 #region Alterations
 
                 oSheet = (Excel._Worksheet)oWB.Sheets["Alterations"];//(Excel._Worksheet)oWB.ActiveSheet;
@@ -7373,27 +7590,42 @@ namespace LogginColombiaGold
                     oSheet.Cells[iInicial, 5] = dtAlterations.Rows[i]["A1Int"].ToString();
                     oSheet.Cells[iInicial, 6] = dtAlterations.Rows[i]["A1Style"].ToString();
                     oSheet.Cells[iInicial, 7] = dtAlterations.Rows[i]["A1Style2"].ToString()
-                           == "-1" ? "" : dtAlterations.Rows[i]["A1Style2"].ToString();
+                           == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Style2"].ToString();
                     oSheet.Cells[iInicial, 8] = dtAlterations.Rows[i]["A1Min"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Min"].ToString();
                     oSheet.Cells[iInicial, 9] = dtAlterations.Rows[i]["A1Min2"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min2"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Min2"].ToString();
                     oSheet.Cells[iInicial, 10] = dtAlterations.Rows[i]["A1Min3"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A1Min3"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A1Min3"].ToString();
                     oSheet.Cells[iInicial, 11] = dtAlterations.Rows[i]["A2Type"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A2Type"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Type"].ToString();
                     oSheet.Cells[iInicial, 12] = dtAlterations.Rows[i]["A2Int"].ToString()
-                        == "-1" ? "" : dtAlterations.Rows[i]["A2Int"].ToString();
+                        == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Int"].ToString();
                     oSheet.Cells[iInicial, 13] = dtAlterations.Rows[i]["A2Style"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Style"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Style"].ToString();
                     oSheet.Cells[iInicial, 14] = dtAlterations.Rows[i]["A2Style2"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Style2"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Style2"].ToString();
                     oSheet.Cells[iInicial, 15] = dtAlterations.Rows[i]["A2Min"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Min"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min"].ToString();
                     oSheet.Cells[iInicial, 16] = dtAlterations.Rows[i]["A2Min"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Min2"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min2"].ToString();
                     oSheet.Cells[iInicial, 17] = dtAlterations.Rows[i]["A2Min3"].ToString()
-                         == "-1" ? "" : dtAlterations.Rows[i]["A2Min3"].ToString();
+                         == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min3"].ToString();
+
+                    oSheet.Cells[iInicial, 18] = ((dtAlterations.Rows[i]["A3Type"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Type"].ToString());
+                    oSheet.Cells[iInicial, 19] = ((dtAlterations.Rows[i]["A3Int"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Int"].ToString());
+                    oSheet.Cells[iInicial, 20] = ((dtAlterations.Rows[i]["A3Style"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Style"].ToString());
+                    oSheet.Cells[iInicial, 21] = ((dtAlterations.Rows[i]["A3Style2"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Style2"].ToString());
+                    oSheet.Cells[iInicial, 22] = ((dtAlterations.Rows[i]["A3Min"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Min"].ToString());
+                    oSheet.Cells[iInicial, 23] = ((dtAlterations.Rows[i]["A3Min"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Min2"].ToString());
+                    oSheet.Cells[iInicial, 24] = ((dtAlterations.Rows[i]["A3Min3"].ToString() 
+                        == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Min3"].ToString());
 
                     oSheet.Cells[iInicial, 18] = dtAlterations.Rows[i]["Comments"].ToString();
 
@@ -7456,42 +7688,78 @@ namespace LogginColombiaGold
                     oSheet.Cells[iInicial, 8] = dtMiner.Rows[i]["MZ1Perc"].ToString();
 
                     oSheet.Cells[iInicial, 9] = dtMiner.Rows[i]["Gsize"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["Gsize"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["Gsize"].ToString();
 
                     //sEditGeo == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
                     oSheet.Cells[iInicial, 10] = dtMiner.Rows[i]["MZ2Mineral"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Mineral"].ToString();
                     oSheet.Cells[iInicial, 11] = dtMiner.Rows[i]["MZ2Mineral2"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral2"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Mineral2"].ToString();
                     oSheet.Cells[iInicial, 12] = dtMiner.Rows[i]["MZ2Mineral3"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Mineral3"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Mineral3"].ToString();
                     oSheet.Cells[iInicial, 13] = dtMiner.Rows[i]["MZ2Style"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Style"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Style"].ToString();
                     oSheet.Cells[iInicial, 14] = dtMiner.Rows[i]["MZ2Perc"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ2Perc"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ2Perc"].ToString();
 
                     oSheet.Cells[iInicial, 15] = dtMiner.Rows[i]["GSize2"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["GSize2"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["GSize2"].ToString();
 
                     oSheet.Cells[iInicial, 16] = dtMiner.Rows[i]["MZ3Mineral"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Mineral"].ToString();
                     oSheet.Cells[iInicial, 17] = dtMiner.Rows[i]["MZ3Mineral2"].ToString()
-                        == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral2"].ToString();
+                        == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Mineral2"].ToString();
                     oSheet.Cells[iInicial, 18] = dtMiner.Rows[i]["MZ3Mineral3"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Mineral3"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Mineral3"].ToString();
                     oSheet.Cells[iInicial, 19] = dtMiner.Rows[i]["MZ3Style"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Style"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Style"].ToString();
                     oSheet.Cells[iInicial, 20] = dtMiner.Rows[i]["MZ3Perc"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["MZ3Perc"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["MZ3Perc"].ToString();
 
                     oSheet.Cells[iInicial, 21] = dtMiner.Rows[i]["GSize3"].ToString()
-                         == "-1" ? "" : dtMiner.Rows[i]["GSize3"].ToString();
+                         == "-1" ? string.Empty : dtMiner.Rows[i]["GSize3"].ToString();
 
                     oSheet.Cells[iInicial, 22] = dtMiner.Rows[i]["Comments"].ToString();
 
                     iInicial += 1;
                 }
 
+                #endregion
+
+                #region Infill
+                oSheet = (Excel._Worksheet)oWB.Sheets["Infill"];
+                DataTable dataInfill = this.dtGeneralInfill;
+                iInicial = 4;
+                for (int numI = 0; numI < dataInfill.Rows.Count; numI++)
+                {
+                    oSheet.Cells[iInicial, 1] = dataInfill.Rows[numI]["HoleID"].ToString();
+                    oSheet.Cells[iInicial, 2] = dataInfill.Rows[numI]["From"].ToString();
+                    oSheet.Cells[iInicial, 3] = dataInfill.Rows[numI]["To"].ToString();
+                    oSheet.Cells[iInicial, 4] = dataInfill.Rows[numI]["InfillStage"].ToString();
+                    oSheet.Cells[iInicial, 5] = dataInfill.Rows[numI]["InfillType"].ToString();
+                    oSheet.Cells[iInicial, 6] = dataInfill.Rows[numI]["InfillNumber"].ToString();
+                    oSheet.Cells[iInicial, 7] = dataInfill.Rows[numI]["InfillAngleToAxis"].ToString();
+                    oSheet.Cells[iInicial, 8] = dataInfill.Rows[numI]["InfillStagePerc"].ToString();
+                    oSheet.Cells[iInicial, 9] = dataInfill.Rows[numI]["InfillMineralGange1"].ToString();
+                    oSheet.Cells[iInicial, 10] = dataInfill.Rows[numI]["InfillMineralGange1Texture"].ToString();
+                    oSheet.Cells[iInicial, 11] = dataInfill.Rows[numI]["InfillMineralGange1Perc"].ToString();
+                    oSheet.Cells[iInicial, 12] = dataInfill.Rows[numI]["InfillMineralGange2"].ToString();
+                    oSheet.Cells[iInicial, 13] = dataInfill.Rows[numI]["InfillMineralGange2Texture"].ToString();
+                    oSheet.Cells[iInicial, 14] = dataInfill.Rows[numI]["InfillMineralGange2Perc"].ToString();
+                    oSheet.Cells[iInicial, 15] = dataInfill.Rows[numI]["InfillMineralGange3"].ToString();
+                    oSheet.Cells[iInicial, 16] = dataInfill.Rows[numI]["InfillMineralGange3Texture"].ToString();
+                    oSheet.Cells[iInicial, 17] = dataInfill.Rows[numI]["InfillMineralGange3Perc"].ToString();
+                    oSheet.Cells[iInicial, 18] = dataInfill.Rows[numI]["InfillOreMineral1"].ToString();
+                    oSheet.Cells[iInicial, 19] = dataInfill.Rows[numI]["InfillOreMineral1Style"].ToString();
+                    oSheet.Cells[iInicial, 20] = dataInfill.Rows[numI]["InfillOreMineral1Perc"].ToString();
+                    oSheet.Cells[iInicial, 21] = dataInfill.Rows[numI]["InfillOreMineral2"].ToString();
+                    oSheet.Cells[iInicial, 22] = dataInfill.Rows[numI]["InfillOreMineral2Style"].ToString();
+                    oSheet.Cells[iInicial, 23] = dataInfill.Rows[numI]["InfillOreMineral2Perc"].ToString();
+                    oSheet.Cells[iInicial, 24] = dataInfill.Rows[numI]["InfillOreMineral3"].ToString();
+                    oSheet.Cells[iInicial, 25] = dataInfill.Rows[numI]["InfillOreMineral3Style"].ToString();
+                    oSheet.Cells[iInicial, 26] = dataInfill.Rows[numI]["InfillOreMineral3Perc"].ToString();
+                    iInicial++;
+                }
                 #endregion
 
                 #region Lithology
@@ -7673,7 +7941,7 @@ namespace LogginColombiaGold
             Thread.Sleep(100);
 
             DateTime start = DateTime.Now;
-            e.Result = "";
+            e.Result = string.Empty;
             for (int i = 0; i < 100; i++)
             {
                 System.Threading.Thread.Sleep(50);
@@ -7892,7 +8160,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                string sresp = "";
+                string sresp = string.Empty;
 
                 oCollars.sHoleID = cmbHoleIDSt.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
@@ -7915,7 +8183,7 @@ namespace LogginColombiaGold
                     return sresp;
                 }
 
-                if (txtSampleNoDens.ToString() == "")
+                if (txtSampleNoDens.ToString() == string.Empty)
                 {
                     sresp = " Empty Sample";
                     return sresp;
@@ -7935,7 +8203,7 @@ namespace LogginColombiaGold
             try
             {
                 string sResp = ControlsValidateDensity().ToString();
-                if (sResp.ToString() != "")
+                if (sResp.ToString() != string.Empty)
                 {
                     MessageBox.Show(sResp.ToString(), "Density", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -8147,19 +8415,19 @@ namespace LogginColombiaGold
                 sEditDens = "0";
                 oDens.iSKDHDensity = 0;
                 //cmbHoleIdDens.SelectedValue = "Select an option..";
-                txtBoxDens.Text = "";
+                txtBoxDens.Text = string.Empty;
                 //txtFromDens.Text = dgDensity.Rows[e.RowIndex].Cells["From"].Value.ToString();
-                txtToDens.Text = "";
-                txtLenghtDens.Text = "";
-                txtSampleNoDens.Text = "";
+                txtToDens.Text = string.Empty;
+                txtLenghtDens.Text = string.Empty;
+                txtSampleNoDens.Text = string.Empty;
                 cmbLithoDens.SelectedValue = "-1";
-                txtCommentsDens.Text = "";
+                txtCommentsDens.Text = string.Empty;
                 cmbVeinNameDens.SelectedValue = "Select an option...";
                 cmbTextureDens.SelectedValue = "-1";
                 cmbStructDens.SelectedValue = "-1";
                 cmbMineral1Dens.SelectedValue = "-1";
                 cmbMineral2Dens.SelectedValue = "-1";
-                txtSulphideDens.Text = "";
+                txtSulphideDens.Text = string.Empty;
                 cmbAltTypeDens.SelectedValue = "-1";
                 cmbAltIntensityDens.SelectedValue = "-1";
 
@@ -8255,10 +8523,10 @@ namespace LogginColombiaGold
             {
 
                 cmbLabDensM.SelectedValue = ConfigurationSettings.AppSettings["IDProjectGC"].ToString();
-                txtDrySampDensM.Text = "";
-                txtInmersedDensM.Text = "";
-                txtDensityDensM.Text = "";
-                txtMethodDensM.Text = "";
+                txtDrySampDensM.Text = string.Empty;
+                txtInmersedDensM.Text = string.Empty;
+                txtDensityDensM.Text = string.Empty;
+                txtMethodDensM.Text = string.Empty;
                 sEditDensM = "0";
 
             }
@@ -8456,6 +8724,9 @@ namespace LogginColombiaGold
             }
         }
 
+        //**************************************************************************************************//
+        // INFILL ***** ALVARO ARAUJO ARRIETA ///////////
+
         private void txtMinPerc1_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = Keypress(e);
@@ -8475,7 +8746,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (txtMinPerc1.Text != "")
+                if (txtMinPerc1.Text != string.Empty)
                 {
                     if (double.Parse(txtMinPerc1.Text) > 100)
                     {
@@ -8494,7 +8765,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (txtMinPerc2.Text != "")
+                if (txtMinPerc2.Text != string.Empty)
                 {
                     if (double.Parse(txtMinPerc2.Text) > 100)
                     {
@@ -8513,7 +8784,7 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (txtMinPerc3.Text != "")
+                if (txtMinPerc3.Text != string.Empty)
                 {
                     if (double.Parse(txtMinPerc3.Text) > 100)
                     {
@@ -8528,31 +8799,1382 @@ namespace LogginColombiaGold
             }
         }
 
-        //private void ValidFTT_Structures()
-        //{
-        //    try
-        //    {
-        //        switch (cmbStructureTypeSt.SelectedValue.ToString())
-        //        {
-        //            case "VEN":
-        //                break;
-        //            case "VNA":
-        //                break;
-        //            case "VNS":
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if (!ValidarValores())
+            {
+                return;
+            }
+
+            string sResp = ValidacionesDeControl().ToString();
+            if (sResp.ToString() != string.Empty)
+            {
+                MessageBox.Show(sResp.ToString(), "Infill", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!swConsulta)
+            {
+                ValidacionFromTo();
+            }
+
+            if (swConsulta)
+            {
+                ActualizarRegistroDataGrid(indexRegistroGrid);
+                return;
+            }
+
+            sEditInfill = "0";
+
+            if (swActualizaParaInsertar)
+            {
+                ActualizarRegistroDataGrid(indexRegistroGrid);
+                LimpiarControlesInffil();
+                swActualizaParaInsertar = false;
+                return;
+            }
+
+            if (!stagesAdicionados.Contains(cmbStage.SelectedValue.ToString()))
+            {
+                stagesAdicionados.Add((cmbStage.SelectedValue == null) ? "0" : cmbStage.SelectedValue.ToString());
+            }
+
+            string IFrom = txtFromInfill.Text.Contains(".") ? txtFromInfill.Text.Replace(".", ",") : (txtFromInfill.Text + ",00");
+            string ITo = txtToInfill.Text.Contains(".") ? txtToInfill.Text.Replace(".", ",") : (txtToInfill.Text + ",00");
+
+            if (IFrom.Length == 3)
+            {
+                IFrom = string.Concat(IFrom, "0");
+            }
+
+            if (ITo.Length == 3)
+            {
+                ITo = string.Concat(ITo, "0");
+            }
+
+            if (IFrom.Length == 1)
+            {
+                IFrom = string.Concat(IFrom, ",00");
+            }
+
+            if (ITo.Length == 1)
+            {
+                ITo = string.Concat(ITo, ",00");
+            }
+
+            if (!fromTosAdicionados.Contains(IFrom + ";" + ITo))
+            {
+                fromTosAdicionados.Add(IFrom + ";" + ITo);
+            }
+
+            dtgInfill.Rows.Add(cmbHoleIdInfill.Text, txtFromInfill.Text, txtToInfill.Text,
+                                cmbStage.SelectedValue.ToString(), cmbTypeInfill.SelectedValue.ToString(), txtNumberInfill.Text, txtAngleCore.Text,
+                                txtPorStage.Text,
+                                cmbGangueMin.SelectedValue.ToString(), cmbTexture.SelectedValue.ToString(), txtPorGangueMin.Text,
+                                cmbOreMin.SelectedValue.ToString(), cmbStyle.SelectedValue == null ? string.Empty : cmbStyle.SelectedValue,
+                                txtPorOreMin.Text,
+
+                                cmbGangueMin2.SelectedValue.ToString(), cmbTexture2.SelectedValue.ToString(), txtPorGangueMin2.Text,
+                                cmbOreMin2.SelectedValue.ToString(), cmbStyle2.SelectedValue == null ? string.Empty : cmbStyle2.SelectedValue,
+                                txtPorOreMin2.Text,
+
+                                cmbGangueMin3.SelectedValue.ToString(), cmbTexture3.SelectedValue.ToString(), txtPorGangueMin3.Text,
+                                cmbOreMin3.SelectedValue.ToString(), cmbStyle3.SelectedValue == null ? string.Empty : cmbStyle3.SelectedValue,
+                                txtPorOreMin3.Text);
+
+            LimpiarControlesInffil();
+        }
+
+        private void ActualizarRegistroDataGrid(int index)
+        {
+            if (dtgInfill.Rows.Count > 1)
+            {
+                dtgInfill.Rows[index].Cells[0].Value = cmbHoleIdInfill.SelectedValue;
+                dtgInfill.Rows[index].Cells[1].Value = txtFromInfill.Text;
+                dtgInfill.Rows[index].Cells[2].Value = txtToInfill.Text;
+                dtgInfill.Rows[index].Cells[3].Value = cmbStage.SelectedValue;
+                dtgInfill.Rows[index].Cells[4].Value = cmbTypeInfill.SelectedValue;
+                dtgInfill.Rows[index].Cells[5].Value = txtNumberInfill.Text;
+                dtgInfill.Rows[index].Cells[6].Value = txtAngleCore.Text;
+                dtgInfill.Rows[index].Cells[7].Value = txtPorStage.Text;
+                dtgInfill.Rows[index].Cells[8].Value = cmbGangueMin.SelectedValue;
+                dtgInfill.Rows[index].Cells[9].Value = cmbTexture.SelectedValue;
+                dtgInfill.Rows[index].Cells[10].Value = txtPorGangueMin.Text;
+                dtgInfill.Rows[index].Cells[11].Value = cmbOreMin.SelectedValue;
+                dtgInfill.Rows[index].Cells[12].Value = cmbStyle.SelectedValue;
+                dtgInfill.Rows[index].Cells[13].Value = txtPorOreMin.Text;
+                dtgInfill.Rows[index].Cells[14].Value = cmbGangueMin2.SelectedValue;
+                dtgInfill.Rows[index].Cells[15].Value = cmbTexture2.SelectedValue;
+                dtgInfill.Rows[index].Cells[16].Value = txtPorGangueMin2.Text;
+                dtgInfill.Rows[index].Cells[17].Value = cmbOreMin2.SelectedValue;
+                dtgInfill.Rows[index].Cells[18].Value = cmbStyle2.SelectedValue;
+                dtgInfill.Rows[index].Cells[19].Value = txtPorOreMin2.Text;
+                dtgInfill.Rows[index].Cells[20].Value = cmbGangueMin3.SelectedValue;
+                dtgInfill.Rows[index].Cells[21].Value = cmbTexture3.SelectedValue;
+                dtgInfill.Rows[index].Cells[22].Value = txtPorGangueMin3.Text;
+                dtgInfill.Rows[index].Cells[23].Value = cmbOreMin3.SelectedValue;
+                dtgInfill.Rows[index].Cells[24].Value = cmbStyle3.SelectedValue;
+                dtgInfill.Rows[index].Cells[25].Value = txtPorOreMin3.Text;
+                dtgInfill.Rows[index].Cells[26].Value = SkDHInfill;
+            }
+        }
+
+        private void LimpiarControlesInffil()
+        {
+            cmbTypeInfill.SelectedValue = string.Empty;
+            txtNumberInfill.Text = string.Empty;
+            txtAngleCore.Text = string.Empty;
+            cmbStage.SelectedValue = string.Empty;
+            txtPorStage.Text = string.Empty;
+            cmbGangueMin.SelectedValue = string.Empty;
+            cmbTexture.SelectedValue = string.Empty;
+            txtPorGangueMin.Text = string.Empty;
+            cmbGangueMin2.SelectedValue = string.Empty;
+            cmbTexture2.SelectedValue = string.Empty;
+            txtPorGangueMin2.Text = string.Empty;
+            cmbGangueMin3.SelectedValue = string.Empty;
+            cmbTexture3.SelectedValue = string.Empty;
+            txtPorGangueMin3.Text = string.Empty;
+            cmbOreMin.SelectedValue = string.Empty;
+            cmbStyle.SelectedValue = string.Empty;
+            txtPorOreMin.Text = string.Empty;
+            cmbOreMin2.SelectedValue = string.Empty;
+            cmbStyle2.SelectedValue = string.Empty;
+            txtPorOreMin2.Text = string.Empty;
+            cmbOreMin3.SelectedValue = string.Empty;
+            cmbStyle3.SelectedValue = string.Empty;
+            txtPorOreMin3.Text = string.Empty;
+        }
+
+        private void ValidacionFromTo()
+        {
+            string text = this.ControlsValidateInfill().ToString();
+            if (text.ToString() != string.Empty)
+            {
+                MessageBox.Show(text.ToString(), "Infill", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
+            DataTable dataValidate = new DataTable();
+            oInfill.dFrom = double.Parse(txtFromInfill.Text.ToString());
+            oInfill.dTo = double.Parse(txtToInfill.Text.ToString());
+            oInfill.sHoleID = cmbHoleIdInfill.SelectedValue.ToString();
+            dataValidate = oInfill.getDHInfillFromToValid();
+
+            if (dataValidate.Rows.Count > 0)
+            {
+                MessageBox.Show("Range 'From To' Overlaps", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private string ControlsValidateInfill()
+        {
+            string sresp = string.Empty;
+
+            try
+            {
+                oCollars.sHoleID = cmbHoleIdMin.SelectedValue.ToString();
+                DataTable dtCollars = oCollars.getDHCollars();
+                DataRow[] dato = dtCollars.Select("Length < '" + txtToMin.Text + "'");
+                if (dato.Length > 0)
+                {
+                    sresp = " 'To' greater than Hole Id lenght";
+                    return sresp;
+                }
+
+                if (cmbHoleIdInfill.SelectedValue.ToString() == "Select an option..")
+                {
+                    sresp = "Selected an option Hole ID";
+                    return sresp;
+                }
+
+                if (txtFromInfill.Text == string.Empty || txtToInfill.Text == string.Empty)
+                {
+                    sresp = "Empty From or To";
+                    return sresp;
+                }
+
+                if (txtFromInfill.Text != "-99")
+                {
+                    if (double.Parse(txtFromInfill.Text.ToString()) == double.Parse(txtToInfill.Text.ToString()))
+                    {
+                        sresp = " 'From' equal to 'To'";
+                        return sresp;
+                    }
+
+                    if (double.Parse(txtFromInfill.Text.ToString()) > double.Parse(txtToInfill.Text.ToString()))
+                    {
+                        sresp = " 'From' greater than 'To'";
+                        return sresp;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return sresp;
+        }
+
+        private void MenorIgual90(Control control)
+        {
+            if (Convert.ToDouble(control.Text == string.Empty ? "0" : control.Text) < 0)
+            {
+                control.Text = "0";
+            }
+
+            if (Convert.ToDouble(control.Text == string.Empty ? "0" : control.Text) > 90)
+            {
+                control.Text = "90";
+            }
+        }
+
+        private void MenorIgual50(Control control)
+        {
+            if (Convert.ToDouble(control.Text == string.Empty ? "0" : control.Text) < 0)
+            {
+                control.Text = "0";
+            }
+
+            if (Convert.ToDouble(control.Text == string.Empty ? "0" : control.Text) > 50)
+            {
+                control.Text = "50";
+            }
+        }
+
+        private string ValidacionesDeControl()
+        {
+            string sresp = string.Empty;
+
+            oCollars.sHoleID = cmbHoleIdInfill.SelectedValue.ToString();
+            DataTable dtCollars = oCollars.getDHCollars();
+            DataRow[] dato = dtCollars.Select("Length < '" + txtToInfill.Text + "'");
+            if (dato.Length > 0)
+            {
+                sresp = " 'To' greater than Hole Id lenght";
+                return sresp;
+            }
+
+            if (cmbHoleIdInfill.SelectedValue.ToString() == "Select an option..")
+            {
+                sresp = "Selected an option Hole ID";
+                return sresp;
+            }
+            if (txtFromInfill.Text == string.Empty || txtToInfill.Text == string.Empty)
+            {
+                sresp = "Empty From or To";
+                return sresp;
+            }
+            if (txtFromInfill.Text != "-99")
+            {
+                if (double.Parse(txtFromInfill.Text.ToString()) == double.Parse(txtToInfill.Text.ToString()))
+                {
+                    sresp = " 'From' equal to 'To'";
+                    return sresp;
+                }
+
+                if (double.Parse(txtFromInfill.Text.ToString()) > double.Parse(txtToInfill.Text.ToString()))
+                {
+                    sresp = " 'From' greater than 'To'";
+                    return sresp;
+                }
+            }
+
+            return sresp;
+        }
+
+        private bool ValidarValores()
+        {
+            if ((Convert.ToDouble(txtPorGangueMin.Text == string.Empty ? "0" : txtPorGangueMin.Text) + Convert.ToDouble(txtPorOreMin.Text == string.Empty ? "0" : txtPorOreMin.Text)) > 100)
+            {
+                MessageBox.Show("The sum % Gangue Mineral 1 and % Ore Mineral 1 cannot exceed 100.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPorGangueMin.Focus();
+                return false;
+            }
+
+            if ((Convert.ToDouble(txtPorGangueMin2.Text == string.Empty ? "0" : txtPorGangueMin2.Text) + Convert.ToDouble(txtPorOreMin2.Text == string.Empty ? "0" : txtPorOreMin2.Text)) > 100)
+            {
+                MessageBox.Show("The sum % Gangue Mineral 2 and % Ore Mineral 2 cannot exceed 100.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPorGangueMin2.Focus();
+                return false;
+            }
+
+            if ((Convert.ToDouble(txtPorGangueMin3.Text == string.Empty ? "0" : txtPorGangueMin3.Text) + Convert.ToDouble(txtPorOreMin3.Text == string.Empty ? "0" : txtPorOreMin3.Text)) > 100)
+            {
+                MessageBox.Show("The sum % Gangue Mineral 3 and % Ore Mineral 3 cannot exceed 100.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtPorGangueMin3.Focus();
+                return false;
+            }
+
+            if (cmbStage.Text != "0")
+            {
+                if (stagesAdicionados.Contains(cmbStage.Text))
+                {
+                    MessageBox.Show("The selected Stage already exists.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbStage.Focus();
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("The Stage is not selected.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbStage.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private void txtNumberInfill_Leave(object sender, EventArgs e)
+        {
+            MenorIgual50(txtNumberInfill);
+        }
+
+        private void txtAngleCore_Leave(object sender, EventArgs e)
+        {
+            MenorIgual90(txtAngleCore);
+        }
+
+        private void CargarCombos()
+        {
+            DataTable dtStage = new DataTable();
+            dtStage = oRf.getRfStage();
+            cmbStage.DisplayMember = "StageNom";
+            cmbStage.ValueMember = "StageNom";
+            cmbStage.DataSource = dtStage;
+            cmbStage.SelectedValue = string.Empty;
+
+            DataTable dtTypeInfill = new DataTable();
+            dtTypeInfill = oRf.getTypeInfill();
+            cmbTypeInfill.DisplayMember = "IdTypeInfill";
+            cmbTypeInfill.ValueMember = "IdTypeInfill";
+            cmbTypeInfill.DataSource = dtTypeInfill;
+            cmbTypeInfill.SelectedValue = string.Empty;
+
+            DataTable dtMineralInfill = new DataTable();
+            dtMineralInfill = oRf.getRfMineral(1);
+            cmbGangueMin.DisplayMember = "IdMineral";
+            cmbGangueMin.ValueMember = "IdMineral";
+            cmbGangueMin.DataSource = dtMineralInfill;
+            cmbGangueMin.SelectedValue = string.Empty;
+
+            DataTable dtMineralInfill2 = new DataTable();
+            dtMineralInfill2 = oRf.getRfMineral(1);
+            cmbGangueMin2.DisplayMember = "IdMineral";
+            cmbGangueMin2.ValueMember = "IdMineral";
+            cmbGangueMin2.DataSource = dtMineralInfill2;
+            cmbGangueMin2.SelectedValue = string.Empty;
+
+            DataTable dtMineralInfill3 = new DataTable();
+            dtMineralInfill3 = oRf.getRfMineral(1);
+            cmbGangueMin3.DisplayMember = "IdMineral";
+            cmbGangueMin3.ValueMember = "IdMineral";
+            cmbGangueMin3.DataSource = dtMineralInfill3;
+            cmbGangueMin3.SelectedValue = string.Empty;
 
 
+            DataTable dtTextureInfill = new DataTable();
+            dtTextureInfill = oRf.getRfTextureInfill();
+            cmbTexture.DisplayMember = "IdTextureInfill";
+            cmbTexture.ValueMember = "IdTextureInfill";
+            cmbTexture.DataSource = dtTextureInfill;
+            cmbTexture.SelectedValue = string.Empty;
+
+            DataTable dtTextureInfill2 = new DataTable();
+            dtTextureInfill2 = oRf.getRfTextureInfill();
+            cmbTexture2.DisplayMember = "IdTextureInfill";
+            cmbTexture2.ValueMember = "IdTextureInfill";
+            cmbTexture2.DataSource = dtTextureInfill2;
+            cmbTexture2.SelectedValue = string.Empty;
+
+            DataTable dtTextureInfill3 = new DataTable();
+            dtTextureInfill3 = oRf.getRfTextureInfill();
+            cmbTexture3.DisplayMember = "IdTextureInfill";
+            cmbTexture3.ValueMember = "IdTextureInfill";
+            cmbTexture3.DataSource = dtTextureInfill3;
+            cmbTexture3.SelectedValue = string.Empty;
 
 
+            DataTable dtOreMineralInfill = new DataTable();
+            dtOreMineralInfill = oRf.getRfMineral(2);
+            cmbOreMin.DisplayMember = "IdMineral";
+            cmbOreMin.ValueMember = "IdMineral";
+            cmbOreMin.DataSource = dtOreMineralInfill;
+            cmbOreMin.SelectedValue = string.Empty;
 
+            DataTable dtOreMineralInfill2 = new DataTable();
+            dtOreMineralInfill2 = oRf.getRfMineral(2);
+            cmbOreMin2.DisplayMember = "IdMineral";
+            cmbOreMin2.ValueMember = "IdMineral";
+            cmbOreMin2.DataSource = dtOreMineralInfill2;
+            cmbOreMin2.SelectedValue = string.Empty;
+
+            DataTable dtOreMineralInfill3 = new DataTable();
+            dtOreMineralInfill3 = oRf.getRfMineral(2);
+            cmbOreMin3.DisplayMember = "IdMineral";
+            cmbOreMin3.ValueMember = "IdMineral";
+            cmbOreMin3.DataSource = dtOreMineralInfill3;
+            cmbOreMin3.SelectedValue = string.Empty;
+            
+
+            DataTable dtMineralStyleInfill = new DataTable();
+            dtMineralStyleInfill = oRf.getRfMinerMinSt_List();
+            cmbStyle.DisplayMember = "Mine_Style_Cod";
+            cmbStyle.ValueMember = "Mine_Style_Cod";
+            cmbStyle.DataSource = dtMineralStyleInfill.Select("project like '%SEG%' and infill='1'");
+
+            DataTable dtMineralStyleInfill2 = new DataTable();
+            dtMineralStyleInfill2 = oRf.getRfMinerMinSt_List();
+            cmbStyle2.DisplayMember = "Mine_Style_Cod";
+            cmbStyle2.ValueMember = "Mine_Style_Cod";
+            cmbStyle2.DataSource = dtMineralStyleInfill2.Select("project like '%SEG%' and infill='1'");
+
+            DataTable dtMineralStyleInfill3 = new DataTable();
+            dtMineralStyleInfill3 = oRf.getRfMinerMinSt_List();
+            cmbStyle3.DisplayMember = "Mine_Style_Cod";
+            cmbStyle3.ValueMember = "Mine_Style_Cod";
+            cmbStyle3.DataSource = dtMineralStyleInfill3.Select("project like '%SEG%' and infill='1'");
+        }
+                
+
+        private void txtAngleCore_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender; 
+            solo_numeros(ref textbox, e);
+        }
+
+
+        public void solo_numeros(ref TextBox textbox, KeyPressEventArgs e)
+        {
+            char signo_decimal = (char)46; 
+
+            if (char.IsNumber(e.KeyChar) | valores_permitidos.Contains(e.KeyChar) |
+                e.KeyChar == (char)Keys.Escape | e.KeyChar == (char)Keys.Back)
+            {
+                e.Handled = false; 
+                return;
+            }
+            else if (e.KeyChar == signo_decimal)
+            {
+                if (textbox.Text.Length == 0 | textbox.Text.LastIndexOf(signo_decimal) >= 0)
+                {
+                    e.Handled = true; 
+                }
+                else
+                {
+                    e.KeyChar = Convert.ToChar(System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
+                    e.Handled = false; 
+                }
+                return;
+            }
+            else if (e.KeyChar == (char)13) 
+            {
+                e.Handled = true; 
+                SendKeys.Send("{TAB}"); 
+            }
+            else 
+            {
+                e.Handled = true; 
+            }
+        }
+
+        public void solo_numeros_KeyDown(ref TextBox textbox, KeyEventArgs e)
+        {
+            if (valores_permitidos.Contains(e.KeyValue) || (e.KeyCode == Keys.C && e.Control) ||
+            (e.KeyCode == Keys.V && e.Control) || (e.KeyCode == Keys.X && e.Control))
+                e.SuppressKeyPress = false;
+            else
+                e.SuppressKeyPress = true;
+        }
+
+        private void txtPorStage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtFromInfill_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtToInfill_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtPorGangueMin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtPorGangueMin2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtPorGangueMin3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtPorOreMin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtPorOreMin2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void txtPorOreMin3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            cmbHoleIdInfill.SelectedValue = string.Empty;
+            txtFromInfill.Text = string.Empty;
+            txtToInfill.Text = string.Empty;
+
+            cmbTypeInfill.SelectedValue = string.Empty;
+            txtNumberInfill.Text = string.Empty;
+            txtAngleCore.Text = string.Empty;
+            cmbStage.SelectedValue = string.Empty;
+            txtPorStage.Text = string.Empty;
+
+            cmbGangueMin.SelectedValue = string.Empty;
+            cmbTexture.SelectedValue = string.Empty;
+            txtPorGangueMin.Text = string.Empty;
+
+            cmbGangueMin2.SelectedValue = string.Empty;
+            cmbTexture2.SelectedValue = string.Empty;
+            txtPorGangueMin2.Text = string.Empty;
+
+            cmbGangueMin3.SelectedValue = string.Empty;
+            cmbTexture3.SelectedValue = string.Empty;
+            txtPorGangueMin3.Text = string.Empty;
+
+            cmbOreMin.SelectedValue = string.Empty;
+            cmbStyle.SelectedValue = string.Empty;
+            txtPorOreMin.Text = string.Empty;
+
+            cmbOreMin2.SelectedValue = string.Empty;
+            cmbStyle2.SelectedValue = string.Empty;
+            txtPorOreMin2.Text = string.Empty;
+
+            cmbOreMin3.SelectedValue = string.Empty;
+            cmbStyle3.SelectedValue = string.Empty;
+            txtPorOreMin3.Text = string.Empty;
+
+            dtgInfill.DataSource = null;
+            dtgInfill.Rows.Clear();
+            sEditInfill = "0";
+            swActualizarRegistro = false;
+            indexRegistroGrid = 0;
+            swConsulta = false;
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < fromTosAdicionados.Count; i++)
+                {
+                    for (int j = 0; j < dtgInfill.Rows.Count - 1; j++)
+                    {
+                        string IFrom = dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ",");
+                        string ITo = dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ",");
+
+                        if (IFrom.Length == 3)
+                        {
+                            IFrom = string.Concat(IFrom, "0");
+                        }
+
+                        if (ITo.Length == 3)
+                        {
+                            ITo = string.Concat(ITo, "0");
+                        }
+
+                        if (IFrom.Length == 1)
+                        {
+                            IFrom = string.Concat(IFrom, ",00");
+                        }
+
+                        if (ITo.Length == 1)
+                        {
+                            ITo = string.Concat(ITo, ",00");
+                        }
+
+                        if (fromTosAdicionados[i] == string.Concat(IFrom, ";", ITo))
+                        {
+                            if (sEditInfill == "1")
+                            {
+                                if (dtgInfill.Rows[j].Cells[26].Value == null || dtgInfill.Rows[j].Cells[26].Value.ToString() == string.Empty)
+                                {
+                                    DataTable dataTable = oInfill.DH_Infill_Consulta(dtgInfill.Rows[j].Cells[0].Value.ToString(), double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ",")), double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ",")));
+                                    if (dataTable.Rows.Count > 0 && dataTable.Rows[0][0].ToString() == "1")
+                                    {
+                                        oInfill.wHoleInfill = dtgInfill.Rows[j].Cells[0].Value.ToString();
+                                        oInfill.DH_Delete_Infill();
+                                    }
+                                    oInfill.sOpcion = "1";
+                                    oInfill.iDHInfillID = 0;
+                                }
+                                else
+                                {
+                                    oInfill.sOpcion = "2";
+                                    oInfill.iDHInfillID = Convert.ToInt32(dtgInfill.Rows[j].Cells[26].Value.ToString());
+                                }
+                            }
+                            else
+                            {
+                                DataTable dtConsultaInfiil = oInfill.DH_Infill_Consulta(dtgInfill.Rows[j].Cells[0].Value.ToString(), double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ",")), double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ",")));
+                                if (dtConsultaInfiil.Rows.Count > 0 && dtConsultaInfiil.Rows[0][0].ToString() == "1")
+                                {
+                                    oInfill.wHoleInfill = dtgInfill.Rows[j].Cells[0].Value.ToString();
+                                    oInfill.DH_Delete_Infill();
+                                }
+                                oInfill.sOpcion = "1";
+                                oInfill.iDHInfillID = 0;
+                            }
+
+                            oInfill.dFrom = double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ","));
+                            oInfill.dTo = double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ","));
+                            oInfill.sHoleID = dtgInfill.Rows[j].Cells[0].Value.ToString();
+
+                            if (Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString()) == 1)
+                            {
+                                oInfill.Infill1Stage = Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString());
+                                oInfill.Infill1Type = dtgInfill.Rows[j].Cells[4].Value.ToString();
+
+                                oInfill.Infill1Number = dtgInfill.Rows[j].Cells[5].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[5].Value.ToString());
+                                oInfill.Infill1Angle = dtgInfill.Rows[j].Cells[6].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[6].Value.ToString());
+                                oInfill.Infill1StagePerc = dtgInfill.Rows[j].Cells[7].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[7].Value.ToString());
+
+                                oInfill.Infill1MineralGange1 = dtgInfill.Rows[j].Cells[8].Value.ToString();
+                                oInfill.Infill1MineralGange1Texture = dtgInfill.Rows[j].Cells[9].Value.ToString();
+                                oInfill.Infill1MineralGange1Perc = dtgInfill.Rows[j].Cells[10].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[10].Value.ToString());
+
+                                oInfill.Infill1MineralGange2 = dtgInfill.Rows[j].Cells[14].Value.ToString();
+                                oInfill.Infill1MineralGange2Texture = dtgInfill.Rows[j].Cells[15].Value.ToString();
+                                oInfill.Infill1MineralGange2Perc = dtgInfill.Rows[j].Cells[16].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[16].Value.ToString());
+
+                                oInfill.Infill1MineralGange3 = dtgInfill.Rows[j].Cells[20].Value.ToString();
+                                oInfill.Infill1MineralGange3Texture = dtgInfill.Rows[j].Cells[21].Value.ToString();
+                                oInfill.Infill1MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
+
+                                oInfill.Infill1OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
+                                oInfill.Infill1OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill1OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
+
+                                oInfill.Infill1OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
+                                oInfill.Infill1OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill1OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
+
+                                oInfill.Infill1OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
+                                oInfill.Infill1OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill1OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
+                            }
+
+                            if (Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString()) == 2)
+                            {
+                                oInfill.Infill2Stage = Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString());
+                                oInfill.Infill2Type = dtgInfill.Rows[j].Cells[4].Value.ToString();
+
+                                oInfill.Infill2Number = dtgInfill.Rows[j].Cells[5].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[5].Value.ToString());
+                                oInfill.Infill2Angle = dtgInfill.Rows[j].Cells[6].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[6].Value.ToString());
+                                oInfill.Infill2StagePerc = dtgInfill.Rows[j].Cells[7].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[7].Value.ToString());
+
+                                oInfill.Infill2MineralGange1 = dtgInfill.Rows[j].Cells[8].Value.ToString();
+                                oInfill.Infill2MineralGange1Texture = dtgInfill.Rows[j].Cells[9].Value.ToString();
+                                oInfill.Infill2MineralGange1Perc = dtgInfill.Rows[j].Cells[10].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[10].Value.ToString());
+
+                                oInfill.Infill2MineralGange2 = dtgInfill.Rows[j].Cells[14].Value.ToString();
+                                oInfill.Infill2MineralGange2Texture = dtgInfill.Rows[j].Cells[15].Value.ToString();
+                                oInfill.Infill2MineralGange2Perc = dtgInfill.Rows[j].Cells[16].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[16].Value.ToString());
+
+                                oInfill.Infill2MineralGange3 = dtgInfill.Rows[j].Cells[20].Value.ToString();
+                                oInfill.Infill2MineralGange3Texture = dtgInfill.Rows[j].Cells[21].Value.ToString();
+                                oInfill.Infill2MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
+
+                                oInfill.Infill2OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
+                                oInfill.Infill2OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill2OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
+
+                                oInfill.Infill2OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
+                                oInfill.Infill2OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill2OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
+
+                                oInfill.Infill2OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
+                                oInfill.Infill2OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill2OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
+                            }
+
+                            if (Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString()) == 3)
+                            {
+                                oInfill.Infill3Stage = Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString());
+                                oInfill.Infill3Type = dtgInfill.Rows[j].Cells[4].Value.ToString();
+
+                                oInfill.Infill3Number = dtgInfill.Rows[j].Cells[5].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[5].Value.ToString());
+                                oInfill.Infill3Angle = dtgInfill.Rows[j].Cells[6].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[6].Value.ToString());
+                                oInfill.Infill3StagePerc = dtgInfill.Rows[j].Cells[7].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[7].Value.ToString());
+
+                                oInfill.Infill3MineralGange1 = dtgInfill.Rows[j].Cells[8].Value.ToString();
+                                oInfill.Infill3MineralGange1Texture = dtgInfill.Rows[j].Cells[9].Value.ToString();
+                                oInfill.Infill3MineralGange1Perc = dtgInfill.Rows[j].Cells[10].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[10].Value.ToString());
+
+                                oInfill.Infill3MineralGange2 = dtgInfill.Rows[j].Cells[14].Value.ToString();
+                                oInfill.Infill3MineralGange2Texture = dtgInfill.Rows[j].Cells[15].Value.ToString();
+                                oInfill.Infill3MineralGange2Perc = dtgInfill.Rows[j].Cells[16].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[16].Value.ToString());
+
+                                oInfill.Infill3MineralGange3 = dtgInfill.Rows[j].Cells[20].Value.ToString();
+                                oInfill.Infill3MineralGange3Texture = dtgInfill.Rows[j].Cells[21].Value.ToString();
+                                oInfill.Infill3MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
+
+                                oInfill.Infill3OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
+                                oInfill.Infill3OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill3OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
+
+                                oInfill.Infill3OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
+                                oInfill.Infill3OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill3OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
+
+                                oInfill.Infill3OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
+                                oInfill.Infill3OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill3OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
+                            }
+
+                            if (Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString()) == 4)
+                            {
+                                oInfill.Infill4Stage = Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString());
+                                oInfill.Infill4Type = dtgInfill.Rows[j].Cells[4].Value.ToString();
+
+                                oInfill.Infill4Number = dtgInfill.Rows[j].Cells[5].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[5].Value.ToString());
+                                oInfill.Infill4Angle = dtgInfill.Rows[j].Cells[6].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[6].Value.ToString());
+                                oInfill.Infill4StagePerc = dtgInfill.Rows[j].Cells[7].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[7].Value.ToString());
+
+                                oInfill.Infill4MineralGange1 = dtgInfill.Rows[j].Cells[8].Value.ToString();
+                                oInfill.Infill4MineralGange1Texture = dtgInfill.Rows[j].Cells[9].Value.ToString();
+                                oInfill.Infill4MineralGange1Perc = dtgInfill.Rows[j].Cells[10].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[10].Value.ToString());
+
+                                oInfill.Infill4MineralGange2 = dtgInfill.Rows[j].Cells[14].Value.ToString();
+                                oInfill.Infill4MineralGange2Texture = dtgInfill.Rows[j].Cells[15].Value.ToString();
+                                oInfill.Infill4MineralGange2Perc = dtgInfill.Rows[j].Cells[16].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[16].Value.ToString());
+
+                                oInfill.Infill4MineralGange3 = dtgInfill.Rows[j].Cells[20].Value.ToString();
+                                oInfill.Infill4MineralGange3Texture = dtgInfill.Rows[j].Cells[21].Value.ToString();
+                                oInfill.Infill4MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
+
+                                oInfill.Infill4OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
+                                oInfill.Infill4OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill4OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
+
+                                oInfill.Infill4OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
+                                oInfill.Infill4OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill4OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
+
+                                oInfill.Infill4OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
+                                oInfill.Infill4OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill4OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
+                            }
+                        }//End iff
+                    }//End for
+
+                    string sRespInfill = oInfill.DH_Infill_Add();
+                    if (sRespInfill == "OK")
+                    {
+                        oRf.InsertTrans("DH_Infill", sEditInfill == "2" ? "Update" : "Insert", clsRf.sUser.ToString(),
+                                        "Hole ID: " + dtgInfill.Rows[0].Cells[0].Value.ToString() + "." +
+                                        " From: " + dtgInfill.Rows[0].Cells[1].Value.ToString() + "." +
+                                        " To: " + dtgInfill.Rows[0].Cells[2].Value.ToString());
+
+                        ReiniciarObjetosInfill();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error Insert: " + sRespInfill, "Infill", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+
+                if (sEditInfill == "1" && dtgInfill.Rows.Count > 1)
+                {
+                    dtgInfill.Rows[indexRegistroGrid].Selected = true;
+                    dtgInfill.CurrentCell = dtgInfill.Rows[indexRegistroGrid].Cells[1];
+                }
+
+                MessageBox.Show("Records saved successfully", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                btnCancelar_Click(null, null);
+                if (!swActualizaParaInsertar)
+                {
+                    fromTosAdicionados = new List<string>();
+                    stagesAdicionados = new List<string>();
+                }
+                if (dtgInfill.Rows.Count - 1 > 1)
+                {
+                    sEditInfill = "1";
+                }
+                else
+                {
+                    sEditInfill = "0";
+                }
+
+                FilldgInfill();
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType().ToString() != "System.NullReferenceException")
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                { MessageBox.Show("You must enter all required records", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            }
+        }
+
+        private void ReiniciarObjetosInfill()
+        {
+            oInfill.Infill1Stage = null;
+            oInfill.Infill1Type = string.Empty;
+            oInfill.Infill1Number = null;
+            oInfill.Infill1Angle = null;
+            oInfill.Infill1StagePerc = null;
+            oInfill.Infill1MineralGange1 = string.Empty;
+            oInfill.Infill1MineralGange1Texture = string.Empty;
+            oInfill.Infill1MineralGange1Perc = null;
+            oInfill.Infill1MineralGange2 = string.Empty;
+            oInfill.Infill1MineralGange2Texture = string.Empty;
+            oInfill.Infill1MineralGange2Perc = null;
+            oInfill.Infill1MineralGange3 = string.Empty;
+            oInfill.Infill1MineralGange3Texture = string.Empty;
+            oInfill.Infill1MineralGange3Perc = null;
+            oInfill.Infill1OreMineral1 = string.Empty;
+            oInfill.Infill1OreMineral1Style = string.Empty;
+            oInfill.Infill1OreMineral1Perc = null;
+            oInfill.Infill1OreMineral2 = string.Empty;
+            oInfill.Infill1OreMineral2Style = string.Empty;
+            oInfill.Infill1OreMineral2Perc = null;
+            oInfill.Infill1OreMineral3 = string.Empty;
+            oInfill.Infill1OreMineral3Style = string.Empty;
+            oInfill.Infill1OreMineral3Perc = null;
+            oInfill.Infill2Stage = null;
+            oInfill.Infill2Type = string.Empty;
+            oInfill.Infill2Number = null;
+            oInfill.Infill2Angle = null;
+            oInfill.Infill2StagePerc = null;
+            oInfill.Infill2MineralGange1 = string.Empty;
+            oInfill.Infill2MineralGange1Texture = string.Empty;
+            oInfill.Infill2MineralGange1Perc = null;
+            oInfill.Infill2MineralGange2 = string.Empty;
+            oInfill.Infill2MineralGange2Texture = string.Empty;
+            oInfill.Infill2MineralGange2Perc = null;
+            oInfill.Infill2MineralGange3 = string.Empty;
+            oInfill.Infill2MineralGange3Texture = string.Empty;
+            oInfill.Infill2MineralGange3Perc = null;
+            oInfill.Infill2OreMineral1 = string.Empty;
+            oInfill.Infill2OreMineral1Style = string.Empty;
+            oInfill.Infill2OreMineral1Perc = null;
+            oInfill.Infill2OreMineral2 = string.Empty;
+            oInfill.Infill2OreMineral2Style = string.Empty;
+            oInfill.Infill2OreMineral2Perc = null;
+            oInfill.Infill2OreMineral3 = string.Empty;
+            oInfill.Infill2OreMineral3Style = string.Empty;
+            oInfill.Infill2OreMineral3Perc = null;
+            oInfill.Infill3Stage = null;
+            oInfill.Infill3Type = string.Empty;
+            oInfill.Infill3Number = null;
+            oInfill.Infill3Angle = null;
+            oInfill.Infill3StagePerc = null;
+            oInfill.Infill3MineralGange1 = string.Empty;
+            oInfill.Infill3MineralGange1Texture = string.Empty;
+            oInfill.Infill3MineralGange1Perc = null;
+            oInfill.Infill3MineralGange2 = string.Empty;
+            oInfill.Infill3MineralGange2Texture = string.Empty;
+            oInfill.Infill3MineralGange2Perc = null;
+            oInfill.Infill3MineralGange3 = string.Empty;
+            oInfill.Infill3MineralGange3Texture = string.Empty;
+            oInfill.Infill3MineralGange3Perc = null;
+            oInfill.Infill3OreMineral1 = string.Empty;
+            oInfill.Infill3OreMineral1Style = string.Empty;
+            oInfill.Infill3OreMineral1Perc = null;
+            oInfill.Infill3OreMineral2 = string.Empty;
+            oInfill.Infill3OreMineral2Style = string.Empty;
+            oInfill.Infill3OreMineral2Perc = null;
+            oInfill.Infill3OreMineral3 = string.Empty;
+            oInfill.Infill3OreMineral3Style = string.Empty;
+            oInfill.Infill3OreMineral3Perc = null;
+            oInfill.Infill4Stage = null;
+            oInfill.Infill4Type = string.Empty;
+            oInfill.Infill4Number = null;
+            oInfill.Infill4Angle = null;
+            oInfill.Infill4StagePerc = null;
+            oInfill.Infill4MineralGange1 = string.Empty;
+            oInfill.Infill4MineralGange1Texture = string.Empty;
+            oInfill.Infill4MineralGange1Perc = null;
+            oInfill.Infill4MineralGange2 = string.Empty;
+            oInfill.Infill4MineralGange2Texture = string.Empty;
+            oInfill.Infill4MineralGange2Perc = null;
+            oInfill.Infill4MineralGange3 = string.Empty;
+            oInfill.Infill4MineralGange3Texture = string.Empty;
+            oInfill.Infill4MineralGange3Perc = null;
+            oInfill.Infill4OreMineral1 = string.Empty;
+            oInfill.Infill4OreMineral1Style = string.Empty;
+            oInfill.Infill4OreMineral1Perc = null;
+            oInfill.Infill4OreMineral2 = string.Empty;
+            oInfill.Infill4OreMineral2Style = string.Empty;
+            oInfill.Infill4OreMineral2Perc = null;
+            oInfill.Infill4OreMineral3 = string.Empty;
+            oInfill.Infill4OreMineral3Style = string.Empty;
+            oInfill.Infill4OreMineral3Perc = null;
+        }
+
+        private void FilldgInfill()
+        {
+            try
+            {
+                DataTable dtInfil = new DataTable();
+                oInfill.sHoleID = cmbHoleIdInfill.SelectedValue.ToString();
+                dtInfil = oInfill.getDHInfill();
+
+                dtGeneralInfill = new DataTable();
+                dtGeneralInfill = dtInfil;
+
+                dtgInfill.Rows.Clear();
+
+                if (dtInfil.Rows.Count > 0)
+                {
+                    foreach (DataRow infill in dtInfil.Rows)
+                    {
+                        if (infill[4].ToString() != string.Empty && !stagesAdicionados.Contains(infill[4].ToString()))
+                        {
+                            stagesAdicionados.Add(infill[4].ToString());
+                        }
+
+                        if (infill[2].ToString() != string.Empty && infill[3].ToString() != string.Empty)
+                        {
+                            string strFrom = infill[2].ToString();
+                            string strTo = infill[3].ToString();
+                            if (!fromTosAdicionados.Contains(strFrom + ";" + strTo))
+                            {
+                                fromTosAdicionados.Add(strFrom + ";" + strTo);
+                            }
+                        }
+
+                        dtgInfill.Rows.Add(infill[1].ToString(), infill[2].ToString(), infill[3].ToString(), infill[4].ToString(),
+
+                                           infill[5].ToString(), infill[6].ToString(), infill[7].ToString(), infill[8].ToString() != string.Empty ? Convert.ToDecimal(infill[8].ToString()).ToString("N2") : string.Empty,
+
+                                           infill[9].ToString(), infill[10].ToString(), infill[11].ToString() != string.Empty ? Convert.ToDecimal(infill[11].ToString()).ToString("N2") : string.Empty,
+                                           infill[18].ToString(), infill[19].ToString(), infill[20].ToString() != string.Empty ? Convert.ToDecimal(infill[20].ToString()).ToString("N2") : string.Empty,
+
+                                           infill[12].ToString(), infill[13].ToString(), infill[14].ToString() != string.Empty ? Convert.ToDecimal(infill[14].ToString()).ToString("N2") : string.Empty,
+                                           infill[21].ToString(), infill[22].ToString(), infill[23].ToString() != string.Empty ? Convert.ToDecimal(infill[23].ToString()).ToString("N2") : string.Empty,
+
+                                           infill[15].ToString(), infill[16].ToString(), infill[17].ToString() != string.Empty ? Convert.ToDecimal(infill[17].ToString()).ToString("N2") : string.Empty,
+                                           infill[24].ToString(), infill[25].ToString(), infill[26].ToString() != string.Empty ? Convert.ToDecimal(infill[26].ToString()).ToString("N2") : string.Empty,
+
+                                           infill[0].ToString());
+                    }
+
+                    sEditInfill = "1";
+                }            
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            FilldgInfill();
+        }
+
+        private void dtgInfill_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dtgInfill.Rows.Count > 1)
+            {
+                cmbHoleIdInfill.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[0].Value.ToString();
+                txtFromInfill.Text = dtgInfill.Rows[e.RowIndex].Cells[1].Value.ToString();
+                txtToInfill.Text = dtgInfill.Rows[e.RowIndex].Cells[2].Value.ToString();
+                cmbStage.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[3].Value.ToString() == string.Empty ? 0 : Convert.ToInt32(dtgInfill.Rows[e.RowIndex].Cells[3].Value.ToString());
+                cmbTypeInfill.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[4].Value.ToString();
+                txtNumberInfill.Text = dtgInfill.Rows[e.RowIndex].Cells[5].Value.ToString();
+                txtAngleCore.Text = dtgInfill.Rows[e.RowIndex].Cells[6].Value.ToString();
+                txtPorStage.Text = dtgInfill.Rows[e.RowIndex].Cells[7].Value.ToString();
+
+                cmbGangueMin.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[8].Value.ToString();
+                cmbTexture.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[9].Value.ToString();
+                txtPorGangueMin.Text = dtgInfill.Rows[e.RowIndex].Cells[10].Value.ToString();
+                cmbOreMin.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[11].Value.ToString();
+                cmbStyle.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[12].Value == null ? string.Empty : dtgInfill.Rows[e.RowIndex].Cells[12].Value.ToString();
+                txtPorOreMin.Text = dtgInfill.Rows[e.RowIndex].Cells[13].Value.ToString();
+
+                cmbGangueMin2.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[14].Value.ToString();
+                cmbTexture2.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[15].Value.ToString();
+                txtPorGangueMin2.Text = dtgInfill.Rows[e.RowIndex].Cells[16].Value.ToString();
+                cmbOreMin2.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[17].Value.ToString();
+                cmbStyle2.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[18].Value == null ? string.Empty : dtgInfill.Rows[e.RowIndex].Cells[18].Value.ToString();
+                txtPorOreMin2.Text = dtgInfill.Rows[e.RowIndex].Cells[19].Value.ToString();
+
+                cmbGangueMin3.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[20].Value.ToString();
+                cmbTexture3.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[21].Value.ToString();
+                txtPorGangueMin3.Text = dtgInfill.Rows[e.RowIndex].Cells[22].Value.ToString();
+                cmbOreMin3.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[23].Value.ToString();
+                cmbStyle3.SelectedValue = dtgInfill.Rows[e.RowIndex].Cells[24].Value == null ? string.Empty : dtgInfill.Rows[e.RowIndex].Cells[24].Value.ToString();
+                txtPorOreMin3.Text = dtgInfill.Rows[e.RowIndex].Cells[25].Value.ToString();
+
+                SkDHInfill = Convert.ToInt32(dtgInfill.Rows[e.RowIndex].Cells[26].Value.ToString());
+
+                sEditInfill = "1";
+                swActualizarRegistro = true;
+                indexRegistroGrid = e.RowIndex;
+                swConsulta = true;
+            }
+
+            if (dtgInfill.Rows.Count == 0)
+            {
+                dtgInfill.DataSource = null;
+                dtgInfill.Rows.Clear();
+            }
+        }
+
+        private void dtgInfill_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (sEditInfill != "0")
+            {
+                if (MessageBox.Show("Do you really want to delete the sample?", "Infill", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    oInfill.iDHInfillID = Convert.ToInt32(dtgInfill.Rows[e.RowIndex].Cells[26].Value);
+                    oInfill.DH_Samples_Delete();
+                    MessageBox.Show("Channels deleted successfully.", "Minning Geology", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    FilldgInfill();
+                    btnCancelar_Click(null, null);
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("Do you really want to delete the sample?", "Infill", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    dtgInfill.Rows.RemoveAt(e.RowIndex);
+                    MessageBox.Show("Sample deleted successfully.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void cmbHoleIdInfill_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!swActualizaParaInsertar)
+                {
+                    fromTosAdicionados = new List<string>();
+                    stagesAdicionados = new List<string>();
+                }
+                btnCancelar_Click(null, null);
+                FilldgInfill();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        //**************************************************************************************************//
+        // OXIDES ***** ALVARO ARAUJO ARRIETA ///////////
+
+        private void CargarCombosOxides(DataTable _dt, ComboBox _cbox)
+        {
+            try
+            {
+                if (_dt.Rows.Count > 0)
+                {
+                    _cbox.DataSource = _dt.Copy();
+                    _cbox.ValueMember = _dt.Columns[0].ToString();
+                    _cbox.DisplayMember = _dt.Columns[1].ToString();
+                    _cbox.SelectedValue = "-1";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private void FillCmbOxides()
+        {
+            DataTable dataTable = new DataTable();
+            dataTable = this.oOxid.getRfIntensityOxides_List();
+            DataRow dataRow = dataTable.NewRow();
+            dataRow[0] = "-1";
+            dataRow[1] = "Select an option..";
+            dataTable.Rows.Add(dataRow);
+            CargarCombosOxides(dataTable, cmbIntensityOxide);
+
+            DataTable dataTable2 = new DataTable();
+            dataTable2 = this.oOxid.getRfMineralOxides_List();
+            DataRow dataRow2 = dataTable2.NewRow();
+            dataRow2[0] = "-1";
+            dataRow2[1] = "Select an option..";
+            dataTable2.Rows.Add(dataRow2);
+            CargarCombosOxides(dataTable2, cmbmmnox_Per);
+        }
+
+        private void cmbHoleIdOxide_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilldtgOxides("2");
+        }
+
+        private void FilldtgOxides(string _opcion)
+        {
+            DataTable dataSource = new DataTable();
+            oOxid.sOpcion = _opcion;
+            oOxid.sHoleID = this.cmbHoleIdOxide.SelectedValue.ToString();
+            dataSource = oOxid.getDHOxides();
+            dtgOxides.DataSource = dataSource;
+            dtgOxides.Columns["SKDHOxides"].Visible = false;
+        }
+
+        private string ControlsValidateOxides()
+        {
+            try
+            {
+                string sresp = string.Empty;
+
+                oCollars.sHoleID = cmbHoleIdOxide.SelectedValue.ToString();
+                DataTable dtCollars = oCollars.getDHCollars();
+                DataRow[] dato = dtCollars.Select("Length < '" + txtToWeat.Text + "'");
+
+                if (dato.Length > 0)
+                {
+                    sresp = " 'To' greater than Hole Id lenght";
+                    return sresp;
+                }
+
+                if (cmbHoleIdOxide.SelectedValue.ToString() == "Select an option..")
+                {
+                    sresp = "Selected an option Hole ID";
+                    return sresp;
+                }
+
+                if (txtFromOxide.Text == string.Empty || txtToOxide.Text == string.Empty)
+                {
+                    sresp = "Empty From or To";
+                    return sresp;
+                }
+
+                if (txtFromOxide.Text != "-99")
+                {
+                    if (double.Parse(txtFromOxide.Text.ToString()) == double.Parse(txtToOxide.Text.ToString()))
+                    {
+                        sresp = " 'From' equal to 'To'";
+                        return sresp;
+                    }
+
+                    if (double.Parse(txtFromOxide.Text.ToString()) > double.Parse(txtToOxide.Text.ToString()))
+                    {
+                        sresp = " 'From' greater than 'To'";
+                        return sresp;
+                    }           
+                }
+
+                return sresp;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private void btnAddOxide_Click(object sender, EventArgs e)
+        {
+            string sResp = ControlsValidateOxides().ToString();
+            oOxid.dFrom = double.Parse(txtFromOxide.Text.ToString().Replace(".", ","));
+            oOxid.dTo = double.Parse(txtToOxide.Text.ToString().Replace(".", ","));
+            oOxid.sHoleID = cmbHoleIdOxide.SelectedValue.ToString();
+
+            if (sResp != string.Empty)
+            {
+                MessageBox.Show(sResp, "Oxides", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (sEditOxide == "1")
+            {
+                oOxid.sOpcion = "2";
+            }
+            else
+            {
+                DataTable dtValidate = new DataTable();
+                dtValidate = oOxid.getDHOxidesFromToValid();
+
+                if (dtValidate.Rows.Count > 0)
+                {
+                    MessageBox.Show("Range 'From To' Overlaps", "Oxides", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    return;
+                }
+
+                oOxid.iSKDHOxides = 0;
+                oOxid.sOpcion = "1";
+            }
+
+            if (cmbmmnox_Per.SelectedValue == null || cmbmmnox_Per.SelectedValue.ToString() == "-1" || cmbmmnox_Per.SelectedValue.ToString() == string.Empty)
+                oOxid.sOxides = null;
+            else
+                oOxid.sOxides = cmbmmnox_Per.SelectedValue.ToString();
+
+            if (cmbIntensityOxide.SelectedValue == null || cmbIntensityOxide.SelectedValue.ToString() == "-1" || cmbIntensityOxide.SelectedValue.ToString() == string.Empty)
+                oOxid.dRate = null;
+            else
+                oOxid.dRate = Convert.ToDouble(cmbIntensityOxide.SelectedValue);
+
+            clsDHOxides.sStaticFrom = txtToOxide.Text.ToString();
+
+            try
+            {
+                string sRespuestaOxide = oOxid.DH_Oxides_Add();
+                if (sRespuestaOxide == "OK")
+                {
+                    this.FilldtgOxides("2");
+                    this.oRf.InsertTrans("DH_Oxides", sEditOxide == "1" ? "Update" : "Insert", clsRf.sUser.ToString(), string.Concat(
+                    "Hole ID: ", cmbHoleIdOxide.SelectedValue.ToString(),
+                    ". From: ", txtFromOxide.Text.ToString(), ". To: ", txtToOxide.Text.ToString(), 
+                    ". Oxide Min: ", cmbmmnox_Per.Text, ". Rate: ", cmbIntensityOxide.Text));
+
+                    if (sEditOxide == "1" && dtgOxides.Rows.Count > 1)
+                    {
+                        DataTable dataTable2 = (DataTable)this.dtgOxides.DataSource;
+                        DataRow[] array = dataTable2.Select("SKDHOxides = '" + oOxid.iSKDHOxides + "'");
+                        int index = dataTable2.Rows.IndexOf(array[0]);
+                        dtgOxides.Rows[index].Selected = true;
+                        dtgOxides.CurrentCell = dtgOxides.Rows[index].Cells[1];
+                    }
+
+                    CleanControlsOxides();
+                    txtFromOxide.Text = clsDHOxides.sStaticFrom.ToString();
+                    txtToOxide.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Error Insert: " + sRespuestaOxide, "Oxides", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+                sEditOxide = "0";
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType().ToString() != "System.NullReferenceException")
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show("You must enter all required records", "Oxides", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                }
+            }
+        }
+
+        private void CleanControlsOxides()
+        {
+            try
+            {
+                sEditOxide = "0";
+                txtToOxide.Text = string.Empty;
+                txtFromOxide.Text = string.Empty;
+                cmbmmnox_Per.SelectedValue = "-1";
+                cmbIntensityOxide.SelectedValue = "-1";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnCancelOxide_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CleanControlsOxides();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void txtFromOxide_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            solo_numeros(ref textBox, e);
+        }
+
+        private void txtToOxide_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            solo_numeros(ref textBox, e);
+        }
+
+        private void dtgOxides_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                sEditOxide = "1";
+                oOxid.iSKDHOxides = long.Parse(dtgOxides.Rows[e.RowIndex].Cells["SKDHOxides"].Value.ToString());
+                cmbHoleIdOxide.SelectedValue = dtgOxides.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
+                txtFromOxide.Text = dtgOxides.Rows[e.RowIndex].Cells["From"].Value.ToString();
+                txtToOxide.Text = dtgOxides.Rows[e.RowIndex].Cells["To"].Value.ToString();
+                cmbmmnox_Per.SelectedValue = ((dtgOxides.Rows[e.RowIndex].Cells["Oxides"].Value.ToString() == string.Empty) ? "-1" : dtgOxides.Rows[e.RowIndex].Cells["Oxides"].Value.ToString());
+                cmbIntensityOxide.SelectedValue = ((dtgOxides.Rows[e.RowIndex].Cells["Rate"].Value.ToString() == string.Empty) ? "-1" : dtgOxides.Rows[e.RowIndex].Cells["Rate"].Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType().Name == "FormatException")
+                {
+                    MessageBox.Show("Invalid Data", "Oxides", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void dtgOxides_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show(string.Concat("Row Delete. Hole Id", dtgOxides.Rows[e.RowIndex].Cells["HoleID"].Value.ToString(), 
+                    " From ", dtgOxides.Rows[e.RowIndex].Cells["From"].Value.ToString(), 
+                    " To ", dtgOxides.Rows[e.RowIndex].Cells["To"].Value.ToString()), "Oxides", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
+                {
+                    oOxid.iSKDHOxides = long.Parse(dtgOxides.Rows[e.RowIndex].Cells["SKDHOxides"].Value.ToString());
+                    string sRespOxide = oOxid.DH_Oxides_Delete();
+
+                    if (sRespOxide == "OK")
+                    {
+                        MessageBox.Show("Row Deleted", "Oxides", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        FilldtgOxides("2");
+                        sEditOxide = "0";
+                        CleanControlsOxides();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

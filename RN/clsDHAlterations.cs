@@ -31,6 +31,13 @@ public class clsDHAlterations
     public static string sStaticFrom;
 
     private DataAccess.ManagerDA oData = new DataAccess.ManagerDA();
+    public string sA3Type;
+    public string sA3Int;
+    public string sA3Style;
+    public string sA3Min;
+    public string sA3Min2;
+    public string sA3Style2;
+    public string sA3Min3;
 
     //[usp_DH_Alterations_List]
     public DataTable getDH_Alterations()
@@ -213,10 +220,54 @@ public class clsDHAlterations
                 arr[19].Value = System.Data.SqlTypes.SqlString.Null;
             else arr[19].Value = sA2Min3;
 
+            arr[20].ParameterName = "@A3Type";
+            if (this.sA3Type == null)
+                arr[20].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[20].Value = sA3Type;
+
+            arr[21].ParameterName = "@A3Int";
+            if (this.sA3Int == null)
+                arr[21].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[21].Value = sA3Int;
+
+            arr[22].ParameterName = "@A3Style";
+            if (this.sA3Style == null)
+                arr[22].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[22].Value = sA3Style;
+
+            arr[23].ParameterName = "@A3Style2";
+            if (this.sA3Style2 == null)
+                arr[23].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[23].Value = sA3Style2;
+
+
+            arr[24].ParameterName = "@A3Min";
+            if (this.sA3Min == null)
+                arr[24].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[24].Value = sA3Min;
+
+
+            arr[25].ParameterName = "@A3Min2";
+            if (this.sA3Min2 == null)
+                arr[25].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[25].Value = sA3Min2;
+
+
+            arr[26].ParameterName = "@A3Min3";
+            if (this.sA3Min3 == null)
+                arr[26].Value = System.Data.SqlTypes.SqlString.Null;
+            else
+                arr[26].Value = sA3Min3;
+
+
             oRes = oData.ExecuteScalar("usp_DH_Alterations_Insert", arr, CommandType.StoredProcedure);
             return oRes.ToString();
-
-
         }
         catch (Exception eX)
         {

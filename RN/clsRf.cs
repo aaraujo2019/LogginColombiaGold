@@ -767,5 +767,93 @@ public class clsRf
         }
         return result;
     }
+
+
+    public DataTable getRfStage()
+    {
+        DataTable result;
+        try
+        {
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfStage_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return result;
+    }
+
+    public DataTable getTypeInfill()
+    {
+        DataTable result;
+        try
+        {
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfTypeInfill_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return result;
+    }
+
+    public DataTable getRfMineral(int opcion)
+    {
+        DataTable result;
+        try
+        {
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(1);
+            parameters[0].ParameterName = "@pOpcion";
+            parameters[0].Value = opcion;
+            dataSet = this.oData.ExecuteDataset("usp_RfMineral_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return result;
+    }
+
+    public DataTable getRfTextureInfill()
+    {
+        DataTable result;
+        try
+        {
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = this.oData.GetParameters(0);
+            dataSet = this.oData.ExecuteDataset("usp_RfTextureInfill_List", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+        return result;
+    }
+
+    public DataTable getRfVeinsCodes()
+    {
+        DataTable result;
+        try
+        {
+            DataSet dataSet = new DataSet();
+            SqlParameter[] parameters = oData.GetParameters(0);
+            dataSet = oData.ExecuteDataset("[dbo].[usp_getRfVeinsCodes]", parameters, CommandType.StoredProcedure);
+            result = dataSet.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Error in dtRfVeinsCodesAll: " + ex.Message);
+        }
+        return result;
+    }
 }
 

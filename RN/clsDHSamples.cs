@@ -25,6 +25,8 @@ public class clsDHSamples
     public static string sConsLoggin;
     public static string sStaticFrom;
     private ManagerDA oData = new ManagerDA();
+    public string sVnMod;
+
     public DataTable getDHSamplesFromToValid()
     {
         DataTable result;
@@ -129,7 +131,7 @@ public class clsDHSamples
         string result;
         try
         {
-            SqlParameter[] parameters = this.oData.GetParameters(12);
+            SqlParameter[] parameters = this.oData.GetParameters(13);
             parameters[0].ParameterName = "@Opcion";
             parameters[0].Value = this.sOpcion;
             parameters[1].ParameterName = "@HoleID";
@@ -175,6 +177,17 @@ public class clsDHSamples
             {
                 parameters[11].Value = this.sVein;
             }
+
+            parameters[12].ParameterName = "@VnMod";
+            if (sVnMod == null)
+            {
+                parameters[12].Value = SqlString.Null;
+            }
+            else
+            {
+                parameters[12].Value = sVnMod;
+            }
+
             object obj = this.oData.ExecuteScalar("usp_DH_Samples_InsertLoggin", parameters, CommandType.StoredProcedure);
             result = obj.ToString();
         }

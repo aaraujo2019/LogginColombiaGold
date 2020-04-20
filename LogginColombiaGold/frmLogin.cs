@@ -16,7 +16,7 @@ namespace LogginColombiaGold
     {
 
         clsRf oRf = new clsRf();
-        //bool bAct = false;
+        bool bAct = false;
 
         public frmLogin()
         {
@@ -108,21 +108,23 @@ namespace LogginColombiaGold
         {
             try
             {
-                //ConfigurationSettings.AppSettings["IDProject"].ToString()
-                //oRf.iIdProject = int.Parse(ConfigurationSettings.AppSettings["IDProject"].ToString());
-                //DataTable dtVers = oRf.getVersionProject();
-                //if (double.Parse( dtVers.Rows[0]["version"].ToString() ) >
-                //    double.Parse(ConfigurationSettings.AppSettings["Version"].ToString()))
-                //{
+                //ConfigurationSettings.AppSettings["IDProject"].ToString();
+                oRf.iIdProject = int.Parse(ConfigurationSettings.AppSettings["IDProject"].ToString());
+                DataTable dtVers = oRf.getVersionProject();
 
-                //    //bAct = true;
-                //    MessageBox.Show("actualizar");
-                //    this.Close();
-                //    Process.Start(@"C:\ColombiaGold\DataInGranColombiaGold\Actualizar.bat");
+                if (double.Parse(dtVers.Rows[0]["version"].ToString()) >
+                    double.Parse(ConfigurationSettings.AppSettings["Version"].ToString()))
+                {
+                    bAct = true;
+                    MessageBox.Show("Actualizar Versión");
 
-                //}
-
-
+                    Process[] _proceses = null;
+                    _proceses = Process.GetProcessesByName("LogginColombiaGold.exe");
+                    foreach (Process proces in _proceses)
+                    {
+                        proces.Kill();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -132,12 +134,10 @@ namespace LogginColombiaGold
 
         private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //if (bAct == true)
-            //{
-                
-            //    //bAct = false;
-            //}
-            
+            if (bAct == true)
+            {
+                Process.Start(@"\\mdesvrfs01\Publica\Aplicaciones\Actualizaciones\DataIn.bat");
+            }
         }
     }
 }

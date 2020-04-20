@@ -177,6 +177,20 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
+    <None Include="bin\x86\Debug\GZC_102302_Template_Login_JFP.xls" />
+    <None Include="bin\x86\Debug\GZC_120316_Template_ValidAlterations.xls" />
+    <None Include="bin\x86\Debug\GZC_120316_Template_ValidGeotech.xls" />
+    <None Include="bin\x86\Debug\GZC_120316_Template_ValidLithology.xls" />
+    <None Include="bin\x86\Debug\GZC_120316_Template_ValidMineraliz.xls" />
+    <None Include="bin\x86\Debug\GZC_120316_Template_ValidSamples.xls" />
+    <None Include="bin\x86\Debug\GZC_120316_Template_ValidStructures.xls" />
+    <None Include="bin\x86\Debug\GZC_120528_Report_Validate_Box.xls" />
+    <None Include="bin\x86\Debug\LogginColombiaGold.exe - Acceso directo.lnk" />
+    <None Include="bin\x86\Debug\LogginColombiaGold.exe.config" />
+    <None Include="bin\x86\Debug\LogginColombiaGold.exe.zip" />
+    <None Include="bin\x86\Debug\LogginColombiaGold.vshost.exe.config" />
+    <None Include="bin\x86\Debug\LogginColombiaGold.vshost.exe.manifest" />
+    <None Include="bin\x86\Debug\Logging.vshost.exe.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -214,6 +228,14 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\x86\Debug\LogginColombiaGold.exe" />
+    <Content Include="bin\x86\Debug\LogginColombiaGold.pdb" />
+    <Content Include="bin\x86\Debug\LogginColombiaGold.vshost.exe" />
+    <Content Include="bin\x86\Debug\Microsoft.Office.Interop.Excel.dll" />
+    <Content Include="bin\x86\Debug\RN.dll" />
+    <Content Include="bin\x86\Debug\RN.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
