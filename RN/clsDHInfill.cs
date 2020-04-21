@@ -404,12 +404,12 @@ namespace RN
                 arr[52].ParameterName = "@Infill3Number";
                 if (Infill3Number == null)
                     arr[52].Value = System.Data.SqlTypes.SqlDouble.Null;
-                else arr[53].Value = Infill3Number;
+                else arr[52].Value = Infill3Number;
 
                 arr[53].ParameterName = "@Infill3AngleToAxis";
                 if (Infill3Angle == null)
                     arr[53].Value = System.Data.SqlTypes.SqlDouble.Null;
-                else arr[54].Value = Infill3Angle;
+                else arr[53].Value = Infill3Angle;
 
                 arr[54].ParameterName = "@Infill3StagePerc";
                 if (Infill3StagePerc == null)
@@ -494,7 +494,7 @@ namespace RN
                 arr[70].ParameterName = "@Infill3OreMineral3";
                 if (Infill3OreMineral3 == null)
                     arr[70].Value = System.Data.SqlTypes.SqlString.Null;
-                else arr[570].Value = Infill3OreMineral3;
+                else arr[70].Value = Infill3OreMineral3;
 
                 arr[71].ParameterName = "@Infill3OreMineral3Style";
                 if (Infill3OreMineral3Style == null)

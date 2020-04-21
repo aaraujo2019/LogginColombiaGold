@@ -134,7 +134,7 @@ public class clsDHAlterations
         {
             
             object oRes;
-            SqlParameter[] arr = oData.GetParameters(20);
+            SqlParameter[] arr = oData.GetParameters(27);
             arr[0].ParameterName = "@Opcion";
             arr[0].Value = sOpcion;
             arr[1].ParameterName = "@HoleID";

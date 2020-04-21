@@ -57,7 +57,7 @@ public class clsDHOxides
         {
 
             object oRes;
-            SqlParameter[] arr = oData.GetParameters(15);
+            SqlParameter[] arr = oData.GetParameters(7);
 
             arr[0].ParameterName = "@Opcion";
             arr[0].Value = sOpcion;

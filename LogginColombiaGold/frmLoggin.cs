@@ -277,18 +277,15 @@ namespace LogginColombiaGold
                 cmbHoleIdDens.ValueMember = "HoleID";
                 cmbHoleIdDens.DataSource = dtCollars.Copy();
                 cmbHoleIdDens.SelectedValue = "Select an option..";
-
-
-
+                
                 DataTable rfVeinsCodes = oRf.getRfVeinsCodes();
                 DataRow dataRow2 = rfVeinsCodes.NewRow();
-                dataRow2[0] = "Select an option..";
+                dataRow2[0] = "";
                 rfVeinsCodes.Rows.Add(dataRow2);
                 cmbOreZone.DisplayMember = "Code";
                 cmbOreZone.ValueMember = "Code";
                 cmbOreZone.DataSource = rfVeinsCodes;
-                cmbOreZone.SelectedValue = "Select an option..";
-
+                cmbOreZone.SelectedValue = "";
             }
             catch (Exception ex)
             {
@@ -326,8 +323,7 @@ namespace LogginColombiaGold
                 cmbLithology.ValueMember = "Code";
                 cmbLithology.DataSource = dtLithology;
                 cmbLithology.SelectedValue = -1;
-
-
+                
                 oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
@@ -338,8 +334,7 @@ namespace LogginColombiaGold
                 cmbHoleID.ValueMember = "HoleID";
                 cmbHoleID.DataSource = dtCollars;
                 cmbHoleID.SelectedValue = "Select an option..";
-
-
+                
                 DataTable dtLocation = oRf.getLocation(string.Empty);
                 DataRow drLoc = dtLocation.NewRow();
                 drLoc[1] = "Select an option...";
@@ -365,7 +360,6 @@ namespace LogginColombiaGold
                 this.cmbVeinStructureSamp.ValueMember = "Code";
                 this.cmbVeinStructureSamp.DataSource = dtVeinStrutureSamp;
                 this.cmbVeinStructureSamp.SelectedValue = -1;
-
             }
             catch (Exception ex)
             {
@@ -426,9 +420,6 @@ namespace LogginColombiaGold
                     Col.SortMode = DataGridViewColumnSortMode.NotSortable;
                 }
                 //gdLoggin.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
-
-
-
             }
             catch (Exception ex)
             {
@@ -482,11 +473,9 @@ namespace LogginColombiaGold
         {
             try
             {
-
                 string sFrom = String.Format(txtFrom.Text.ToString(), "#########0.00");
                 string sTo = String.Format(txtTo.Text.ToString(), "#########0.00");
                 double dtotalFromTo = double.Parse(sTo.ToString()) - double.Parse(sFrom.ToString());
-
 
                 //Valida que los datos en from to sean validos, mayor que cero o -99
                 bool bFromtoValido = true;
@@ -1240,6 +1229,8 @@ namespace LogginColombiaGold
 
                     cmbSampleType.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["SampleType"].Value.ToString();
                     cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
+
+                    cmbOreZone.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["Vn_mod"].Value.ToString();
 
                     //if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "HW")
                     //{
@@ -4253,23 +4244,6 @@ namespace LogginColombiaGold
 
         #endregion
 
-        //[BrowsableAttribute(false)]
-        //public event EventHandler LostFocus;
-        //private void txtFromGeo_LostFocus(object sender, System.EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (txtFromGeo.Text.ToString() == "-99")
-        //        {
-        //            txtToGeo.Text = "-99";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-
         private void txtFromGeo_Leave(object sender, EventArgs e)
         {
             try
@@ -5543,6 +5517,29 @@ namespace LogginColombiaGold
 
                 cmbMin3Alt2.SelectedValue = dgAlterations.Rows[e.RowIndex].Cells["A2Min3"].Value.ToString() == string.Empty ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Min3"].Value.ToString();
+
+
+                cmbTypeAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Type"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Type"].Value.ToString());
+
+                cmbIntAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Int"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Int"].Value.ToString());
+
+                cmbStyleAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Style"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Style"].Value.ToString());
+
+                cmbMin1Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Min"].Value.ToString());
+
+                cmbMin2Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min2"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Min2"].Value.ToString());
+
+                cmbStyleAlt33.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Style2"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Style2"].Value.ToString());
+
+                cmbMin3Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min3"].Value.ToString() == string.Empty) ? 
+                    "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Min3"].Value.ToString());
+
             }
             catch (Exception ex)
             {
@@ -7455,9 +7452,6 @@ namespace LogginColombiaGold
 
                     oXL.Visible = true;
                     oXL.UserControl = true;
-
-
-
                 }
 
             }
@@ -7728,7 +7722,7 @@ namespace LogginColombiaGold
 
                 #region Infill
                 oSheet = (Excel._Worksheet)oWB.Sheets["Infill"];
-                DataTable dataInfill = this.dtGeneralInfill;
+                DataTable dataInfill = dtGeneralInfill;
                 iInicial = 4;
                 for (int numI = 0; numI < dataInfill.Rows.Count; numI++)
                 {
@@ -9344,7 +9338,6 @@ namespace LogginColombiaGold
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            cmbHoleIdInfill.SelectedValue = string.Empty;
             txtFromInfill.Text = string.Empty;
             txtToInfill.Text = string.Empty;
 
@@ -9955,7 +9948,7 @@ namespace LogginColombiaGold
 
                 oCollars.sHoleID = cmbHoleIdOxide.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
-                DataRow[] dato = dtCollars.Select("Length < '" + txtToWeat.Text + "'");
+                DataRow[] dato = dtCollars.Select("Length < '" + txtToOxide.Text + "'");
 
                 if (dato.Length > 0)
                 {
