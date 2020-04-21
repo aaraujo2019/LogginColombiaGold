@@ -3701,6 +3701,7 @@ namespace LogginColombiaGold
             this.dgMineraliz.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgMineraliz.Size = new System.Drawing.Size(679, 90);
             this.dgMineraliz.TabIndex = 338;
+            this.dgMineraliz.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgMineraliz_CellClick);
             this.dgMineraliz.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgMineraliz_CellDoubleClick);
             // 
             // tabPage2
