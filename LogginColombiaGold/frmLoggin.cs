@@ -9994,8 +9994,8 @@ namespace LogginColombiaGold
         private void btnAddOxide_Click(object sender, EventArgs e)
         {
             string sResp = ControlsValidateOxides().ToString();
-            oOxid.dFrom = double.Parse(txtFromOxide.Text.ToString().Replace(".", ","));
-            oOxid.dTo = double.Parse(txtToOxide.Text.ToString().Replace(".", ","));
+            oOxid.dFrom = double.Parse(txtFromOxide.Text.ToString());
+            oOxid.dTo = double.Parse(txtToOxide.Text.ToString());
             oOxid.sHoleID = cmbHoleIdOxide.SelectedValue.ToString();
 
             if (sResp != string.Empty)
