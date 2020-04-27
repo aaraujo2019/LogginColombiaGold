@@ -26,6 +26,7 @@ public class clsDHSamples
     public static string sStaticFrom;
     private ManagerDA oData = new ManagerDA();
     public string sVnMod;
+    public double ?Recovery_perc;
 
     public DataTable getDHSamplesFromToValid()
     {
@@ -131,7 +132,7 @@ public class clsDHSamples
         string result;
         try
         {
-            SqlParameter[] parameters = this.oData.GetParameters(13);
+            SqlParameter[] parameters = this.oData.GetParameters(14);
             parameters[0].ParameterName = "@Opcion";
             parameters[0].Value = this.sOpcion;
             parameters[1].ParameterName = "@HoleID";
@@ -186,6 +187,17 @@ public class clsDHSamples
             else
             {
                 parameters[12].Value = sVnMod;
+            }
+            
+
+            parameters[13].ParameterName = "@Recovery_perc";
+            if (Recovery_perc == null)
+            {
+                parameters[13].Value = SqlDouble.Null;
+            }
+            else
+            {
+                parameters[13].Value = Recovery_perc;
             }
 
             object obj = this.oData.ExecuteScalar("usp_DH_Samples_InsertLoggin", parameters, CommandType.StoredProcedure);

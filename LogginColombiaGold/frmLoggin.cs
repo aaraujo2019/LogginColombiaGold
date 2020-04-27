@@ -413,8 +413,7 @@ namespace LogginColombiaGold
                 gdLoggin.DataSource = dtLoggin;
 
                 gdLoggin.Columns["SKDHSamples"].Visible = false;
-
-
+                
                 foreach (DataGridViewColumn Col in gdLoggin.Columns)
                 {
                     Col.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -690,10 +689,17 @@ namespace LogginColombiaGold
                     oSamp.sDupDe = txtDupDe.Text.ToString();
                     oSamp.sComments = txtCommentsSamp.Text.ToString();
                     oSamp.iDHSampID = Int64.Parse(sDHSamplesID.ToString());
-                    oSamp.sVnMod = cmbOreZone.SelectedValue.ToString();
+                    oSamp.sVnMod = cmbOreZone.SelectedValue == null ? string.Empty : cmbOreZone.SelectedValue.ToString();
                     oSamp.sLith = sLith; //cmbLithology.SelectedValue.ToString();
 
+                    if (txtRecoveryPerc.Text == string.Empty)
+                        oSamp.Recovery_perc = null;
+                    else
+                        oSamp.Recovery_perc = double.Parse(txtRecoveryPerc.Text.ToString());
+
                     string text3 = string.Empty;
+
+
                     //if (this.cmbVeinLocationSamp.Text.ToString() == "HW: Hanging-wall of vein")
                     //{
                     //    text3 = "HW";
@@ -717,14 +723,20 @@ namespace LogginColombiaGold
                         oLit.sOpcion = "2";
                         oLit.sHoleID = cmbHoleID.SelectedValue.ToString();
                         dtLit = oLit.getDH_Lithology();
-                        DataRow[] myRowLth = dtLit.Select("[From] <= " + txtFrom.Text.ToString() + " and [To] >= " + txtTo.Text.ToString());
-                        if (myRowLth.Length > 0)
+
+                        if(dtLit.Rows.Count > 0)
                         {
-                            if (myRowLth[0].Table.Rows[0]["Litho"].ToString() != cmbLithology.SelectedValue.ToString())
+                            DataRow[] myRowLth = dtLit.Select("[From] <= " + txtFrom.Text.ToString() + " and [To] >= " + txtTo.Text.ToString());
+
+                            if (myRowLth.Length > 0)
                             {
-                                MessageBox.Show("Difference between litho-Samples and litho-Lithology ", "Samples", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (myRowLth[0].Table.Rows[0]["Litho"].ToString() != cmbLithology.SelectedValue.ToString())
+                                {
+                                    MessageBox.Show("Difference between litho-Samples and litho-Lithology ", "Samples", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
                             }
                         }
+
                         /* [Litho], [From], [To] */
                         ///Fin. Valida la informacion contra los datos de litologia
                         //Para limpiar la variable sDHSamplesID que se utiliza para modificar un dato
@@ -909,6 +921,29 @@ namespace LogginColombiaGold
 
         }
 
+        // Alvaro Araujo Arrieta ********************************************
+
+        private void txtRecoveryPerc_Leave(object sender, EventArgs e)
+        {
+            if (txtRecoveryPerc.Text != string.Empty)
+            {
+                if (double.Parse(txtRecoveryPerc.Text) > 100 || double.Parse(txtRecoveryPerc.Text) < 0)
+                {
+                    MessageBox.Show("The number entered cannot be greater than 100", "Samples", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    txtRecoveryPerc.Text = "100";
+                    txtRecoveryPerc.SelectAll();
+                    txtRecoveryPerc.Focus();
+                    return;
+                }
+            }
+        }
+
+        private void txtRecoveryPerc_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            solo_numeros(ref textBox, e);
+        }
+
         private void HoleIDValidate(string _sHoleID)
         {
             try
@@ -942,6 +977,10 @@ namespace LogginColombiaGold
                 oSamp.sOpcion = "2";
                 FillLoggin();
                 cmbOreZone.SelectedValue = "-1";
+                txtDupDe.Text = string.Empty;
+                txtFrom.Text = string.Empty;
+                txtTo.Text = string.Empty;
+                cmbSampleType.SelectedValue = "-1";
 
                 if (sEdit == "1")
                 {
@@ -1231,6 +1270,8 @@ namespace LogginColombiaGold
                     cmbHoleID.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["HoleID"].Value.ToString();
 
                     cmbOreZone.SelectedValue = gdLoggin.Rows[e.RowIndex].Cells["Vn_mod"].Value.ToString();
+
+                    txtRecoveryPerc.Text = gdLoggin.Rows[e.RowIndex].Cells["Recovery_perc"].Value.ToString();
 
                     //if (this.gdLoggin.Rows[e.RowIndex].Cells["VeinLocation"].Value.ToString() == "HW")
                     //{
@@ -8815,6 +8856,7 @@ namespace LogginColombiaGold
             if (swConsulta)
             {
                 ActualizarRegistroDataGrid(indexRegistroGrid);
+                LimpiarControlesInffil();
                 return;
             }
 
@@ -8828,13 +8870,16 @@ namespace LogginColombiaGold
                 return;
             }
 
+            if (cmbStage.SelectedValue == null)
+                cmbStage.SelectedValue = "0";
+
             if (!stagesAdicionados.Contains(cmbStage.SelectedValue.ToString()))
             {
                 stagesAdicionados.Add((cmbStage.SelectedValue == null) ? "0" : cmbStage.SelectedValue.ToString());
             }
 
-            string IFrom = txtFromInfill.Text.Contains(".") ? txtFromInfill.Text.Replace(".", ",") : (txtFromInfill.Text + ",00");
-            string ITo = txtToInfill.Text.Contains(".") ? txtToInfill.Text.Replace(".", ",") : (txtToInfill.Text + ",00");
+            string IFrom = txtFromInfill.Text;
+            string ITo = txtToInfill.Text;
 
             if (IFrom.Length == 3)
             {
@@ -8848,12 +8893,12 @@ namespace LogginColombiaGold
 
             if (IFrom.Length == 1)
             {
-                IFrom = string.Concat(IFrom, ",00");
+                IFrom = string.Concat(IFrom, ".00");
             }
 
             if (ITo.Length == 1)
             {
-                ITo = string.Concat(ITo, ",00");
+                ITo = string.Concat(ITo, ".00");
             }
 
             if (!fromTosAdicionados.Contains(IFrom + ";" + ITo))
@@ -8969,7 +9014,7 @@ namespace LogginColombiaGold
             {
                 oCollars.sHoleID = cmbHoleIdMin.SelectedValue.ToString();
                 DataTable dtCollars = oCollars.getDHCollars();
-                DataRow[] dato = dtCollars.Select("Length < '" + txtToMin.Text + "'");
+                DataRow[] dato = dtCollars.Select("Length < '" + txtToInfill.Text + "'");
                 if (dato.Length > 0)
                 {
                     sresp = " 'To' greater than Hole Id lenght";
@@ -9101,20 +9146,159 @@ namespace LogginColombiaGold
                 return false;
             }
 
-            if (cmbStage.Text != "0")
+            if (dtgInfill.Rows[0].Cells[26].Value == null && Convert.ToInt32(dtgInfill.Rows[0].Cells[26].Value) == 0)
             {
-                if (stagesAdicionados.Contains(cmbStage.Text))
+                if (cmbStage.Text != "0")
                 {
-                    MessageBox.Show("The selected Stage already exists.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cmbStage.Focus();
-                    return false;
+                    string IFrom = txtFromInfill.Text;
+                    string ITo = txtToInfill.Text;
+
+                    if (IFrom.Length == 3)
+                    {
+                        IFrom = string.Concat(IFrom, "0");
+                    }
+
+                    if (ITo.Length == 3)
+                    {
+                        ITo = string.Concat(ITo, "0");
+                    }
+
+                    if (IFrom.Length == 1)
+                    {
+                        IFrom = string.Concat(IFrom, ".00");
+                    }
+
+                    if (ITo.Length == 1)
+                    {
+                        ITo = string.Concat(ITo, ".00");
+                    }
+
+                    if (stagesAdicionados.Contains(cmbStage.Text) && fromTosAdicionados.Contains(IFrom + ";" + ITo))
+                    {
+                        MessageBox.Show("The selected Stage already exists.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cmbStage.Focus();
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (cmbStage.SelectedValue == null)
+                    {
+                        MessageBox.Show("The Stage is not selected.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        cmbStage.Focus();
+                        return false;
+                    }
+
+                    string IFrom = txtFromInfill.Text;
+                    string ITo = txtToInfill.Text;
+
+                    if (IFrom.Length == 3)
+                    {
+                        IFrom = string.Concat(IFrom, "0");
+                    }
+
+                    if (ITo.Length == 3)
+                    {
+                        ITo = string.Concat(ITo, "0");
+                    }
+
+                    if (IFrom.Length == 1)
+                    {
+                        IFrom = string.Concat(IFrom, ".00");
+                    }
+
+                    if (ITo.Length == 1)
+                    {
+                        ITo = string.Concat(ITo, ".00");
+                    }
+
+                    if (stagesAdicionados.Contains(cmbStage.Text) && fromTosAdicionados.Contains(IFrom + ";" + ITo))
+                    {
+                        MessageBox.Show("The selected Stage already exists.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cmbStage.Focus();
+                        return false;
+                    }
                 }
             }
             else
             {
-                MessageBox.Show("The Stage is not selected.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbStage.Focus();
-                return false;
+                if (!swActualizaParaInsertar)
+                {
+                    if (cmbStage.Text != "0")
+                    {
+                        string IFrom = txtFromInfill.Text;
+                        string ITo = txtToInfill.Text;
+
+                        if (IFrom.Length == 3)
+                        {
+                            IFrom = string.Concat(IFrom, "0");
+                        }
+
+                        if (ITo.Length == 3)
+                        {
+                            ITo = string.Concat(ITo, "0");
+                        }
+
+                        if (IFrom.Length == 1)
+                        {
+                            IFrom = string.Concat(IFrom, ".00");
+                        }
+
+                        if (ITo.Length == 1)
+                        {
+                            ITo = string.Concat(ITo, ".00");
+                        }
+
+                        if (!swActualizarRegistro)
+                        {
+                            if (stagesAdicionados.Contains(cmbStage.Text) && fromTosAdicionados.Contains(IFrom + ";" + ITo))
+                            {
+                                MessageBox.Show("The selected Stage already exists.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                cmbStage.Focus();
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (cmbStage.SelectedValue == null)
+                        {
+                            MessageBox.Show("The Stage is not selected.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            cmbStage.Focus();
+                            return false;
+                        }
+
+                        string IFrom = txtFromInfill.Text;
+                        string ITo = txtToInfill.Text;
+
+                        if (IFrom.Length == 3)
+                        {
+                            IFrom = string.Concat(IFrom, "0");
+                        }
+
+                        if (ITo.Length == 3)
+                        {
+                            ITo = string.Concat(ITo, "0");
+                        }
+
+                        if (IFrom.Length == 1)
+                        {
+                            IFrom = string.Concat(IFrom, ".00");
+                        }
+
+                        if (ITo.Length == 1)
+                        {
+                            ITo = string.Concat(ITo, ".00");
+                        }
+
+                        if (stagesAdicionados.Contains(cmbStage.Text) && fromTosAdicionados.Contains(IFrom + ";" + ITo))
+                        {
+                            MessageBox.Show("The selected Stage already exists.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            cmbStage.Focus();
+                            return false;
+                        }
+                    }
+                }
             }
 
             return true;
@@ -9238,6 +9422,11 @@ namespace LogginColombiaGold
             solo_numeros(ref textbox, e);
         }
 
+        private void txtNumberInfill_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textbox = (TextBox)sender;
+            solo_numeros(ref textbox, e);
+        }
 
         public void solo_numeros(ref TextBox textbox, KeyPressEventArgs e)
         {
@@ -9387,8 +9576,8 @@ namespace LogginColombiaGold
                 {
                     for (int j = 0; j < dtgInfill.Rows.Count - 1; j++)
                     {
-                        string IFrom = dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ",");
-                        string ITo = dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ",");
+                        string IFrom = dtgInfill.Rows[j].Cells[1].Value.ToString();
+                        string ITo = dtgInfill.Rows[j].Cells[2].Value.ToString();
 
                         if (IFrom.Length == 3)
                         {
@@ -9402,12 +9591,12 @@ namespace LogginColombiaGold
 
                         if (IFrom.Length == 1)
                         {
-                            IFrom = string.Concat(IFrom, ",00");
+                            IFrom = string.Concat(IFrom, ".00");
                         }
 
                         if (ITo.Length == 1)
                         {
-                            ITo = string.Concat(ITo, ",00");
+                            ITo = string.Concat(ITo, ".00");
                         }
 
                         if (fromTosAdicionados[i] == string.Concat(IFrom, ";", ITo))
@@ -9443,8 +9632,8 @@ namespace LogginColombiaGold
                                 oInfill.iDHInfillID = 0;
                             }
 
-                            oInfill.dFrom = double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ","));
-                            oInfill.dTo = double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ","));
+                            oInfill.dFrom = double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString());
+                            oInfill.dTo = double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString());
                             oInfill.sHoleID = dtgInfill.Rows[j].Cells[0].Value.ToString();
 
                             if (Convert.ToInt32(dtgInfill.Rows[j].Cells[3].Value.ToString()) == 1)
@@ -9503,15 +9692,15 @@ namespace LogginColombiaGold
                                 oInfill.Infill2MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
 
                                 oInfill.Infill2OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
-                                oInfill.Infill2OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill2OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[12].Value.ToString();
                                 oInfill.Infill2OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
 
                                 oInfill.Infill2OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
-                                oInfill.Infill2OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill2OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[18].Value.ToString();
                                 oInfill.Infill2OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
 
                                 oInfill.Infill2OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
-                                oInfill.Infill2OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill2OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[24].Value.ToString();
                                 oInfill.Infill2OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
                             }
 
@@ -9537,15 +9726,15 @@ namespace LogginColombiaGold
                                 oInfill.Infill3MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
 
                                 oInfill.Infill3OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
-                                oInfill.Infill3OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill3OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[12].Value.ToString();
                                 oInfill.Infill3OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
 
                                 oInfill.Infill3OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
-                                oInfill.Infill3OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill3OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[18].Value.ToString();
                                 oInfill.Infill3OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
 
                                 oInfill.Infill3OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
-                                oInfill.Infill3OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill3OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[24].Value.ToString();
                                 oInfill.Infill3OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
                             }
 
@@ -9571,15 +9760,15 @@ namespace LogginColombiaGold
                                 oInfill.Infill4MineralGange3Perc = dtgInfill.Rows[j].Cells[22].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[22].Value.ToString());
 
                                 oInfill.Infill4OreMineral1 = dtgInfill.Rows[j].Cells[11].Value.ToString();
-                                oInfill.Infill4OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value.ToString();
+                                oInfill.Infill4OreMineral1Style = dtgInfill.Rows[j].Cells[12].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[12].Value.ToString();
                                 oInfill.Infill4OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
 
                                 oInfill.Infill4OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
-                                oInfill.Infill4OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill4OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value == null ? string.Empty :dtgInfill.Rows[j].Cells[18].Value.ToString();
                                 oInfill.Infill4OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
 
                                 oInfill.Infill4OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
-                                oInfill.Infill4OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value.ToString();
+                                oInfill.Infill4OreMineral3Style = dtgInfill.Rows[j].Cells[24].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[24].Value.ToString();
                                 oInfill.Infill4OreMineral3Perc = dtgInfill.Rows[j].Cells[25].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[25].Value.ToString());
                             }
                         }//End iff
@@ -9861,6 +10050,32 @@ namespace LogginColombiaGold
             {
                 if (MessageBox.Show("Do you really want to delete the sample?", "Infill", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
+                    string IFrom = dtgInfill.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    string ITo = dtgInfill.Rows[e.RowIndex].Cells[2].Value.ToString();
+
+                    if (IFrom.Length == 3)
+                    {
+                        IFrom = string.Concat(IFrom, "0");
+                    }
+
+                    if (ITo.Length == 3)
+                    {
+                        ITo = string.Concat(ITo, "0");
+                    }
+
+                    if (IFrom.Length == 1)
+                    {
+                        IFrom = string.Concat(IFrom, ".00");
+                    }
+
+                    if (ITo.Length == 1)
+                    {
+                        ITo = string.Concat(ITo, ".00");
+                    }
+
+                    if (fromTosAdicionados.Contains(IFrom + ";" + ITo))
+                        fromTosAdicionados.Remove(IFrom + ";" + ITo);
+
                     dtgInfill.Rows.RemoveAt(e.RowIndex);
                     MessageBox.Show("Sample deleted successfully.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -10169,5 +10384,6 @@ namespace LogginColombiaGold
                 MessageBox.Show(ex.Message);
             }
         }
+
     }
 }

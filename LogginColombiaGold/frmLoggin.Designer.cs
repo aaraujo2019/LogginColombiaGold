@@ -79,8 +79,6 @@ namespace LogginColombiaGold
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.btnValidBox = new System.Windows.Forms.PictureBox();
             this.btnExcelBox = new System.Windows.Forms.PictureBox();
-            this.btnExporExcelMin = new System.Windows.Forms.PictureBox();
-            this.btnValidMin = new System.Windows.Forms.PictureBox();
             this.TabPpal = new System.Windows.Forms.TabControl();
             this.tbSamples = new System.Windows.Forms.TabPage();
             this.tbBox = new System.Windows.Forms.TabPage();
@@ -268,120 +266,6 @@ namespace LogginColombiaGold
             this.label43 = new System.Windows.Forms.Label();
             this.dgStructure = new System.Windows.Forms.DataGridView();
             this.tbMineraliz = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnCancelMin = new System.Windows.Forms.Button();
-            this.btnAddMin = new System.Windows.Forms.Button();
-            this.label64 = new System.Windows.Forms.Label();
-            this.txtCommentsMin = new System.Windows.Forms.TextBox();
-            this.txtToMin = new System.Windows.Forms.TextBox();
-            this.txtFromMin = new System.Windows.Forms.TextBox();
-            this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.txtMinPerc3 = new System.Windows.Forms.TextBox();
-            this.label96 = new System.Windows.Forms.Label();
-            this.cmbGSizeMin3 = new System.Windows.Forms.ComboBox();
-            this.label59 = new System.Windows.Forms.Label();
-            this.cmbStyleM3 = new System.Windows.Forms.ComboBox();
-            this.label60 = new System.Windows.Forms.Label();
-            this.cmbM3Z3 = new System.Windows.Forms.ComboBox();
-            this.cmbM3Z2 = new System.Windows.Forms.ComboBox();
-            this.cmbM3Z1 = new System.Windows.Forms.ComboBox();
-            this.label61 = new System.Windows.Forms.Label();
-            this.label62 = new System.Windows.Forms.Label();
-            this.label63 = new System.Windows.Forms.Label();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.txtMinPerc2 = new System.Windows.Forms.TextBox();
-            this.label95 = new System.Windows.Forms.Label();
-            this.cmbGSizeMin2 = new System.Windows.Forms.ComboBox();
-            this.label54 = new System.Windows.Forms.Label();
-            this.cmbStyleM2 = new System.Windows.Forms.ComboBox();
-            this.label55 = new System.Windows.Forms.Label();
-            this.cmbM2Z3 = new System.Windows.Forms.ComboBox();
-            this.cmbM2Z2 = new System.Windows.Forms.ComboBox();
-            this.cmbM2Z1 = new System.Windows.Forms.ComboBox();
-            this.label56 = new System.Windows.Forms.Label();
-            this.label57 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.txtMinPerc1 = new System.Windows.Forms.TextBox();
-            this.label94 = new System.Windows.Forms.Label();
-            this.cmbGSizeMin1 = new System.Windows.Forms.ComboBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.cmbStyleM1 = new System.Windows.Forms.ComboBox();
-            this.label52 = new System.Windows.Forms.Label();
-            this.cmbM1Z3 = new System.Windows.Forms.ComboBox();
-            this.cmbM1Z2 = new System.Windows.Forms.ComboBox();
-            this.cmbM1Z1 = new System.Windows.Forms.ComboBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.cmbHoleIdMin = new System.Windows.Forms.ComboBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.dgMineraliz = new System.Windows.Forms.DataGridView();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cmbHoleIdInfill = new System.Windows.Forms.ComboBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.groupBox23 = new System.Windows.Forms.GroupBox();
-            this.txtPorGangueMin2 = new System.Windows.Forms.TextBox();
-            this.label153 = new System.Windows.Forms.Label();
-            this.cmbGangueMin = new System.Windows.Forms.ComboBox();
-            this.label154 = new System.Windows.Forms.Label();
-            this.cmbTexture = new System.Windows.Forms.ComboBox();
-            this.label155 = new System.Windows.Forms.Label();
-            this.txtPorGangueMin = new System.Windows.Forms.TextBox();
-            this.label162 = new System.Windows.Forms.Label();
-            this.cmbGangueMin2 = new System.Windows.Forms.ComboBox();
-            this.cmbTexture3 = new System.Windows.Forms.ComboBox();
-            this.label161 = new System.Windows.Forms.Label();
-            this.label168 = new System.Windows.Forms.Label();
-            this.label166 = new System.Windows.Forms.Label();
-            this.cmbTexture2 = new System.Windows.Forms.ComboBox();
-            this.cmbGangueMin3 = new System.Windows.Forms.ComboBox();
-            this.label167 = new System.Windows.Forms.Label();
-            this.label165 = new System.Windows.Forms.Label();
-            this.txtPorGangueMin3 = new System.Windows.Forms.TextBox();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.cmbStyle3 = new System.Windows.Forms.ComboBox();
-            this.label170 = new System.Windows.Forms.Label();
-            this.cmbStyle2 = new System.Windows.Forms.ComboBox();
-            this.label169 = new System.Windows.Forms.Label();
-            this.txtPorOreMin3 = new System.Windows.Forms.TextBox();
-            this.label163 = new System.Windows.Forms.Label();
-            this.cmbOreMin3 = new System.Windows.Forms.ComboBox();
-            this.label164 = new System.Windows.Forms.Label();
-            this.txtPorOreMin2 = new System.Windows.Forms.TextBox();
-            this.label159 = new System.Windows.Forms.Label();
-            this.cmbOreMin2 = new System.Windows.Forms.ComboBox();
-            this.label160 = new System.Windows.Forms.Label();
-            this.cmbStyle = new System.Windows.Forms.ComboBox();
-            this.label158 = new System.Windows.Forms.Label();
-            this.txtPorOreMin = new System.Windows.Forms.TextBox();
-            this.label157 = new System.Windows.Forms.Label();
-            this.cmbOreMin = new System.Windows.Forms.ComboBox();
-            this.label156 = new System.Windows.Forms.Label();
-            this.txtToInfill = new System.Windows.Forms.TextBox();
-            this.txtFromInfill = new System.Windows.Forms.TextBox();
-            this.label171 = new System.Windows.Forms.Label();
-            this.label172 = new System.Windows.Forms.Label();
-            this.label173 = new System.Windows.Forms.Label();
-            this.label174 = new System.Windows.Forms.Label();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnGuardar = new System.Windows.Forms.Button();
-            this.btnAgregar = new System.Windows.Forms.Button();
-            this.txtPorStage = new System.Windows.Forms.TextBox();
-            this.label152 = new System.Windows.Forms.Label();
-            this.txtAngleCore = new System.Windows.Forms.TextBox();
-            this.label151 = new System.Windows.Forms.Label();
-            this.txtNumberInfill = new System.Windows.Forms.TextBox();
-            this.label150 = new System.Windows.Forms.Label();
-            this.cmbTypeInfill = new System.Windows.Forms.ComboBox();
-            this.label149 = new System.Windows.Forms.Label();
-            this.cmbStage = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.dtgInfill = new System.Windows.Forms.DataGridView();
             this.tbGeotech = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -519,6 +403,123 @@ namespace LogginColombiaGold
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label105 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tbInfill = new System.Windows.Forms.TabPage();
+            this.groupBox26 = new System.Windows.Forms.GroupBox();
+            this.cmbHoleIdInfill = new System.Windows.Forms.ComboBox();
+            this.groupBox23 = new System.Windows.Forms.GroupBox();
+            this.txtPorGangueMin2 = new System.Windows.Forms.TextBox();
+            this.label153 = new System.Windows.Forms.Label();
+            this.cmbGangueMin = new System.Windows.Forms.ComboBox();
+            this.label154 = new System.Windows.Forms.Label();
+            this.cmbTexture = new System.Windows.Forms.ComboBox();
+            this.label155 = new System.Windows.Forms.Label();
+            this.txtPorGangueMin = new System.Windows.Forms.TextBox();
+            this.label162 = new System.Windows.Forms.Label();
+            this.cmbGangueMin2 = new System.Windows.Forms.ComboBox();
+            this.cmbTexture3 = new System.Windows.Forms.ComboBox();
+            this.label161 = new System.Windows.Forms.Label();
+            this.label168 = new System.Windows.Forms.Label();
+            this.label166 = new System.Windows.Forms.Label();
+            this.cmbTexture2 = new System.Windows.Forms.ComboBox();
+            this.cmbGangueMin3 = new System.Windows.Forms.ComboBox();
+            this.label167 = new System.Windows.Forms.Label();
+            this.label165 = new System.Windows.Forms.Label();
+            this.txtPorGangueMin3 = new System.Windows.Forms.TextBox();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.cmbStyle3 = new System.Windows.Forms.ComboBox();
+            this.label170 = new System.Windows.Forms.Label();
+            this.cmbStyle2 = new System.Windows.Forms.ComboBox();
+            this.label169 = new System.Windows.Forms.Label();
+            this.txtPorOreMin3 = new System.Windows.Forms.TextBox();
+            this.label163 = new System.Windows.Forms.Label();
+            this.cmbOreMin3 = new System.Windows.Forms.ComboBox();
+            this.label164 = new System.Windows.Forms.Label();
+            this.txtPorOreMin2 = new System.Windows.Forms.TextBox();
+            this.label159 = new System.Windows.Forms.Label();
+            this.cmbOreMin2 = new System.Windows.Forms.ComboBox();
+            this.label160 = new System.Windows.Forms.Label();
+            this.cmbStyle = new System.Windows.Forms.ComboBox();
+            this.label158 = new System.Windows.Forms.Label();
+            this.txtPorOreMin = new System.Windows.Forms.TextBox();
+            this.label157 = new System.Windows.Forms.Label();
+            this.cmbOreMin = new System.Windows.Forms.ComboBox();
+            this.label156 = new System.Windows.Forms.Label();
+            this.txtToInfill = new System.Windows.Forms.TextBox();
+            this.txtFromInfill = new System.Windows.Forms.TextBox();
+            this.label171 = new System.Windows.Forms.Label();
+            this.label172 = new System.Windows.Forms.Label();
+            this.label173 = new System.Windows.Forms.Label();
+            this.label174 = new System.Windows.Forms.Label();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnAgregar = new System.Windows.Forms.Button();
+            this.txtPorStage = new System.Windows.Forms.TextBox();
+            this.label152 = new System.Windows.Forms.Label();
+            this.txtAngleCore = new System.Windows.Forms.TextBox();
+            this.label151 = new System.Windows.Forms.Label();
+            this.txtNumberInfill = new System.Windows.Forms.TextBox();
+            this.label150 = new System.Windows.Forms.Label();
+            this.cmbTypeInfill = new System.Windows.Forms.ComboBox();
+            this.label149 = new System.Windows.Forms.Label();
+            this.cmbStage = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dtgInfill = new System.Windows.Forms.DataGridView();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.btnCancelMin = new System.Windows.Forms.Button();
+            this.btnAddMin = new System.Windows.Forms.Button();
+            this.btnValidMin = new System.Windows.Forms.PictureBox();
+            this.label64 = new System.Windows.Forms.Label();
+            this.txtCommentsMin = new System.Windows.Forms.TextBox();
+            this.txtToMin = new System.Windows.Forms.TextBox();
+            this.txtFromMin = new System.Windows.Forms.TextBox();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.txtMinPerc3 = new System.Windows.Forms.TextBox();
+            this.label96 = new System.Windows.Forms.Label();
+            this.cmbGSizeMin3 = new System.Windows.Forms.ComboBox();
+            this.label59 = new System.Windows.Forms.Label();
+            this.cmbStyleM3 = new System.Windows.Forms.ComboBox();
+            this.label60 = new System.Windows.Forms.Label();
+            this.cmbM3Z3 = new System.Windows.Forms.ComboBox();
+            this.cmbM3Z2 = new System.Windows.Forms.ComboBox();
+            this.cmbM3Z1 = new System.Windows.Forms.ComboBox();
+            this.label61 = new System.Windows.Forms.Label();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label63 = new System.Windows.Forms.Label();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.txtMinPerc2 = new System.Windows.Forms.TextBox();
+            this.label95 = new System.Windows.Forms.Label();
+            this.cmbGSizeMin2 = new System.Windows.Forms.ComboBox();
+            this.label54 = new System.Windows.Forms.Label();
+            this.cmbStyleM2 = new System.Windows.Forms.ComboBox();
+            this.label55 = new System.Windows.Forms.Label();
+            this.cmbM2Z3 = new System.Windows.Forms.ComboBox();
+            this.cmbM2Z2 = new System.Windows.Forms.ComboBox();
+            this.cmbM2Z1 = new System.Windows.Forms.ComboBox();
+            this.label56 = new System.Windows.Forms.Label();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.groupBox27 = new System.Windows.Forms.GroupBox();
+            this.txtMinPerc1 = new System.Windows.Forms.TextBox();
+            this.label94 = new System.Windows.Forms.Label();
+            this.cmbGSizeMin1 = new System.Windows.Forms.ComboBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.cmbStyleM1 = new System.Windows.Forms.ComboBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.cmbM1Z3 = new System.Windows.Forms.ComboBox();
+            this.cmbM1Z2 = new System.Windows.Forms.ComboBox();
+            this.cmbM1Z1 = new System.Windows.Forms.ComboBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.btnExporExcelMin = new System.Windows.Forms.PictureBox();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.cmbHoleIdMin = new System.Windows.Forms.ComboBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.dgMineraliz = new System.Windows.Forms.DataGridView();
+            this.txtRecoveryPerc = new System.Windows.Forms.TextBox();
+            this.label189 = new System.Windows.Forms.Label();
             this.txtStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnValidSamples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnExcel)).BeginInit();
@@ -540,8 +541,6 @@ namespace LogginColombiaGold
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnValidBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnExcelBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnExporExcelMin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnValidMin)).BeginInit();
             this.TabPpal.SuspendLayout();
             this.tbSamples.SuspendLayout();
             this.tbBox.SuspendLayout();
@@ -571,16 +570,6 @@ namespace LogginColombiaGold
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgStructure)).BeginInit();
             this.tbMineraliz.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.groupBox14.SuspendLayout();
-            this.groupBox12.SuspendLayout();
-            this.groupBox13.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgMineraliz)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            this.groupBox23.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgInfill)).BeginInit();
             this.tbGeotech.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -599,10 +588,24 @@ namespace LogginColombiaGold
             ((System.ComponentModel.ISupportInitialize)(this.pCargando)).BeginInit();
             this.groupBox20.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tbInfill.SuspendLayout();
+            this.groupBox26.SuspendLayout();
+            this.groupBox23.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgInfill)).BeginInit();
+            this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnValidMin)).BeginInit();
+            this.groupBox14.SuspendLayout();
+            this.groupBox13.SuspendLayout();
+            this.groupBox27.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnExporExcelMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgMineraliz)).BeginInit();
             this.SuspendLayout();
             // 
             // txtStart
             // 
+            this.txtStart.Controls.Add(this.txtRecoveryPerc);
+            this.txtStart.Controls.Add(this.label189);
             this.txtStart.Controls.Add(this.cmbOreZone);
             this.txtStart.Controls.Add(this.label175);
             this.txtStart.Controls.Add(this.label136);
@@ -637,7 +640,7 @@ namespace LogginColombiaGold
             // cmbOreZone
             // 
             this.cmbOreZone.FormattingEnabled = true;
-            this.cmbOreZone.Location = new System.Drawing.Point(388, 27);
+            this.cmbOreZone.Location = new System.Drawing.Point(374, 26);
             this.cmbOreZone.Name = "cmbOreZone";
             this.cmbOreZone.Size = new System.Drawing.Size(103, 21);
             this.cmbOreZone.TabIndex = 64;
@@ -645,7 +648,7 @@ namespace LogginColombiaGold
             // label175
             // 
             this.label175.AutoSize = true;
-            this.label175.Location = new System.Drawing.Point(385, 11);
+            this.label175.Location = new System.Drawing.Point(371, 10);
             this.label175.Name = "label175";
             this.label175.Size = new System.Drawing.Size(52, 13);
             this.label175.TabIndex = 65;
@@ -670,9 +673,9 @@ namespace LogginColombiaGold
             // 
             // btnCancelSamp
             // 
-            this.btnCancelSamp.Location = new System.Drawing.Point(621, 71);
+            this.btnCancelSamp.Location = new System.Drawing.Point(634, 71);
             this.btnCancelSamp.Name = "btnCancelSamp";
-            this.btnCancelSamp.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelSamp.Size = new System.Drawing.Size(64, 23);
             this.btnCancelSamp.TabIndex = 11;
             this.btnCancelSamp.Text = "Cancel";
             this.btnCancelSamp.UseVisualStyleBackColor = true;
@@ -731,14 +734,13 @@ namespace LogginColombiaGold
             this.cmbHoleID.FormattingEnabled = true;
             this.cmbHoleID.Location = new System.Drawing.Point(116, 27);
             this.cmbHoleID.Name = "cmbHoleID";
-            this.cmbHoleID.Size = new System.Drawing.Size(127, 21);
+            this.cmbHoleID.Size = new System.Drawing.Size(120, 21);
             this.cmbHoleID.TabIndex = 1;
             this.cmbHoleID.SelectedIndexChanged += new System.EventHandler(this.cmbHoleID_SelectedIndexChanged);
-            this.cmbHoleID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cmbHoleID_KeyPress);
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(259, 25);
+            this.btnStart.Location = new System.Drawing.Point(243, 25);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 2;
@@ -765,9 +767,9 @@ namespace LogginColombiaGold
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(538, 71);
+            this.btnAdd.Location = new System.Drawing.Point(568, 71);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(64, 23);
             this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -783,15 +785,15 @@ namespace LogginColombiaGold
             // 
             // txtDupDe
             // 
-            this.txtDupDe.Location = new System.Drawing.Point(388, 72);
+            this.txtDupDe.Location = new System.Drawing.Point(374, 72);
             this.txtDupDe.Name = "txtDupDe";
-            this.txtDupDe.Size = new System.Drawing.Size(103, 20);
+            this.txtDupDe.Size = new System.Drawing.Size(68, 20);
             this.txtDupDe.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(385, 56);
+            this.label4.Location = new System.Drawing.Point(371, 56);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 13);
             this.label4.TabIndex = 29;
@@ -802,7 +804,7 @@ namespace LogginColombiaGold
             this.cmbSampleType.FormattingEnabled = true;
             this.cmbSampleType.Location = new System.Drawing.Point(242, 72);
             this.cmbSampleType.Name = "cmbSampleType";
-            this.cmbSampleType.Size = new System.Drawing.Size(140, 21);
+            this.cmbSampleType.Size = new System.Drawing.Size(126, 21);
             this.cmbSampleType.TabIndex = 6;
             this.cmbSampleType.SelectedIndexChanged += new System.EventHandler(this.cmbSampleType_SelectedIndexChanged);
             // 
@@ -1135,42 +1137,17 @@ namespace LogginColombiaGold
             this.toolTip1.SetToolTip(this.btnExcelBox, "Export Excel");
             this.btnExcelBox.Click += new System.EventHandler(this.btnExcelBox_Click);
             // 
-            // btnExporExcelMin
-            // 
-            this.btnExporExcelMin.Image = ((System.Drawing.Image)(resources.GetObject("btnExporExcelMin.Image")));
-            this.btnExporExcelMin.InitialImage = null;
-            this.btnExporExcelMin.Location = new System.Drawing.Point(614, 21);
-            this.btnExporExcelMin.Margin = new System.Windows.Forms.Padding(2);
-            this.btnExporExcelMin.Name = "btnExporExcelMin";
-            this.btnExporExcelMin.Size = new System.Drawing.Size(36, 36);
-            this.btnExporExcelMin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.btnExporExcelMin.TabIndex = 341;
-            this.btnExporExcelMin.TabStop = false;
-            this.toolTip1.SetToolTip(this.btnExporExcelMin, "Export Excel");
-            // 
-            // btnValidMin
-            // 
-            this.btnValidMin.Image = ((System.Drawing.Image)(resources.GetObject("btnValidMin.Image")));
-            this.btnValidMin.InitialImage = null;
-            this.btnValidMin.Location = new System.Drawing.Point(654, 21);
-            this.btnValidMin.Margin = new System.Windows.Forms.Padding(2);
-            this.btnValidMin.Name = "btnValidMin";
-            this.btnValidMin.Size = new System.Drawing.Size(36, 36);
-            this.btnValidMin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.btnValidMin.TabIndex = 343;
-            this.btnValidMin.TabStop = false;
-            this.toolTip1.SetToolTip(this.btnValidMin, "Info Validate");
-            // 
             // TabPpal
             // 
-            this.TabPpal.Controls.Add(this.tbSamples);
-            this.TabPpal.Controls.Add(this.tbBox);
+            this.TabPpal.Controls.Add(this.tbLithology);
             this.TabPpal.Controls.Add(this.tbWeathering);
             this.TabPpal.Controls.Add(this.tbOxides);
-            this.TabPpal.Controls.Add(this.tbLithology);
             this.TabPpal.Controls.Add(this.tbAlteration);
-            this.TabPpal.Controls.Add(this.tbStructure);
             this.TabPpal.Controls.Add(this.tbMineraliz);
+            this.TabPpal.Controls.Add(this.tbStructure);
+            this.TabPpal.Controls.Add(this.tbInfill);
+            this.TabPpal.Controls.Add(this.tbSamples);
+            this.TabPpal.Controls.Add(this.tbBox);
             this.TabPpal.Controls.Add(this.tbGeotech);
             this.TabPpal.Controls.Add(this.tbDensity);
             this.TabPpal.Location = new System.Drawing.Point(7, 77);
@@ -1559,9 +1536,9 @@ namespace LogginColombiaGold
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(283, 17);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(62, 13);
+            this.label14.Size = new System.Drawing.Size(30, 13);
             this.label14.TabIndex = 27;
-            this.label14.Text = "Weathering";
+            this.label14.Text = "Rate";
             // 
             // label15
             // 
@@ -2207,7 +2184,7 @@ namespace LogginColombiaGold
             this.cmbMin3Alt3.DropDownWidth = 200;
             this.cmbMin3Alt3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMin3Alt3.FormattingEnabled = true;
-            this.cmbMin3Alt3.Location = new System.Drawing.Point(599, 29);
+            this.cmbMin3Alt3.Location = new System.Drawing.Point(599, 30);
             this.cmbMin3Alt3.Name = "cmbMin3Alt3";
             this.cmbMin3Alt3.Size = new System.Drawing.Size(93, 21);
             this.cmbMin3Alt3.TabIndex = 20;
@@ -2227,7 +2204,7 @@ namespace LogginColombiaGold
             this.cmbStyleAlt33.DropDownWidth = 200;
             this.cmbStyleAlt33.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbStyleAlt33.FormattingEnabled = true;
-            this.cmbStyleAlt33.Location = new System.Drawing.Point(302, 29);
+            this.cmbStyleAlt33.Location = new System.Drawing.Point(302, 30);
             this.cmbStyleAlt33.Name = "cmbStyleAlt33";
             this.cmbStyleAlt33.Size = new System.Drawing.Size(93, 21);
             this.cmbStyleAlt33.TabIndex = 17;
@@ -2247,7 +2224,7 @@ namespace LogginColombiaGold
             this.cmbMin2Alt3.DropDownWidth = 200;
             this.cmbMin2Alt3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMin2Alt3.FormattingEnabled = true;
-            this.cmbMin2Alt3.Location = new System.Drawing.Point(500, 29);
+            this.cmbMin2Alt3.Location = new System.Drawing.Point(500, 30);
             this.cmbMin2Alt3.Name = "cmbMin2Alt3";
             this.cmbMin2Alt3.Size = new System.Drawing.Size(93, 21);
             this.cmbMin2Alt3.TabIndex = 19;
@@ -2267,7 +2244,7 @@ namespace LogginColombiaGold
             this.cmbStyleAlt3.DropDownWidth = 200;
             this.cmbStyleAlt3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbStyleAlt3.FormattingEnabled = true;
-            this.cmbStyleAlt3.Location = new System.Drawing.Point(203, 29);
+            this.cmbStyleAlt3.Location = new System.Drawing.Point(203, 30);
             this.cmbStyleAlt3.Name = "cmbStyleAlt3";
             this.cmbStyleAlt3.Size = new System.Drawing.Size(93, 21);
             this.cmbStyleAlt3.TabIndex = 16;
@@ -2276,7 +2253,7 @@ namespace LogginColombiaGold
             // 
             this.label179.AutoSize = true;
             this.label179.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label179.Location = new System.Drawing.Point(200, 14);
+            this.label179.Location = new System.Drawing.Point(200, 15);
             this.label179.Name = "label179";
             this.label179.Size = new System.Drawing.Size(39, 13);
             this.label179.TabIndex = 49;
@@ -2287,7 +2264,7 @@ namespace LogginColombiaGold
             this.cmbMin1Alt3.DropDownWidth = 200;
             this.cmbMin1Alt3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMin1Alt3.FormattingEnabled = true;
-            this.cmbMin1Alt3.Location = new System.Drawing.Point(401, 29);
+            this.cmbMin1Alt3.Location = new System.Drawing.Point(401, 30);
             this.cmbMin1Alt3.Name = "cmbMin1Alt3";
             this.cmbMin1Alt3.Size = new System.Drawing.Size(93, 21);
             this.cmbMin1Alt3.TabIndex = 18;
@@ -2326,7 +2303,7 @@ namespace LogginColombiaGold
             // 
             this.label181.AutoSize = true;
             this.label181.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label181.Location = new System.Drawing.Point(6, 16);
+            this.label181.Location = new System.Drawing.Point(6, 15);
             this.label181.Name = "label181";
             this.label181.Size = new System.Drawing.Size(31, 13);
             this.label181.TabIndex = 43;
@@ -2526,7 +2503,7 @@ namespace LogginColombiaGold
             // 
             this.label77.AutoSize = true;
             this.label77.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label77.Location = new System.Drawing.Point(6, 16);
+            this.label77.Location = new System.Drawing.Point(6, 15);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(31, 13);
             this.label77.TabIndex = 43;
@@ -2571,7 +2548,7 @@ namespace LogginColombiaGold
             this.cmbMin3Alt1.DropDownWidth = 200;
             this.cmbMin3Alt1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMin3Alt1.FormattingEnabled = true;
-            this.cmbMin3Alt1.Location = new System.Drawing.Point(598, 27);
+            this.cmbMin3Alt1.Location = new System.Drawing.Point(598, 29);
             this.cmbMin3Alt1.Name = "cmbMin3Alt1";
             this.cmbMin3Alt1.Size = new System.Drawing.Size(93, 21);
             this.cmbMin3Alt1.TabIndex = 13;
@@ -2580,7 +2557,7 @@ namespace LogginColombiaGold
             // 
             this.label148.AutoSize = true;
             this.label148.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label148.Location = new System.Drawing.Point(595, 13);
+            this.label148.Location = new System.Drawing.Point(595, 14);
             this.label148.Name = "label148";
             this.label148.Size = new System.Drawing.Size(50, 13);
             this.label148.TabIndex = 57;
@@ -2611,7 +2588,7 @@ namespace LogginColombiaGold
             this.cmbMin2Alt1.DropDownWidth = 200;
             this.cmbMin2Alt1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMin2Alt1.FormattingEnabled = true;
-            this.cmbMin2Alt1.Location = new System.Drawing.Point(500, 27);
+            this.cmbMin2Alt1.Location = new System.Drawing.Point(500, 29);
             this.cmbMin2Alt1.Name = "cmbMin2Alt1";
             this.cmbMin2Alt1.Size = new System.Drawing.Size(93, 21);
             this.cmbMin2Alt1.TabIndex = 12;
@@ -2621,7 +2598,7 @@ namespace LogginColombiaGold
             // 
             this.label92.AutoSize = true;
             this.label92.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label92.Location = new System.Drawing.Point(497, 13);
+            this.label92.Location = new System.Drawing.Point(497, 14);
             this.label92.Name = "label92";
             this.label92.Size = new System.Drawing.Size(50, 13);
             this.label92.TabIndex = 49;
@@ -2653,7 +2630,7 @@ namespace LogginColombiaGold
             this.cmbMin1Alt.DropDownWidth = 200;
             this.cmbMin1Alt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMin1Alt.FormattingEnabled = true;
-            this.cmbMin1Alt.Location = new System.Drawing.Point(401, 28);
+            this.cmbMin1Alt.Location = new System.Drawing.Point(401, 29);
             this.cmbMin1Alt.Name = "cmbMin1Alt";
             this.cmbMin1Alt.Size = new System.Drawing.Size(93, 21);
             this.cmbMin1Alt.TabIndex = 11;
@@ -2664,7 +2641,7 @@ namespace LogginColombiaGold
             this.cmbIntAlt.DropDownWidth = 200;
             this.cmbIntAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbIntAlt.FormattingEnabled = true;
-            this.cmbIntAlt.Location = new System.Drawing.Point(104, 30);
+            this.cmbIntAlt.Location = new System.Drawing.Point(104, 29);
             this.cmbIntAlt.Name = "cmbIntAlt";
             this.cmbIntAlt.Size = new System.Drawing.Size(93, 21);
             this.cmbIntAlt.TabIndex = 8;
@@ -2675,7 +2652,7 @@ namespace LogginColombiaGold
             this.cmbTypeAlt.DropDownWidth = 200;
             this.cmbTypeAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbTypeAlt.FormattingEnabled = true;
-            this.cmbTypeAlt.Location = new System.Drawing.Point(6, 30);
+            this.cmbTypeAlt.Location = new System.Drawing.Point(6, 29);
             this.cmbTypeAlt.Name = "cmbTypeAlt";
             this.cmbTypeAlt.Size = new System.Drawing.Size(93, 21);
             this.cmbTypeAlt.TabIndex = 7;
@@ -2696,7 +2673,7 @@ namespace LogginColombiaGold
             // 
             this.label84.AutoSize = true;
             this.label84.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label84.Location = new System.Drawing.Point(6, 16);
+            this.label84.Location = new System.Drawing.Point(6, 14);
             this.label84.Name = "label84";
             this.label84.Size = new System.Drawing.Size(31, 13);
             this.label84.TabIndex = 43;
@@ -2706,7 +2683,7 @@ namespace LogginColombiaGold
             // 
             this.label85.AutoSize = true;
             this.label85.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label85.Location = new System.Drawing.Point(101, 15);
+            this.label85.Location = new System.Drawing.Point(101, 14);
             this.label85.Name = "label85";
             this.label85.Size = new System.Drawing.Size(46, 13);
             this.label85.TabIndex = 44;
@@ -3141,1160 +3118,13 @@ namespace LogginColombiaGold
             // 
             // tbMineraliz
             // 
-            this.tbMineraliz.Controls.Add(this.tabControl1);
+            this.tbMineraliz.Controls.Add(this.groupBox12);
             this.tbMineraliz.Location = new System.Drawing.Point(4, 22);
             this.tbMineraliz.Name = "tbMineraliz";
             this.tbMineraliz.Size = new System.Drawing.Size(715, 405);
             this.tbMineraliz.TabIndex = 4;
-            this.tbMineraliz.Text = "HostRock - Infill Mineraliz";
+            this.tbMineraliz.Text = "Mineralization";
             this.tbMineraliz.UseVisualStyleBackColor = true;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(4, 4);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(706, 398);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.btnCancelMin);
-            this.tabPage1.Controls.Add(this.btnAddMin);
-            this.tabPage1.Controls.Add(this.btnValidMin);
-            this.tabPage1.Controls.Add(this.label64);
-            this.tabPage1.Controls.Add(this.txtCommentsMin);
-            this.tabPage1.Controls.Add(this.txtToMin);
-            this.tabPage1.Controls.Add(this.txtFromMin);
-            this.tabPage1.Controls.Add(this.groupBox14);
-            this.tabPage1.Controls.Add(this.groupBox12);
-            this.tabPage1.Controls.Add(this.groupBox13);
-            this.tabPage1.Controls.Add(this.btnExporExcelMin);
-            this.tabPage1.Controls.Add(this.label44);
-            this.tabPage1.Controls.Add(this.label45);
-            this.tabPage1.Controls.Add(this.cmbHoleIdMin);
-            this.tabPage1.Controls.Add(this.label47);
-            this.tabPage1.Controls.Add(this.label48);
-            this.tabPage1.Controls.Add(this.dgMineraliz);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(698, 372);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Mineralization";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnCancelMin
-            // 
-            this.btnCancelMin.Location = new System.Drawing.Point(621, 343);
-            this.btnCancelMin.Name = "btnCancelMin";
-            this.btnCancelMin.Size = new System.Drawing.Size(62, 23);
-            this.btnCancelMin.TabIndex = 345;
-            this.btnCancelMin.Text = "Cancel";
-            this.btnCancelMin.UseVisualStyleBackColor = true;
-            this.btnCancelMin.Click += new System.EventHandler(this.btnCancelMin_Click);
-            // 
-            // btnAddMin
-            // 
-            this.btnAddMin.Location = new System.Drawing.Point(553, 343);
-            this.btnAddMin.Name = "btnAddMin";
-            this.btnAddMin.Size = new System.Drawing.Size(62, 23);
-            this.btnAddMin.TabIndex = 344;
-            this.btnAddMin.Text = "Add";
-            this.btnAddMin.UseVisualStyleBackColor = true;
-            this.btnAddMin.Click += new System.EventHandler(this.btnAddMin_Click);
-            // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(282, 6);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(56, 13);
-            this.label64.TabIndex = 342;
-            this.label64.Text = "Comments";
-            // 
-            // txtCommentsMin
-            // 
-            this.txtCommentsMin.Location = new System.Drawing.Point(284, 22);
-            this.txtCommentsMin.Multiline = true;
-            this.txtCommentsMin.Name = "txtCommentsMin";
-            this.txtCommentsMin.Size = new System.Drawing.Size(322, 36);
-            this.txtCommentsMin.TabIndex = 330;
-            // 
-            // txtToMin
-            // 
-            this.txtToMin.Location = new System.Drawing.Point(212, 22);
-            this.txtToMin.Name = "txtToMin";
-            this.txtToMin.Size = new System.Drawing.Size(56, 20);
-            this.txtToMin.TabIndex = 329;
-            // 
-            // txtFromMin
-            // 
-            this.txtFromMin.Location = new System.Drawing.Point(148, 22);
-            this.txtFromMin.Name = "txtFromMin";
-            this.txtFromMin.Size = new System.Drawing.Size(56, 20);
-            this.txtFromMin.TabIndex = 328;
-            // 
-            // groupBox14
-            // 
-            this.groupBox14.Controls.Add(this.txtMinPerc3);
-            this.groupBox14.Controls.Add(this.label96);
-            this.groupBox14.Controls.Add(this.cmbGSizeMin3);
-            this.groupBox14.Controls.Add(this.label59);
-            this.groupBox14.Controls.Add(this.cmbStyleM3);
-            this.groupBox14.Controls.Add(this.label60);
-            this.groupBox14.Controls.Add(this.cmbM3Z3);
-            this.groupBox14.Controls.Add(this.cmbM3Z2);
-            this.groupBox14.Controls.Add(this.cmbM3Z1);
-            this.groupBox14.Controls.Add(this.label61);
-            this.groupBox14.Controls.Add(this.label62);
-            this.groupBox14.Controls.Add(this.label63);
-            this.groupBox14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox14.Location = new System.Drawing.Point(11, 184);
-            this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(679, 61);
-            this.groupBox14.TabIndex = 333;
-            this.groupBox14.TabStop = false;
-            this.groupBox14.Text = "Mineralization 3";
-            // 
-            // txtMinPerc3
-            // 
-            this.txtMinPerc3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinPerc3.Location = new System.Drawing.Point(478, 30);
-            this.txtMinPerc3.Name = "txtMinPerc3";
-            this.txtMinPerc3.Size = new System.Drawing.Size(59, 20);
-            this.txtMinPerc3.TabIndex = 266;
-            // 
-            // label96
-            // 
-            this.label96.AutoSize = true;
-            this.label96.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label96.Location = new System.Drawing.Point(578, 14);
-            this.label96.Name = "label96";
-            this.label96.Size = new System.Drawing.Size(35, 13);
-            this.label96.TabIndex = 265;
-            this.label96.Text = "GSize";
-            // 
-            // cmbGSizeMin3
-            // 
-            this.cmbGSizeMin3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbGSizeMin3.FormattingEnabled = true;
-            this.cmbGSizeMin3.Location = new System.Drawing.Point(581, 30);
-            this.cmbGSizeMin3.Name = "cmbGSizeMin3";
-            this.cmbGSizeMin3.Size = new System.Drawing.Size(92, 21);
-            this.cmbGSizeMin3.TabIndex = 264;
-            // 
-            // label59
-            // 
-            this.label59.AutoSize = true;
-            this.label59.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label59.Location = new System.Drawing.Point(478, 16);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(15, 13);
-            this.label59.TabIndex = 55;
-            this.label59.Text = "%";
-            // 
-            // cmbStyleM3
-            // 
-            this.cmbStyleM3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbStyleM3.FormattingEnabled = true;
-            this.cmbStyleM3.Location = new System.Drawing.Point(341, 30);
-            this.cmbStyleM3.Name = "cmbStyleM3";
-            this.cmbStyleM3.Size = new System.Drawing.Size(117, 21);
-            this.cmbStyleM3.TabIndex = 23;
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label60.Location = new System.Drawing.Point(339, 14);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(30, 13);
-            this.label60.TabIndex = 52;
-            this.label60.Text = "Style";
-            // 
-            // cmbM3Z3
-            // 
-            this.cmbM3Z3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM3Z3.FormattingEnabled = true;
-            this.cmbM3Z3.Location = new System.Drawing.Point(228, 30);
-            this.cmbM3Z3.Name = "cmbM3Z3";
-            this.cmbM3Z3.Size = new System.Drawing.Size(93, 21);
-            this.cmbM3Z3.TabIndex = 22;
-            // 
-            // cmbM3Z2
-            // 
-            this.cmbM3Z2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM3Z2.FormattingEnabled = true;
-            this.cmbM3Z2.Location = new System.Drawing.Point(115, 30);
-            this.cmbM3Z2.Name = "cmbM3Z2";
-            this.cmbM3Z2.Size = new System.Drawing.Size(93, 21);
-            this.cmbM3Z2.TabIndex = 21;
-            // 
-            // cmbM3Z1
-            // 
-            this.cmbM3Z1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM3Z1.FormattingEnabled = true;
-            this.cmbM3Z1.Location = new System.Drawing.Point(6, 30);
-            this.cmbM3Z1.Name = "cmbM3Z1";
-            this.cmbM3Z1.Size = new System.Drawing.Size(93, 21);
-            this.cmbM3Z1.TabIndex = 20;
-            // 
-            // label61
-            // 
-            this.label61.AutoSize = true;
-            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label61.Location = new System.Drawing.Point(225, 16);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(50, 13);
-            this.label61.TabIndex = 45;
-            this.label61.Text = "Mineral 3";
-            // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label62.Location = new System.Drawing.Point(6, 16);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(50, 13);
-            this.label62.TabIndex = 43;
-            this.label62.Text = "Mineral 1";
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label63.Location = new System.Drawing.Point(112, 15);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(50, 13);
-            this.label63.TabIndex = 44;
-            this.label63.Text = "Mineral 2";
-            // 
-            // groupBox12
-            // 
-            this.groupBox12.Controls.Add(this.txtMinPerc2);
-            this.groupBox12.Controls.Add(this.label95);
-            this.groupBox12.Controls.Add(this.cmbGSizeMin2);
-            this.groupBox12.Controls.Add(this.label54);
-            this.groupBox12.Controls.Add(this.cmbStyleM2);
-            this.groupBox12.Controls.Add(this.label55);
-            this.groupBox12.Controls.Add(this.cmbM2Z3);
-            this.groupBox12.Controls.Add(this.cmbM2Z2);
-            this.groupBox12.Controls.Add(this.cmbM2Z1);
-            this.groupBox12.Controls.Add(this.label56);
-            this.groupBox12.Controls.Add(this.label57);
-            this.groupBox12.Controls.Add(this.label58);
-            this.groupBox12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox12.Location = new System.Drawing.Point(11, 122);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(679, 61);
-            this.groupBox12.TabIndex = 332;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Mineralization 2";
-            // 
-            // txtMinPerc2
-            // 
-            this.txtMinPerc2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinPerc2.Location = new System.Drawing.Point(478, 30);
-            this.txtMinPerc2.Name = "txtMinPerc2";
-            this.txtMinPerc2.Size = new System.Drawing.Size(59, 20);
-            this.txtMinPerc2.TabIndex = 266;
-            // 
-            // label95
-            // 
-            this.label95.AutoSize = true;
-            this.label95.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label95.Location = new System.Drawing.Point(578, 14);
-            this.label95.Name = "label95";
-            this.label95.Size = new System.Drawing.Size(35, 13);
-            this.label95.TabIndex = 265;
-            this.label95.Text = "GSize";
-            // 
-            // cmbGSizeMin2
-            // 
-            this.cmbGSizeMin2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbGSizeMin2.FormattingEnabled = true;
-            this.cmbGSizeMin2.Location = new System.Drawing.Point(581, 30);
-            this.cmbGSizeMin2.Name = "cmbGSizeMin2";
-            this.cmbGSizeMin2.Size = new System.Drawing.Size(92, 21);
-            this.cmbGSizeMin2.TabIndex = 264;
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label54.Location = new System.Drawing.Point(478, 11);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(15, 13);
-            this.label54.TabIndex = 55;
-            this.label54.Text = "%";
-            // 
-            // cmbStyleM2
-            // 
-            this.cmbStyleM2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbStyleM2.FormattingEnabled = true;
-            this.cmbStyleM2.Location = new System.Drawing.Point(340, 30);
-            this.cmbStyleM2.Name = "cmbStyleM2";
-            this.cmbStyleM2.Size = new System.Drawing.Size(117, 21);
-            this.cmbStyleM2.TabIndex = 17;
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label55.Location = new System.Drawing.Point(338, 14);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(30, 13);
-            this.label55.TabIndex = 52;
-            this.label55.Text = "Style";
-            // 
-            // cmbM2Z3
-            // 
-            this.cmbM2Z3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM2Z3.FormattingEnabled = true;
-            this.cmbM2Z3.Location = new System.Drawing.Point(228, 30);
-            this.cmbM2Z3.Name = "cmbM2Z3";
-            this.cmbM2Z3.Size = new System.Drawing.Size(93, 21);
-            this.cmbM2Z3.TabIndex = 16;
-            // 
-            // cmbM2Z2
-            // 
-            this.cmbM2Z2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM2Z2.FormattingEnabled = true;
-            this.cmbM2Z2.Location = new System.Drawing.Point(115, 30);
-            this.cmbM2Z2.Name = "cmbM2Z2";
-            this.cmbM2Z2.Size = new System.Drawing.Size(93, 21);
-            this.cmbM2Z2.TabIndex = 15;
-            // 
-            // cmbM2Z1
-            // 
-            this.cmbM2Z1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM2Z1.FormattingEnabled = true;
-            this.cmbM2Z1.Location = new System.Drawing.Point(6, 30);
-            this.cmbM2Z1.Name = "cmbM2Z1";
-            this.cmbM2Z1.Size = new System.Drawing.Size(93, 21);
-            this.cmbM2Z1.TabIndex = 14;
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label56.Location = new System.Drawing.Point(225, 16);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(50, 13);
-            this.label56.TabIndex = 45;
-            this.label56.Text = "Mineral 3";
-            // 
-            // label57
-            // 
-            this.label57.AutoSize = true;
-            this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label57.Location = new System.Drawing.Point(6, 16);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(50, 13);
-            this.label57.TabIndex = 43;
-            this.label57.Text = "Mineral 1";
-            // 
-            // label58
-            // 
-            this.label58.AutoSize = true;
-            this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label58.Location = new System.Drawing.Point(112, 15);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(50, 13);
-            this.label58.TabIndex = 44;
-            this.label58.Text = "Mineral 2";
-            // 
-            // groupBox13
-            // 
-            this.groupBox13.Controls.Add(this.txtMinPerc1);
-            this.groupBox13.Controls.Add(this.label94);
-            this.groupBox13.Controls.Add(this.cmbGSizeMin1);
-            this.groupBox13.Controls.Add(this.label53);
-            this.groupBox13.Controls.Add(this.cmbStyleM1);
-            this.groupBox13.Controls.Add(this.label52);
-            this.groupBox13.Controls.Add(this.cmbM1Z3);
-            this.groupBox13.Controls.Add(this.cmbM1Z2);
-            this.groupBox13.Controls.Add(this.cmbM1Z1);
-            this.groupBox13.Controls.Add(this.label51);
-            this.groupBox13.Controls.Add(this.label49);
-            this.groupBox13.Controls.Add(this.label50);
-            this.groupBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox13.Location = new System.Drawing.Point(11, 60);
-            this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(679, 61);
-            this.groupBox13.TabIndex = 331;
-            this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "Mineralization 1";
-            // 
-            // txtMinPerc1
-            // 
-            this.txtMinPerc1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMinPerc1.Location = new System.Drawing.Point(478, 30);
-            this.txtMinPerc1.Name = "txtMinPerc1";
-            this.txtMinPerc1.Size = new System.Drawing.Size(59, 20);
-            this.txtMinPerc1.TabIndex = 264;
-            // 
-            // label94
-            // 
-            this.label94.AutoSize = true;
-            this.label94.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label94.Location = new System.Drawing.Point(578, 14);
-            this.label94.Name = "label94";
-            this.label94.Size = new System.Drawing.Size(35, 13);
-            this.label94.TabIndex = 263;
-            this.label94.Text = "GSize";
-            // 
-            // cmbGSizeMin1
-            // 
-            this.cmbGSizeMin1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbGSizeMin1.FormattingEnabled = true;
-            this.cmbGSizeMin1.Location = new System.Drawing.Point(581, 30);
-            this.cmbGSizeMin1.Name = "cmbGSizeMin1";
-            this.cmbGSizeMin1.Size = new System.Drawing.Size(92, 21);
-            this.cmbGSizeMin1.TabIndex = 262;
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label53.Location = new System.Drawing.Point(478, 16);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(15, 13);
-            this.label53.TabIndex = 55;
-            this.label53.Text = "%";
-            // 
-            // cmbStyleM1
-            // 
-            this.cmbStyleM1.DropDownWidth = 200;
-            this.cmbStyleM1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbStyleM1.FormattingEnabled = true;
-            this.cmbStyleM1.Location = new System.Drawing.Point(339, 30);
-            this.cmbStyleM1.Name = "cmbStyleM1";
-            this.cmbStyleM1.Size = new System.Drawing.Size(117, 21);
-            this.cmbStyleM1.TabIndex = 11;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(337, 14);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(30, 13);
-            this.label52.TabIndex = 52;
-            this.label52.Text = "Style";
-            // 
-            // cmbM1Z3
-            // 
-            this.cmbM1Z3.DropDownWidth = 200;
-            this.cmbM1Z3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM1Z3.FormattingEnabled = true;
-            this.cmbM1Z3.Location = new System.Drawing.Point(228, 30);
-            this.cmbM1Z3.Name = "cmbM1Z3";
-            this.cmbM1Z3.Size = new System.Drawing.Size(93, 21);
-            this.cmbM1Z3.TabIndex = 10;
-            // 
-            // cmbM1Z2
-            // 
-            this.cmbM1Z2.DropDownWidth = 200;
-            this.cmbM1Z2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM1Z2.FormattingEnabled = true;
-            this.cmbM1Z2.Location = new System.Drawing.Point(115, 30);
-            this.cmbM1Z2.Name = "cmbM1Z2";
-            this.cmbM1Z2.Size = new System.Drawing.Size(93, 21);
-            this.cmbM1Z2.TabIndex = 9;
-            // 
-            // cmbM1Z1
-            // 
-            this.cmbM1Z1.DropDownWidth = 200;
-            this.cmbM1Z1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbM1Z1.FormattingEnabled = true;
-            this.cmbM1Z1.Location = new System.Drawing.Point(6, 30);
-            this.cmbM1Z1.Name = "cmbM1Z1";
-            this.cmbM1Z1.Size = new System.Drawing.Size(93, 21);
-            this.cmbM1Z1.TabIndex = 8;
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label51.Location = new System.Drawing.Point(225, 16);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(50, 13);
-            this.label51.TabIndex = 45;
-            this.label51.Text = "Mineral 3";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label49.Location = new System.Drawing.Point(6, 16);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(50, 13);
-            this.label49.TabIndex = 43;
-            this.label49.Text = "Mineral 1";
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label50.Location = new System.Drawing.Point(112, 15);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(50, 13);
-            this.label50.TabIndex = 44;
-            this.label50.Text = "Mineral 2";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.ForeColor = System.Drawing.Color.Blue;
-            this.label44.Location = new System.Drawing.Point(146, 45);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(122, 13);
-            this.label44.TabIndex = 340;
-            this.label44.Text = "2 Decimals From and To";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(8, 6);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(43, 13);
-            this.label45.TabIndex = 339;
-            this.label45.Text = "Hole ID";
-            // 
-            // cmbHoleIdMin
-            // 
-            this.cmbHoleIdMin.FormattingEnabled = true;
-            this.cmbHoleIdMin.Location = new System.Drawing.Point(11, 22);
-            this.cmbHoleIdMin.Name = "cmbHoleIdMin";
-            this.cmbHoleIdMin.Size = new System.Drawing.Size(127, 21);
-            this.cmbHoleIdMin.TabIndex = 327;
-            this.cmbHoleIdMin.SelectedIndexChanged += new System.EventHandler(this.cmbHoleIdMin_SelectedIndexChanged);
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(209, 5);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(20, 13);
-            this.label47.TabIndex = 335;
-            this.label47.Text = "To";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(145, 5);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(30, 13);
-            this.label48.TabIndex = 334;
-            this.label48.Text = "From";
-            // 
-            // dgMineraliz
-            // 
-            this.dgMineraliz.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgMineraliz.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgMineraliz.Location = new System.Drawing.Point(13, 249);
-            this.dgMineraliz.Name = "dgMineraliz";
-            this.dgMineraliz.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgMineraliz.Size = new System.Drawing.Size(679, 90);
-            this.dgMineraliz.TabIndex = 338;
-            this.dgMineraliz.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgMineraliz_CellClick);
-            this.dgMineraliz.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgMineraliz_CellDoubleClick);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.cmbHoleIdInfill);
-            this.tabPage2.Controls.Add(this.btnBuscar);
-            this.tabPage2.Controls.Add(this.groupBox23);
-            this.tabPage2.Controls.Add(this.groupBox11);
-            this.tabPage2.Controls.Add(this.txtToInfill);
-            this.tabPage2.Controls.Add(this.txtFromInfill);
-            this.tabPage2.Controls.Add(this.label171);
-            this.tabPage2.Controls.Add(this.label172);
-            this.tabPage2.Controls.Add(this.label173);
-            this.tabPage2.Controls.Add(this.label174);
-            this.tabPage2.Controls.Add(this.btnCancelar);
-            this.tabPage2.Controls.Add(this.btnGuardar);
-            this.tabPage2.Controls.Add(this.btnAgregar);
-            this.tabPage2.Controls.Add(this.txtPorStage);
-            this.tabPage2.Controls.Add(this.label152);
-            this.tabPage2.Controls.Add(this.txtAngleCore);
-            this.tabPage2.Controls.Add(this.label151);
-            this.tabPage2.Controls.Add(this.txtNumberInfill);
-            this.tabPage2.Controls.Add(this.label150);
-            this.tabPage2.Controls.Add(this.cmbTypeInfill);
-            this.tabPage2.Controls.Add(this.label149);
-            this.tabPage2.Controls.Add(this.cmbStage);
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.dtgInfill);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(698, 372);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Infill";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // cmbHoleIdInfill
-            // 
-            this.cmbHoleIdInfill.FormattingEnabled = true;
-            this.cmbHoleIdInfill.Location = new System.Drawing.Point(9, 23);
-            this.cmbHoleIdInfill.Name = "cmbHoleIdInfill";
-            this.cmbHoleIdInfill.Size = new System.Drawing.Size(133, 21);
-            this.cmbHoleIdInfill.TabIndex = 403;
-            this.cmbHoleIdInfill.SelectedIndexChanged += new System.EventHandler(this.cmbHoleIdInfill_SelectedIndexChanged);
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(629, 12);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(62, 23);
-            this.btnBuscar.TabIndex = 402;
-            this.btnBuscar.Text = "Search";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
-            // 
-            // groupBox23
-            // 
-            this.groupBox23.Controls.Add(this.txtPorGangueMin2);
-            this.groupBox23.Controls.Add(this.label153);
-            this.groupBox23.Controls.Add(this.cmbGangueMin);
-            this.groupBox23.Controls.Add(this.label154);
-            this.groupBox23.Controls.Add(this.cmbTexture);
-            this.groupBox23.Controls.Add(this.label155);
-            this.groupBox23.Controls.Add(this.txtPorGangueMin);
-            this.groupBox23.Controls.Add(this.label162);
-            this.groupBox23.Controls.Add(this.cmbGangueMin2);
-            this.groupBox23.Controls.Add(this.cmbTexture3);
-            this.groupBox23.Controls.Add(this.label161);
-            this.groupBox23.Controls.Add(this.label168);
-            this.groupBox23.Controls.Add(this.label166);
-            this.groupBox23.Controls.Add(this.cmbTexture2);
-            this.groupBox23.Controls.Add(this.cmbGangueMin3);
-            this.groupBox23.Controls.Add(this.label167);
-            this.groupBox23.Controls.Add(this.label165);
-            this.groupBox23.Controls.Add(this.txtPorGangueMin3);
-            this.groupBox23.Location = new System.Drawing.Point(236, 47);
-            this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(245, 153);
-            this.groupBox23.TabIndex = 401;
-            this.groupBox23.TabStop = false;
-            // 
-            // txtPorGangueMin2
-            // 
-            this.txtPorGangueMin2.Location = new System.Drawing.Point(166, 76);
-            this.txtPorGangueMin2.Name = "txtPorGangueMin2";
-            this.txtPorGangueMin2.Size = new System.Drawing.Size(55, 20);
-            this.txtPorGangueMin2.TabIndex = 371;
-            this.txtPorGangueMin2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorGangueMin2_KeyPress);
-            // 
-            // label153
-            // 
-            this.label153.AutoSize = true;
-            this.label153.Location = new System.Drawing.Point(2, 13);
-            this.label153.Name = "label153";
-            this.label153.Size = new System.Drawing.Size(85, 13);
-            this.label153.TabIndex = 355;
-            this.label153.Text = "Gange Mineral 1";
-            // 
-            // cmbGangueMin
-            // 
-            this.cmbGangueMin.FormattingEnabled = true;
-            this.cmbGangueMin.Location = new System.Drawing.Point(15, 29);
-            this.cmbGangueMin.Name = "cmbGangueMin";
-            this.cmbGangueMin.Size = new System.Drawing.Size(56, 21);
-            this.cmbGangueMin.TabIndex = 356;
-            // 
-            // label154
-            // 
-            this.label154.AutoSize = true;
-            this.label154.Location = new System.Drawing.Point(90, 12);
-            this.label154.Name = "label154";
-            this.label154.Size = new System.Drawing.Size(52, 13);
-            this.label154.TabIndex = 357;
-            this.label154.Text = "Texture 1";
-            // 
-            // cmbTexture
-            // 
-            this.cmbTexture.FormattingEnabled = true;
-            this.cmbTexture.Location = new System.Drawing.Point(89, 29);
-            this.cmbTexture.Name = "cmbTexture";
-            this.cmbTexture.Size = new System.Drawing.Size(55, 21);
-            this.cmbTexture.TabIndex = 358;
-            // 
-            // label155
-            // 
-            this.label155.AutoSize = true;
-            this.label155.Location = new System.Drawing.Point(147, 12);
-            this.label155.Name = "label155";
-            this.label155.Size = new System.Drawing.Size(96, 13);
-            this.label155.TabIndex = 360;
-            this.label155.Text = "% Gange Mineral 1";
-            // 
-            // txtPorGangueMin
-            // 
-            this.txtPorGangueMin.Location = new System.Drawing.Point(166, 30);
-            this.txtPorGangueMin.Name = "txtPorGangueMin";
-            this.txtPorGangueMin.Size = new System.Drawing.Size(55, 20);
-            this.txtPorGangueMin.TabIndex = 359;
-            this.txtPorGangueMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorGangueMin_KeyPress);
-            // 
-            // label162
-            // 
-            this.label162.AutoSize = true;
-            this.label162.Location = new System.Drawing.Point(2, 59);
-            this.label162.Name = "label162";
-            this.label162.Size = new System.Drawing.Size(85, 13);
-            this.label162.TabIndex = 369;
-            this.label162.Text = "Gange Mineral 2";
-            // 
-            // cmbGangueMin2
-            // 
-            this.cmbGangueMin2.FormattingEnabled = true;
-            this.cmbGangueMin2.Location = new System.Drawing.Point(15, 75);
-            this.cmbGangueMin2.Name = "cmbGangueMin2";
-            this.cmbGangueMin2.Size = new System.Drawing.Size(56, 21);
-            this.cmbGangueMin2.TabIndex = 370;
-            // 
-            // cmbTexture3
-            // 
-            this.cmbTexture3.FormattingEnabled = true;
-            this.cmbTexture3.Location = new System.Drawing.Point(89, 120);
-            this.cmbTexture3.Name = "cmbTexture3";
-            this.cmbTexture3.Size = new System.Drawing.Size(55, 21);
-            this.cmbTexture3.TabIndex = 388;
-            // 
-            // label161
-            // 
-            this.label161.AutoSize = true;
-            this.label161.Location = new System.Drawing.Point(146, 59);
-            this.label161.Name = "label161";
-            this.label161.Size = new System.Drawing.Size(96, 13);
-            this.label161.TabIndex = 372;
-            this.label161.Text = "% Gange Mineral 2";
-            // 
-            // label168
-            // 
-            this.label168.AutoSize = true;
-            this.label168.Location = new System.Drawing.Point(90, 104);
-            this.label168.Name = "label168";
-            this.label168.Size = new System.Drawing.Size(52, 13);
-            this.label168.TabIndex = 387;
-            this.label168.Text = "Texture 3";
-            // 
-            // label166
-            // 
-            this.label166.AutoSize = true;
-            this.label166.Location = new System.Drawing.Point(2, 105);
-            this.label166.Name = "label166";
-            this.label166.Size = new System.Drawing.Size(85, 13);
-            this.label166.TabIndex = 377;
-            this.label166.Text = "Gange Mineral 3";
-            // 
-            // cmbTexture2
-            // 
-            this.cmbTexture2.FormattingEnabled = true;
-            this.cmbTexture2.Location = new System.Drawing.Point(89, 75);
-            this.cmbTexture2.Name = "cmbTexture2";
-            this.cmbTexture2.Size = new System.Drawing.Size(55, 21);
-            this.cmbTexture2.TabIndex = 386;
-            // 
-            // cmbGangueMin3
-            // 
-            this.cmbGangueMin3.FormattingEnabled = true;
-            this.cmbGangueMin3.Location = new System.Drawing.Point(15, 121);
-            this.cmbGangueMin3.Name = "cmbGangueMin3";
-            this.cmbGangueMin3.Size = new System.Drawing.Size(56, 21);
-            this.cmbGangueMin3.TabIndex = 378;
-            // 
-            // label167
-            // 
-            this.label167.AutoSize = true;
-            this.label167.Location = new System.Drawing.Point(90, 59);
-            this.label167.Name = "label167";
-            this.label167.Size = new System.Drawing.Size(52, 13);
-            this.label167.TabIndex = 385;
-            this.label167.Text = "Texture 2";
-            // 
-            // label165
-            // 
-            this.label165.AutoSize = true;
-            this.label165.Location = new System.Drawing.Point(147, 105);
-            this.label165.Name = "label165";
-            this.label165.Size = new System.Drawing.Size(96, 13);
-            this.label165.TabIndex = 380;
-            this.label165.Text = "% Gange Mineral 3";
-            // 
-            // txtPorGangueMin3
-            // 
-            this.txtPorGangueMin3.Location = new System.Drawing.Point(166, 122);
-            this.txtPorGangueMin3.Name = "txtPorGangueMin3";
-            this.txtPorGangueMin3.Size = new System.Drawing.Size(55, 20);
-            this.txtPorGangueMin3.TabIndex = 379;
-            this.txtPorGangueMin3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorGangueMin3_KeyPress);
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.cmbStyle3);
-            this.groupBox11.Controls.Add(this.label170);
-            this.groupBox11.Controls.Add(this.cmbStyle2);
-            this.groupBox11.Controls.Add(this.label169);
-            this.groupBox11.Controls.Add(this.txtPorOreMin3);
-            this.groupBox11.Controls.Add(this.label163);
-            this.groupBox11.Controls.Add(this.cmbOreMin3);
-            this.groupBox11.Controls.Add(this.label164);
-            this.groupBox11.Controls.Add(this.txtPorOreMin2);
-            this.groupBox11.Controls.Add(this.label159);
-            this.groupBox11.Controls.Add(this.cmbOreMin2);
-            this.groupBox11.Controls.Add(this.label160);
-            this.groupBox11.Controls.Add(this.cmbStyle);
-            this.groupBox11.Controls.Add(this.label158);
-            this.groupBox11.Controls.Add(this.txtPorOreMin);
-            this.groupBox11.Controls.Add(this.label157);
-            this.groupBox11.Controls.Add(this.cmbOreMin);
-            this.groupBox11.Controls.Add(this.label156);
-            this.groupBox11.Location = new System.Drawing.Point(487, 47);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(204, 153);
-            this.groupBox11.TabIndex = 400;
-            this.groupBox11.TabStop = false;
-            // 
-            // cmbStyle3
-            // 
-            this.cmbStyle3.FormattingEnabled = true;
-            this.cmbStyle3.Location = new System.Drawing.Point(79, 121);
-            this.cmbStyle3.Name = "cmbStyle3";
-            this.cmbStyle3.Size = new System.Drawing.Size(51, 21);
-            this.cmbStyle3.TabIndex = 410;
-            // 
-            // label170
-            // 
-            this.label170.AutoSize = true;
-            this.label170.Location = new System.Drawing.Point(79, 105);
-            this.label170.Name = "label170";
-            this.label170.Size = new System.Drawing.Size(39, 13);
-            this.label170.TabIndex = 409;
-            this.label170.Text = "Style 3";
-            // 
-            // cmbStyle2
-            // 
-            this.cmbStyle2.FormattingEnabled = true;
-            this.cmbStyle2.Location = new System.Drawing.Point(79, 74);
-            this.cmbStyle2.Name = "cmbStyle2";
-            this.cmbStyle2.Size = new System.Drawing.Size(51, 21);
-            this.cmbStyle2.TabIndex = 408;
-            // 
-            // label169
-            // 
-            this.label169.AutoSize = true;
-            this.label169.Location = new System.Drawing.Point(79, 58);
-            this.label169.Name = "label169";
-            this.label169.Size = new System.Drawing.Size(39, 13);
-            this.label169.TabIndex = 407;
-            this.label169.Text = "Style 2";
-            // 
-            // txtPorOreMin3
-            // 
-            this.txtPorOreMin3.Location = new System.Drawing.Point(144, 122);
-            this.txtPorOreMin3.Name = "txtPorOreMin3";
-            this.txtPorOreMin3.Size = new System.Drawing.Size(48, 20);
-            this.txtPorOreMin3.TabIndex = 405;
-            this.txtPorOreMin3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorOreMin3_KeyPress);
-            // 
-            // label163
-            // 
-            this.label163.AutoSize = true;
-            this.label163.Location = new System.Drawing.Point(125, 105);
-            this.label163.Name = "label163";
-            this.label163.Size = new System.Drawing.Size(75, 13);
-            this.label163.TabIndex = 406;
-            this.label163.Text = "%OreMineral 3";
-            // 
-            // cmbOreMin3
-            // 
-            this.cmbOreMin3.FormattingEnabled = true;
-            this.cmbOreMin3.Location = new System.Drawing.Point(11, 120);
-            this.cmbOreMin3.Name = "cmbOreMin3";
-            this.cmbOreMin3.Size = new System.Drawing.Size(46, 21);
-            this.cmbOreMin3.TabIndex = 404;
-            // 
-            // label164
-            // 
-            this.label164.AutoSize = true;
-            this.label164.Location = new System.Drawing.Point(6, 104);
-            this.label164.Name = "label164";
-            this.label164.Size = new System.Drawing.Size(70, 13);
-            this.label164.TabIndex = 403;
-            this.label164.Text = "Ore Mineral 3";
-            // 
-            // txtPorOreMin2
-            // 
-            this.txtPorOreMin2.Location = new System.Drawing.Point(143, 75);
-            this.txtPorOreMin2.Name = "txtPorOreMin2";
-            this.txtPorOreMin2.Size = new System.Drawing.Size(49, 20);
-            this.txtPorOreMin2.TabIndex = 401;
-            this.txtPorOreMin2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorOreMin2_KeyPress);
-            // 
-            // label159
-            // 
-            this.label159.AutoSize = true;
-            this.label159.Location = new System.Drawing.Point(125, 58);
-            this.label159.Name = "label159";
-            this.label159.Size = new System.Drawing.Size(75, 13);
-            this.label159.TabIndex = 402;
-            this.label159.Text = "%OreMineral 2";
-            // 
-            // cmbOreMin2
-            // 
-            this.cmbOreMin2.FormattingEnabled = true;
-            this.cmbOreMin2.Location = new System.Drawing.Point(11, 74);
-            this.cmbOreMin2.Name = "cmbOreMin2";
-            this.cmbOreMin2.Size = new System.Drawing.Size(46, 21);
-            this.cmbOreMin2.TabIndex = 400;
-            // 
-            // label160
-            // 
-            this.label160.AutoSize = true;
-            this.label160.Location = new System.Drawing.Point(6, 58);
-            this.label160.Name = "label160";
-            this.label160.Size = new System.Drawing.Size(70, 13);
-            this.label160.TabIndex = 399;
-            this.label160.Text = "Ore Mineral 2";
-            // 
-            // cmbStyle
-            // 
-            this.cmbStyle.FormattingEnabled = true;
-            this.cmbStyle.Location = new System.Drawing.Point(79, 28);
-            this.cmbStyle.Name = "cmbStyle";
-            this.cmbStyle.Size = new System.Drawing.Size(51, 21);
-            this.cmbStyle.TabIndex = 398;
-            // 
-            // label158
-            // 
-            this.label158.AutoSize = true;
-            this.label158.Location = new System.Drawing.Point(79, 12);
-            this.label158.Name = "label158";
-            this.label158.Size = new System.Drawing.Size(39, 13);
-            this.label158.TabIndex = 397;
-            this.label158.Text = "Style 1";
-            // 
-            // txtPorOreMin
-            // 
-            this.txtPorOreMin.Location = new System.Drawing.Point(144, 29);
-            this.txtPorOreMin.Name = "txtPorOreMin";
-            this.txtPorOreMin.Size = new System.Drawing.Size(48, 20);
-            this.txtPorOreMin.TabIndex = 395;
-            this.txtPorOreMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorOreMin_KeyPress);
-            // 
-            // label157
-            // 
-            this.label157.AutoSize = true;
-            this.label157.Location = new System.Drawing.Point(126, 12);
-            this.label157.Name = "label157";
-            this.label157.Size = new System.Drawing.Size(75, 13);
-            this.label157.TabIndex = 396;
-            this.label157.Text = "%OreMineral 1";
-            // 
-            // cmbOreMin
-            // 
-            this.cmbOreMin.FormattingEnabled = true;
-            this.cmbOreMin.Location = new System.Drawing.Point(11, 28);
-            this.cmbOreMin.Name = "cmbOreMin";
-            this.cmbOreMin.Size = new System.Drawing.Size(46, 21);
-            this.cmbOreMin.TabIndex = 394;
-            // 
-            // label156
-            // 
-            this.label156.AutoSize = true;
-            this.label156.Location = new System.Drawing.Point(6, 12);
-            this.label156.Name = "label156";
-            this.label156.Size = new System.Drawing.Size(70, 13);
-            this.label156.TabIndex = 393;
-            this.label156.Text = "Ore Mineral 1";
-            // 
-            // txtToInfill
-            // 
-            this.txtToInfill.Location = new System.Drawing.Point(212, 23);
-            this.txtToInfill.Name = "txtToInfill";
-            this.txtToInfill.Size = new System.Drawing.Size(56, 20);
-            this.txtToInfill.TabIndex = 395;
-            this.txtToInfill.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToInfill_KeyPress);
-            // 
-            // txtFromInfill
-            // 
-            this.txtFromInfill.Location = new System.Drawing.Point(148, 23);
-            this.txtFromInfill.Name = "txtFromInfill";
-            this.txtFromInfill.Size = new System.Drawing.Size(56, 20);
-            this.txtFromInfill.TabIndex = 394;
-            this.txtFromInfill.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFromInfill_KeyPress);
-            // 
-            // label171
-            // 
-            this.label171.AutoSize = true;
-            this.label171.ForeColor = System.Drawing.Color.Blue;
-            this.label171.Location = new System.Drawing.Point(242, 6);
-            this.label171.Name = "label171";
-            this.label171.Size = new System.Drawing.Size(122, 13);
-            this.label171.TabIndex = 399;
-            this.label171.Text = "2 Decimals From and To";
-            // 
-            // label172
-            // 
-            this.label172.AutoSize = true;
-            this.label172.Location = new System.Drawing.Point(8, 7);
-            this.label172.Name = "label172";
-            this.label172.Size = new System.Drawing.Size(43, 13);
-            this.label172.TabIndex = 398;
-            this.label172.Text = "Hole ID";
-            // 
-            // label173
-            // 
-            this.label173.AutoSize = true;
-            this.label173.Location = new System.Drawing.Point(209, 6);
-            this.label173.Name = "label173";
-            this.label173.Size = new System.Drawing.Size(20, 13);
-            this.label173.TabIndex = 397;
-            this.label173.Text = "To";
-            // 
-            // label174
-            // 
-            this.label174.AutoSize = true;
-            this.label174.Location = new System.Drawing.Point(145, 6);
-            this.label174.Name = "label174";
-            this.label174.Size = new System.Drawing.Size(30, 13);
-            this.label174.TabIndex = 396;
-            this.label174.Text = "From";
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Location = new System.Drawing.Point(626, 343);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(62, 23);
-            this.btnCancelar.TabIndex = 368;
-            this.btnCancelar.Text = "Cancel";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // btnGuardar
-            // 
-            this.btnGuardar.Location = new System.Drawing.Point(558, 343);
-            this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(62, 23);
-            this.btnGuardar.TabIndex = 367;
-            this.btnGuardar.Text = "Add";
-            this.btnGuardar.UseVisualStyleBackColor = true;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
-            // 
-            // btnAgregar
-            // 
-            this.btnAgregar.Location = new System.Drawing.Point(445, 343);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(67, 23);
-            this.btnAgregar.TabIndex = 338;
-            this.btnAgregar.Text = "Aggregate";
-            this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
-            // 
-            // txtPorStage
-            // 
-            this.txtPorStage.Location = new System.Drawing.Point(187, 71);
-            this.txtPorStage.Name = "txtPorStage";
-            this.txtPorStage.Size = new System.Drawing.Size(43, 20);
-            this.txtPorStage.TabIndex = 353;
-            this.txtPorStage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorStage_KeyPress);
-            // 
-            // label152
-            // 
-            this.label152.AutoSize = true;
-            this.label152.Location = new System.Drawing.Point(181, 55);
-            this.label152.Name = "label152";
-            this.label152.Size = new System.Drawing.Size(49, 13);
-            this.label152.TabIndex = 354;
-            this.label152.Text = " % Stage";
-            // 
-            // txtAngleCore
-            // 
-            this.txtAngleCore.Location = new System.Drawing.Point(98, 70);
-            this.txtAngleCore.Name = "txtAngleCore";
-            this.txtAngleCore.Size = new System.Drawing.Size(41, 20);
-            this.txtAngleCore.TabIndex = 351;
-            this.txtAngleCore.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAngleCore_KeyPress);
-            this.txtAngleCore.Leave += new System.EventHandler(this.txtAngleCore_Leave);
-            // 
-            // label151
-            // 
-            this.label151.AutoSize = true;
-            this.label151.Location = new System.Drawing.Point(102, 55);
-            this.label151.Name = "label151";
-            this.label151.Size = new System.Drawing.Size(34, 13);
-            this.label151.TabIndex = 352;
-            this.label151.Text = "Angle";
-            // 
-            // txtNumberInfill
-            // 
-            this.txtNumberInfill.Location = new System.Drawing.Point(62, 70);
-            this.txtNumberInfill.Name = "txtNumberInfill";
-            this.txtNumberInfill.Size = new System.Drawing.Size(29, 20);
-            this.txtNumberInfill.TabIndex = 349;
-            this.txtNumberInfill.Leave += new System.EventHandler(this.txtNumberInfill_Leave);
-            // 
-            // label150
-            // 
-            this.label150.AutoSize = true;
-            this.label150.Location = new System.Drawing.Point(69, 55);
-            this.label150.Name = "label150";
-            this.label150.Size = new System.Drawing.Size(14, 13);
-            this.label150.TabIndex = 350;
-            this.label150.Text = "#";
-            // 
-            // cmbTypeInfill
-            // 
-            this.cmbTypeInfill.FormattingEnabled = true;
-            this.cmbTypeInfill.Location = new System.Drawing.Point(9, 69);
-            this.cmbTypeInfill.Name = "cmbTypeInfill";
-            this.cmbTypeInfill.Size = new System.Drawing.Size(49, 21);
-            this.cmbTypeInfill.TabIndex = 348;
-            // 
-            // label149
-            // 
-            this.label149.AutoSize = true;
-            this.label149.Location = new System.Drawing.Point(6, 54);
-            this.label149.Name = "label149";
-            this.label149.Size = new System.Drawing.Size(52, 13);
-            this.label149.TabIndex = 347;
-            this.label149.Text = "Type Infill";
-            // 
-            // cmbStage
-            // 
-            this.cmbStage.FormattingEnabled = true;
-            this.cmbStage.Location = new System.Drawing.Point(144, 70);
-            this.cmbStage.Name = "cmbStage";
-            this.cmbStage.Size = new System.Drawing.Size(39, 21);
-            this.cmbStage.TabIndex = 346;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(146, 55);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 345;
-            this.label5.Text = "Stage";
-            // 
-            // dtgInfill
-            // 
-            this.dtgInfill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgInfill.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dtgInfill.Location = new System.Drawing.Point(9, 206);
-            this.dtgInfill.Name = "dtgInfill";
-            this.dtgInfill.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtgInfill.Size = new System.Drawing.Size(679, 131);
-            this.dtgInfill.TabIndex = 344;
-            this.dtgInfill.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgInfill_CellContentClick);
-            this.dtgInfill.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgInfill_CellDoubleClick);
             // 
             // tbGeotech
             // 
@@ -5673,6 +4503,1187 @@ namespace LogginColombiaGold
             this.dataGridView1.Size = new System.Drawing.Size(606, 222);
             this.dataGridView1.TabIndex = 9;
             // 
+            // tbInfill
+            // 
+            this.tbInfill.Controls.Add(this.groupBox26);
+            this.tbInfill.Location = new System.Drawing.Point(4, 22);
+            this.tbInfill.Name = "tbInfill";
+            this.tbInfill.Padding = new System.Windows.Forms.Padding(3);
+            this.tbInfill.Size = new System.Drawing.Size(715, 405);
+            this.tbInfill.TabIndex = 10;
+            this.tbInfill.Text = "Infill";
+            this.tbInfill.UseVisualStyleBackColor = true;
+            // 
+            // groupBox26
+            // 
+            this.groupBox26.Controls.Add(this.cmbHoleIdInfill);
+            this.groupBox26.Controls.Add(this.groupBox23);
+            this.groupBox26.Controls.Add(this.groupBox11);
+            this.groupBox26.Controls.Add(this.txtToInfill);
+            this.groupBox26.Controls.Add(this.txtFromInfill);
+            this.groupBox26.Controls.Add(this.label171);
+            this.groupBox26.Controls.Add(this.label172);
+            this.groupBox26.Controls.Add(this.label173);
+            this.groupBox26.Controls.Add(this.label174);
+            this.groupBox26.Controls.Add(this.btnCancelar);
+            this.groupBox26.Controls.Add(this.btnGuardar);
+            this.groupBox26.Controls.Add(this.btnAgregar);
+            this.groupBox26.Controls.Add(this.txtPorStage);
+            this.groupBox26.Controls.Add(this.label152);
+            this.groupBox26.Controls.Add(this.txtAngleCore);
+            this.groupBox26.Controls.Add(this.label151);
+            this.groupBox26.Controls.Add(this.txtNumberInfill);
+            this.groupBox26.Controls.Add(this.label150);
+            this.groupBox26.Controls.Add(this.cmbTypeInfill);
+            this.groupBox26.Controls.Add(this.label149);
+            this.groupBox26.Controls.Add(this.cmbStage);
+            this.groupBox26.Controls.Add(this.label5);
+            this.groupBox26.Controls.Add(this.dtgInfill);
+            this.groupBox26.Location = new System.Drawing.Point(6, 6);
+            this.groupBox26.Name = "groupBox26";
+            this.groupBox26.Size = new System.Drawing.Size(703, 393);
+            this.groupBox26.TabIndex = 0;
+            this.groupBox26.TabStop = false;
+            // 
+            // cmbHoleIdInfill
+            // 
+            this.cmbHoleIdInfill.FormattingEnabled = true;
+            this.cmbHoleIdInfill.Location = new System.Drawing.Point(12, 33);
+            this.cmbHoleIdInfill.Name = "cmbHoleIdInfill";
+            this.cmbHoleIdInfill.Size = new System.Drawing.Size(133, 21);
+            this.cmbHoleIdInfill.TabIndex = 426;
+            this.cmbHoleIdInfill.SelectedIndexChanged += new System.EventHandler(this.cmbHoleIdInfill_SelectedIndexChanged);
+            // 
+            // groupBox23
+            // 
+            this.groupBox23.Controls.Add(this.txtPorGangueMin2);
+            this.groupBox23.Controls.Add(this.label153);
+            this.groupBox23.Controls.Add(this.cmbGangueMin);
+            this.groupBox23.Controls.Add(this.label154);
+            this.groupBox23.Controls.Add(this.cmbTexture);
+            this.groupBox23.Controls.Add(this.label155);
+            this.groupBox23.Controls.Add(this.txtPorGangueMin);
+            this.groupBox23.Controls.Add(this.label162);
+            this.groupBox23.Controls.Add(this.cmbGangueMin2);
+            this.groupBox23.Controls.Add(this.cmbTexture3);
+            this.groupBox23.Controls.Add(this.label161);
+            this.groupBox23.Controls.Add(this.label168);
+            this.groupBox23.Controls.Add(this.label166);
+            this.groupBox23.Controls.Add(this.cmbTexture2);
+            this.groupBox23.Controls.Add(this.cmbGangueMin3);
+            this.groupBox23.Controls.Add(this.label167);
+            this.groupBox23.Controls.Add(this.label165);
+            this.groupBox23.Controls.Add(this.txtPorGangueMin3);
+            this.groupBox23.Location = new System.Drawing.Point(239, 57);
+            this.groupBox23.Name = "groupBox23";
+            this.groupBox23.Size = new System.Drawing.Size(245, 153);
+            this.groupBox23.TabIndex = 425;
+            this.groupBox23.TabStop = false;
+            // 
+            // txtPorGangueMin2
+            // 
+            this.txtPorGangueMin2.Location = new System.Drawing.Point(166, 76);
+            this.txtPorGangueMin2.Name = "txtPorGangueMin2";
+            this.txtPorGangueMin2.Size = new System.Drawing.Size(55, 20);
+            this.txtPorGangueMin2.TabIndex = 371;
+            this.txtPorGangueMin2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorGangueMin2_KeyPress);
+            // 
+            // label153
+            // 
+            this.label153.AutoSize = true;
+            this.label153.Location = new System.Drawing.Point(2, 13);
+            this.label153.Name = "label153";
+            this.label153.Size = new System.Drawing.Size(85, 13);
+            this.label153.TabIndex = 355;
+            this.label153.Text = "Gange Mineral 1";
+            // 
+            // cmbGangueMin
+            // 
+            this.cmbGangueMin.FormattingEnabled = true;
+            this.cmbGangueMin.Location = new System.Drawing.Point(15, 29);
+            this.cmbGangueMin.Name = "cmbGangueMin";
+            this.cmbGangueMin.Size = new System.Drawing.Size(56, 21);
+            this.cmbGangueMin.TabIndex = 356;
+            // 
+            // label154
+            // 
+            this.label154.AutoSize = true;
+            this.label154.Location = new System.Drawing.Point(90, 12);
+            this.label154.Name = "label154";
+            this.label154.Size = new System.Drawing.Size(52, 13);
+            this.label154.TabIndex = 357;
+            this.label154.Text = "Texture 1";
+            // 
+            // cmbTexture
+            // 
+            this.cmbTexture.FormattingEnabled = true;
+            this.cmbTexture.Location = new System.Drawing.Point(89, 29);
+            this.cmbTexture.Name = "cmbTexture";
+            this.cmbTexture.Size = new System.Drawing.Size(55, 21);
+            this.cmbTexture.TabIndex = 358;
+            // 
+            // label155
+            // 
+            this.label155.AutoSize = true;
+            this.label155.Location = new System.Drawing.Point(147, 12);
+            this.label155.Name = "label155";
+            this.label155.Size = new System.Drawing.Size(96, 13);
+            this.label155.TabIndex = 360;
+            this.label155.Text = "% Gange Mineral 1";
+            // 
+            // txtPorGangueMin
+            // 
+            this.txtPorGangueMin.Location = new System.Drawing.Point(166, 30);
+            this.txtPorGangueMin.Name = "txtPorGangueMin";
+            this.txtPorGangueMin.Size = new System.Drawing.Size(55, 20);
+            this.txtPorGangueMin.TabIndex = 359;
+            this.txtPorGangueMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorGangueMin_KeyPress);
+            // 
+            // label162
+            // 
+            this.label162.AutoSize = true;
+            this.label162.Location = new System.Drawing.Point(2, 59);
+            this.label162.Name = "label162";
+            this.label162.Size = new System.Drawing.Size(85, 13);
+            this.label162.TabIndex = 369;
+            this.label162.Text = "Gange Mineral 2";
+            // 
+            // cmbGangueMin2
+            // 
+            this.cmbGangueMin2.FormattingEnabled = true;
+            this.cmbGangueMin2.Location = new System.Drawing.Point(15, 75);
+            this.cmbGangueMin2.Name = "cmbGangueMin2";
+            this.cmbGangueMin2.Size = new System.Drawing.Size(56, 21);
+            this.cmbGangueMin2.TabIndex = 370;
+            // 
+            // cmbTexture3
+            // 
+            this.cmbTexture3.FormattingEnabled = true;
+            this.cmbTexture3.Location = new System.Drawing.Point(89, 120);
+            this.cmbTexture3.Name = "cmbTexture3";
+            this.cmbTexture3.Size = new System.Drawing.Size(55, 21);
+            this.cmbTexture3.TabIndex = 388;
+            // 
+            // label161
+            // 
+            this.label161.AutoSize = true;
+            this.label161.Location = new System.Drawing.Point(146, 59);
+            this.label161.Name = "label161";
+            this.label161.Size = new System.Drawing.Size(96, 13);
+            this.label161.TabIndex = 372;
+            this.label161.Text = "% Gange Mineral 2";
+            // 
+            // label168
+            // 
+            this.label168.AutoSize = true;
+            this.label168.Location = new System.Drawing.Point(90, 104);
+            this.label168.Name = "label168";
+            this.label168.Size = new System.Drawing.Size(52, 13);
+            this.label168.TabIndex = 387;
+            this.label168.Text = "Texture 3";
+            // 
+            // label166
+            // 
+            this.label166.AutoSize = true;
+            this.label166.Location = new System.Drawing.Point(2, 105);
+            this.label166.Name = "label166";
+            this.label166.Size = new System.Drawing.Size(85, 13);
+            this.label166.TabIndex = 377;
+            this.label166.Text = "Gange Mineral 3";
+            // 
+            // cmbTexture2
+            // 
+            this.cmbTexture2.FormattingEnabled = true;
+            this.cmbTexture2.Location = new System.Drawing.Point(89, 75);
+            this.cmbTexture2.Name = "cmbTexture2";
+            this.cmbTexture2.Size = new System.Drawing.Size(55, 21);
+            this.cmbTexture2.TabIndex = 386;
+            // 
+            // cmbGangueMin3
+            // 
+            this.cmbGangueMin3.FormattingEnabled = true;
+            this.cmbGangueMin3.Location = new System.Drawing.Point(15, 121);
+            this.cmbGangueMin3.Name = "cmbGangueMin3";
+            this.cmbGangueMin3.Size = new System.Drawing.Size(56, 21);
+            this.cmbGangueMin3.TabIndex = 378;
+            // 
+            // label167
+            // 
+            this.label167.AutoSize = true;
+            this.label167.Location = new System.Drawing.Point(90, 59);
+            this.label167.Name = "label167";
+            this.label167.Size = new System.Drawing.Size(52, 13);
+            this.label167.TabIndex = 385;
+            this.label167.Text = "Texture 2";
+            // 
+            // label165
+            // 
+            this.label165.AutoSize = true;
+            this.label165.Location = new System.Drawing.Point(147, 105);
+            this.label165.Name = "label165";
+            this.label165.Size = new System.Drawing.Size(96, 13);
+            this.label165.TabIndex = 380;
+            this.label165.Text = "% Gange Mineral 3";
+            // 
+            // txtPorGangueMin3
+            // 
+            this.txtPorGangueMin3.Location = new System.Drawing.Point(166, 122);
+            this.txtPorGangueMin3.Name = "txtPorGangueMin3";
+            this.txtPorGangueMin3.Size = new System.Drawing.Size(55, 20);
+            this.txtPorGangueMin3.TabIndex = 379;
+            this.txtPorGangueMin3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorGangueMin3_KeyPress);
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.cmbStyle3);
+            this.groupBox11.Controls.Add(this.label170);
+            this.groupBox11.Controls.Add(this.cmbStyle2);
+            this.groupBox11.Controls.Add(this.label169);
+            this.groupBox11.Controls.Add(this.txtPorOreMin3);
+            this.groupBox11.Controls.Add(this.label163);
+            this.groupBox11.Controls.Add(this.cmbOreMin3);
+            this.groupBox11.Controls.Add(this.label164);
+            this.groupBox11.Controls.Add(this.txtPorOreMin2);
+            this.groupBox11.Controls.Add(this.label159);
+            this.groupBox11.Controls.Add(this.cmbOreMin2);
+            this.groupBox11.Controls.Add(this.label160);
+            this.groupBox11.Controls.Add(this.cmbStyle);
+            this.groupBox11.Controls.Add(this.label158);
+            this.groupBox11.Controls.Add(this.txtPorOreMin);
+            this.groupBox11.Controls.Add(this.label157);
+            this.groupBox11.Controls.Add(this.cmbOreMin);
+            this.groupBox11.Controls.Add(this.label156);
+            this.groupBox11.Location = new System.Drawing.Point(490, 57);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(204, 153);
+            this.groupBox11.TabIndex = 424;
+            this.groupBox11.TabStop = false;
+            // 
+            // cmbStyle3
+            // 
+            this.cmbStyle3.FormattingEnabled = true;
+            this.cmbStyle3.Location = new System.Drawing.Point(79, 121);
+            this.cmbStyle3.Name = "cmbStyle3";
+            this.cmbStyle3.Size = new System.Drawing.Size(51, 21);
+            this.cmbStyle3.TabIndex = 410;
+            // 
+            // label170
+            // 
+            this.label170.AutoSize = true;
+            this.label170.Location = new System.Drawing.Point(79, 105);
+            this.label170.Name = "label170";
+            this.label170.Size = new System.Drawing.Size(39, 13);
+            this.label170.TabIndex = 409;
+            this.label170.Text = "Style 3";
+            // 
+            // cmbStyle2
+            // 
+            this.cmbStyle2.FormattingEnabled = true;
+            this.cmbStyle2.Location = new System.Drawing.Point(79, 74);
+            this.cmbStyle2.Name = "cmbStyle2";
+            this.cmbStyle2.Size = new System.Drawing.Size(51, 21);
+            this.cmbStyle2.TabIndex = 408;
+            // 
+            // label169
+            // 
+            this.label169.AutoSize = true;
+            this.label169.Location = new System.Drawing.Point(79, 58);
+            this.label169.Name = "label169";
+            this.label169.Size = new System.Drawing.Size(39, 13);
+            this.label169.TabIndex = 407;
+            this.label169.Text = "Style 2";
+            // 
+            // txtPorOreMin3
+            // 
+            this.txtPorOreMin3.Location = new System.Drawing.Point(144, 122);
+            this.txtPorOreMin3.Name = "txtPorOreMin3";
+            this.txtPorOreMin3.Size = new System.Drawing.Size(48, 20);
+            this.txtPorOreMin3.TabIndex = 405;
+            this.txtPorOreMin3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorOreMin3_KeyPress);
+            // 
+            // label163
+            // 
+            this.label163.AutoSize = true;
+            this.label163.Location = new System.Drawing.Point(125, 105);
+            this.label163.Name = "label163";
+            this.label163.Size = new System.Drawing.Size(75, 13);
+            this.label163.TabIndex = 406;
+            this.label163.Text = "%OreMineral 3";
+            // 
+            // cmbOreMin3
+            // 
+            this.cmbOreMin3.FormattingEnabled = true;
+            this.cmbOreMin3.Location = new System.Drawing.Point(11, 120);
+            this.cmbOreMin3.Name = "cmbOreMin3";
+            this.cmbOreMin3.Size = new System.Drawing.Size(46, 21);
+            this.cmbOreMin3.TabIndex = 404;
+            // 
+            // label164
+            // 
+            this.label164.AutoSize = true;
+            this.label164.Location = new System.Drawing.Point(6, 104);
+            this.label164.Name = "label164";
+            this.label164.Size = new System.Drawing.Size(70, 13);
+            this.label164.TabIndex = 403;
+            this.label164.Text = "Ore Mineral 3";
+            // 
+            // txtPorOreMin2
+            // 
+            this.txtPorOreMin2.Location = new System.Drawing.Point(143, 75);
+            this.txtPorOreMin2.Name = "txtPorOreMin2";
+            this.txtPorOreMin2.Size = new System.Drawing.Size(49, 20);
+            this.txtPorOreMin2.TabIndex = 401;
+            this.txtPorOreMin2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorOreMin2_KeyPress);
+            // 
+            // label159
+            // 
+            this.label159.AutoSize = true;
+            this.label159.Location = new System.Drawing.Point(125, 58);
+            this.label159.Name = "label159";
+            this.label159.Size = new System.Drawing.Size(75, 13);
+            this.label159.TabIndex = 402;
+            this.label159.Text = "%OreMineral 2";
+            // 
+            // cmbOreMin2
+            // 
+            this.cmbOreMin2.FormattingEnabled = true;
+            this.cmbOreMin2.Location = new System.Drawing.Point(11, 74);
+            this.cmbOreMin2.Name = "cmbOreMin2";
+            this.cmbOreMin2.Size = new System.Drawing.Size(46, 21);
+            this.cmbOreMin2.TabIndex = 400;
+            // 
+            // label160
+            // 
+            this.label160.AutoSize = true;
+            this.label160.Location = new System.Drawing.Point(6, 58);
+            this.label160.Name = "label160";
+            this.label160.Size = new System.Drawing.Size(70, 13);
+            this.label160.TabIndex = 399;
+            this.label160.Text = "Ore Mineral 2";
+            // 
+            // cmbStyle
+            // 
+            this.cmbStyle.FormattingEnabled = true;
+            this.cmbStyle.Location = new System.Drawing.Point(79, 28);
+            this.cmbStyle.Name = "cmbStyle";
+            this.cmbStyle.Size = new System.Drawing.Size(51, 21);
+            this.cmbStyle.TabIndex = 398;
+            // 
+            // label158
+            // 
+            this.label158.AutoSize = true;
+            this.label158.Location = new System.Drawing.Point(79, 12);
+            this.label158.Name = "label158";
+            this.label158.Size = new System.Drawing.Size(39, 13);
+            this.label158.TabIndex = 397;
+            this.label158.Text = "Style 1";
+            // 
+            // txtPorOreMin
+            // 
+            this.txtPorOreMin.Location = new System.Drawing.Point(144, 29);
+            this.txtPorOreMin.Name = "txtPorOreMin";
+            this.txtPorOreMin.Size = new System.Drawing.Size(48, 20);
+            this.txtPorOreMin.TabIndex = 395;
+            this.txtPorOreMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorOreMin_KeyPress);
+            // 
+            // label157
+            // 
+            this.label157.AutoSize = true;
+            this.label157.Location = new System.Drawing.Point(126, 12);
+            this.label157.Name = "label157";
+            this.label157.Size = new System.Drawing.Size(75, 13);
+            this.label157.TabIndex = 396;
+            this.label157.Text = "%OreMineral 1";
+            // 
+            // cmbOreMin
+            // 
+            this.cmbOreMin.FormattingEnabled = true;
+            this.cmbOreMin.Location = new System.Drawing.Point(11, 28);
+            this.cmbOreMin.Name = "cmbOreMin";
+            this.cmbOreMin.Size = new System.Drawing.Size(46, 21);
+            this.cmbOreMin.TabIndex = 394;
+            // 
+            // label156
+            // 
+            this.label156.AutoSize = true;
+            this.label156.Location = new System.Drawing.Point(6, 12);
+            this.label156.Name = "label156";
+            this.label156.Size = new System.Drawing.Size(70, 13);
+            this.label156.TabIndex = 393;
+            this.label156.Text = "Ore Mineral 1";
+            // 
+            // txtToInfill
+            // 
+            this.txtToInfill.Location = new System.Drawing.Point(215, 33);
+            this.txtToInfill.Name = "txtToInfill";
+            this.txtToInfill.Size = new System.Drawing.Size(56, 20);
+            this.txtToInfill.TabIndex = 419;
+            this.txtToInfill.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToInfill_KeyPress);
+            // 
+            // txtFromInfill
+            // 
+            this.txtFromInfill.Location = new System.Drawing.Point(151, 33);
+            this.txtFromInfill.Name = "txtFromInfill";
+            this.txtFromInfill.Size = new System.Drawing.Size(56, 20);
+            this.txtFromInfill.TabIndex = 418;
+            this.txtFromInfill.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFromInfill_KeyPress);
+            // 
+            // label171
+            // 
+            this.label171.AutoSize = true;
+            this.label171.ForeColor = System.Drawing.Color.Blue;
+            this.label171.Location = new System.Drawing.Point(245, 16);
+            this.label171.Name = "label171";
+            this.label171.Size = new System.Drawing.Size(122, 13);
+            this.label171.TabIndex = 423;
+            this.label171.Text = "2 Decimals From and To";
+            // 
+            // label172
+            // 
+            this.label172.AutoSize = true;
+            this.label172.Location = new System.Drawing.Point(11, 17);
+            this.label172.Name = "label172";
+            this.label172.Size = new System.Drawing.Size(43, 13);
+            this.label172.TabIndex = 422;
+            this.label172.Text = "Hole ID";
+            // 
+            // label173
+            // 
+            this.label173.AutoSize = true;
+            this.label173.Location = new System.Drawing.Point(212, 16);
+            this.label173.Name = "label173";
+            this.label173.Size = new System.Drawing.Size(20, 13);
+            this.label173.TabIndex = 421;
+            this.label173.Text = "To";
+            // 
+            // label174
+            // 
+            this.label174.AutoSize = true;
+            this.label174.Location = new System.Drawing.Point(148, 16);
+            this.label174.Name = "label174";
+            this.label174.Size = new System.Drawing.Size(30, 13);
+            this.label174.TabIndex = 420;
+            this.label174.Text = "From";
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(629, 357);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(62, 23);
+            this.btnCancelar.TabIndex = 417;
+            this.btnCancelar.Text = "Cancel";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
+            // btnGuardar
+            // 
+            this.btnGuardar.Location = new System.Drawing.Point(561, 357);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(62, 23);
+            this.btnGuardar.TabIndex = 416;
+            this.btnGuardar.Text = "Add";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
+            // 
+            // btnAgregar
+            // 
+            this.btnAgregar.Location = new System.Drawing.Point(448, 357);
+            this.btnAgregar.Name = "btnAgregar";
+            this.btnAgregar.Size = new System.Drawing.Size(67, 23);
+            this.btnAgregar.TabIndex = 404;
+            this.btnAgregar.Text = "Aggregate";
+            this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
+            // 
+            // txtPorStage
+            // 
+            this.txtPorStage.Location = new System.Drawing.Point(190, 81);
+            this.txtPorStage.Name = "txtPorStage";
+            this.txtPorStage.Size = new System.Drawing.Size(43, 20);
+            this.txtPorStage.TabIndex = 414;
+            this.txtPorStage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPorStage_KeyPress);
+            // 
+            // label152
+            // 
+            this.label152.AutoSize = true;
+            this.label152.Location = new System.Drawing.Point(184, 65);
+            this.label152.Name = "label152";
+            this.label152.Size = new System.Drawing.Size(49, 13);
+            this.label152.TabIndex = 415;
+            this.label152.Text = " % Stage";
+            // 
+            // txtAngleCore
+            // 
+            this.txtAngleCore.Location = new System.Drawing.Point(101, 80);
+            this.txtAngleCore.Name = "txtAngleCore";
+            this.txtAngleCore.Size = new System.Drawing.Size(41, 20);
+            this.txtAngleCore.TabIndex = 412;
+            this.txtAngleCore.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAngleCore_KeyPress);
+            // 
+            // label151
+            // 
+            this.label151.AutoSize = true;
+            this.label151.Location = new System.Drawing.Point(105, 65);
+            this.label151.Name = "label151";
+            this.label151.Size = new System.Drawing.Size(34, 13);
+            this.label151.TabIndex = 413;
+            this.label151.Text = "Angle";
+            // 
+            // txtNumberInfill
+            // 
+            this.txtNumberInfill.Location = new System.Drawing.Point(65, 80);
+            this.txtNumberInfill.Name = "txtNumberInfill";
+            this.txtNumberInfill.Size = new System.Drawing.Size(29, 20);
+            this.txtNumberInfill.TabIndex = 410;
+            this.txtNumberInfill.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNumberInfill_KeyPress);
+            // 
+            // label150
+            // 
+            this.label150.AutoSize = true;
+            this.label150.Location = new System.Drawing.Point(72, 65);
+            this.label150.Name = "label150";
+            this.label150.Size = new System.Drawing.Size(14, 13);
+            this.label150.TabIndex = 411;
+            this.label150.Text = "#";
+            // 
+            // cmbTypeInfill
+            // 
+            this.cmbTypeInfill.FormattingEnabled = true;
+            this.cmbTypeInfill.Location = new System.Drawing.Point(12, 79);
+            this.cmbTypeInfill.Name = "cmbTypeInfill";
+            this.cmbTypeInfill.Size = new System.Drawing.Size(49, 21);
+            this.cmbTypeInfill.TabIndex = 409;
+            // 
+            // label149
+            // 
+            this.label149.AutoSize = true;
+            this.label149.Location = new System.Drawing.Point(9, 64);
+            this.label149.Name = "label149";
+            this.label149.Size = new System.Drawing.Size(52, 13);
+            this.label149.TabIndex = 408;
+            this.label149.Text = "Type Infill";
+            // 
+            // cmbStage
+            // 
+            this.cmbStage.FormattingEnabled = true;
+            this.cmbStage.Location = new System.Drawing.Point(147, 80);
+            this.cmbStage.Name = "cmbStage";
+            this.cmbStage.Size = new System.Drawing.Size(39, 21);
+            this.cmbStage.TabIndex = 407;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(149, 65);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 406;
+            this.label5.Text = "Stage";
+            // 
+            // dtgInfill
+            // 
+            this.dtgInfill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dtgInfill.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dtgInfill.Location = new System.Drawing.Point(12, 216);
+            this.dtgInfill.Name = "dtgInfill";
+            this.dtgInfill.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtgInfill.Size = new System.Drawing.Size(679, 131);
+            this.dtgInfill.TabIndex = 405;
+            this.dtgInfill.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgInfill_CellContentClick);
+            this.dtgInfill.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtgInfill_CellDoubleClick);
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.btnCancelMin);
+            this.groupBox12.Controls.Add(this.btnAddMin);
+            this.groupBox12.Controls.Add(this.btnValidMin);
+            this.groupBox12.Controls.Add(this.label64);
+            this.groupBox12.Controls.Add(this.txtCommentsMin);
+            this.groupBox12.Controls.Add(this.txtToMin);
+            this.groupBox12.Controls.Add(this.txtFromMin);
+            this.groupBox12.Controls.Add(this.groupBox14);
+            this.groupBox12.Controls.Add(this.groupBox13);
+            this.groupBox12.Controls.Add(this.groupBox27);
+            this.groupBox12.Controls.Add(this.btnExporExcelMin);
+            this.groupBox12.Controls.Add(this.label44);
+            this.groupBox12.Controls.Add(this.label45);
+            this.groupBox12.Controls.Add(this.cmbHoleIdMin);
+            this.groupBox12.Controls.Add(this.label47);
+            this.groupBox12.Controls.Add(this.label48);
+            this.groupBox12.Controls.Add(this.dgMineraliz);
+            this.groupBox12.Location = new System.Drawing.Point(7, 1);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(703, 398);
+            this.groupBox12.TabIndex = 0;
+            this.groupBox12.TabStop = false;
+            // 
+            // btnCancelMin
+            // 
+            this.btnCancelMin.Location = new System.Drawing.Point(630, 368);
+            this.btnCancelMin.Name = "btnCancelMin";
+            this.btnCancelMin.Size = new System.Drawing.Size(62, 23);
+            this.btnCancelMin.TabIndex = 362;
+            this.btnCancelMin.Text = "Cancel";
+            this.btnCancelMin.UseVisualStyleBackColor = true;
+            this.btnCancelMin.Click += new System.EventHandler(this.btnCancelMin_Click);
+            // 
+            // btnAddMin
+            // 
+            this.btnAddMin.Location = new System.Drawing.Point(562, 368);
+            this.btnAddMin.Name = "btnAddMin";
+            this.btnAddMin.Size = new System.Drawing.Size(62, 23);
+            this.btnAddMin.TabIndex = 361;
+            this.btnAddMin.Text = "Add";
+            this.btnAddMin.UseVisualStyleBackColor = true;
+            this.btnAddMin.Click += new System.EventHandler(this.btnAddMin_Click);
+            // 
+            // btnValidMin
+            // 
+            this.btnValidMin.Image = ((System.Drawing.Image)(resources.GetObject("btnValidMin.Image")));
+            this.btnValidMin.InitialImage = null;
+            this.btnValidMin.Location = new System.Drawing.Point(655, 26);
+            this.btnValidMin.Margin = new System.Windows.Forms.Padding(2);
+            this.btnValidMin.Name = "btnValidMin";
+            this.btnValidMin.Size = new System.Drawing.Size(36, 36);
+            this.btnValidMin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnValidMin.TabIndex = 360;
+            this.btnValidMin.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnValidMin, "Info Validate");
+            this.btnValidMin.Click += new System.EventHandler(this.btnValidMin_Click);
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Location = new System.Drawing.Point(283, 11);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(56, 13);
+            this.label64.TabIndex = 359;
+            this.label64.Text = "Comments";
+            // 
+            // txtCommentsMin
+            // 
+            this.txtCommentsMin.Location = new System.Drawing.Point(285, 27);
+            this.txtCommentsMin.Multiline = true;
+            this.txtCommentsMin.Name = "txtCommentsMin";
+            this.txtCommentsMin.Size = new System.Drawing.Size(322, 36);
+            this.txtCommentsMin.TabIndex = 349;
+            // 
+            // txtToMin
+            // 
+            this.txtToMin.Location = new System.Drawing.Point(213, 27);
+            this.txtToMin.Name = "txtToMin";
+            this.txtToMin.Size = new System.Drawing.Size(56, 20);
+            this.txtToMin.TabIndex = 348;
+            this.txtToMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtToMin_KeyPress);
+            // 
+            // txtFromMin
+            // 
+            this.txtFromMin.Location = new System.Drawing.Point(149, 27);
+            this.txtFromMin.Name = "txtFromMin";
+            this.txtFromMin.Size = new System.Drawing.Size(56, 20);
+            this.txtFromMin.TabIndex = 347;
+            this.txtFromMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFromMin_KeyPress);
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.txtMinPerc3);
+            this.groupBox14.Controls.Add(this.label96);
+            this.groupBox14.Controls.Add(this.cmbGSizeMin3);
+            this.groupBox14.Controls.Add(this.label59);
+            this.groupBox14.Controls.Add(this.cmbStyleM3);
+            this.groupBox14.Controls.Add(this.label60);
+            this.groupBox14.Controls.Add(this.cmbM3Z3);
+            this.groupBox14.Controls.Add(this.cmbM3Z2);
+            this.groupBox14.Controls.Add(this.cmbM3Z1);
+            this.groupBox14.Controls.Add(this.label61);
+            this.groupBox14.Controls.Add(this.label62);
+            this.groupBox14.Controls.Add(this.label63);
+            this.groupBox14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox14.Location = new System.Drawing.Point(12, 189);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(679, 61);
+            this.groupBox14.TabIndex = 352;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Mineralization 3";
+            // 
+            // txtMinPerc3
+            // 
+            this.txtMinPerc3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMinPerc3.Location = new System.Drawing.Point(478, 30);
+            this.txtMinPerc3.Name = "txtMinPerc3";
+            this.txtMinPerc3.Size = new System.Drawing.Size(59, 20);
+            this.txtMinPerc3.TabIndex = 266;
+            // 
+            // label96
+            // 
+            this.label96.AutoSize = true;
+            this.label96.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label96.Location = new System.Drawing.Point(578, 14);
+            this.label96.Name = "label96";
+            this.label96.Size = new System.Drawing.Size(35, 13);
+            this.label96.TabIndex = 265;
+            this.label96.Text = "GSize";
+            // 
+            // cmbGSizeMin3
+            // 
+            this.cmbGSizeMin3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbGSizeMin3.FormattingEnabled = true;
+            this.cmbGSizeMin3.Location = new System.Drawing.Point(581, 30);
+            this.cmbGSizeMin3.Name = "cmbGSizeMin3";
+            this.cmbGSizeMin3.Size = new System.Drawing.Size(92, 21);
+            this.cmbGSizeMin3.TabIndex = 264;
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label59.Location = new System.Drawing.Point(478, 16);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(15, 13);
+            this.label59.TabIndex = 55;
+            this.label59.Text = "%";
+            // 
+            // cmbStyleM3
+            // 
+            this.cmbStyleM3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbStyleM3.FormattingEnabled = true;
+            this.cmbStyleM3.Location = new System.Drawing.Point(341, 30);
+            this.cmbStyleM3.Name = "cmbStyleM3";
+            this.cmbStyleM3.Size = new System.Drawing.Size(117, 21);
+            this.cmbStyleM3.TabIndex = 23;
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label60.Location = new System.Drawing.Point(339, 14);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(30, 13);
+            this.label60.TabIndex = 52;
+            this.label60.Text = "Style";
+            // 
+            // cmbM3Z3
+            // 
+            this.cmbM3Z3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM3Z3.FormattingEnabled = true;
+            this.cmbM3Z3.Location = new System.Drawing.Point(228, 30);
+            this.cmbM3Z3.Name = "cmbM3Z3";
+            this.cmbM3Z3.Size = new System.Drawing.Size(93, 21);
+            this.cmbM3Z3.TabIndex = 22;
+            // 
+            // cmbM3Z2
+            // 
+            this.cmbM3Z2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM3Z2.FormattingEnabled = true;
+            this.cmbM3Z2.Location = new System.Drawing.Point(115, 30);
+            this.cmbM3Z2.Name = "cmbM3Z2";
+            this.cmbM3Z2.Size = new System.Drawing.Size(93, 21);
+            this.cmbM3Z2.TabIndex = 21;
+            // 
+            // cmbM3Z1
+            // 
+            this.cmbM3Z1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM3Z1.FormattingEnabled = true;
+            this.cmbM3Z1.Location = new System.Drawing.Point(6, 30);
+            this.cmbM3Z1.Name = "cmbM3Z1";
+            this.cmbM3Z1.Size = new System.Drawing.Size(93, 21);
+            this.cmbM3Z1.TabIndex = 20;
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label61.Location = new System.Drawing.Point(225, 16);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(50, 13);
+            this.label61.TabIndex = 45;
+            this.label61.Text = "Mineral 3";
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label62.Location = new System.Drawing.Point(6, 16);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(50, 13);
+            this.label62.TabIndex = 43;
+            this.label62.Text = "Mineral 1";
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label63.Location = new System.Drawing.Point(112, 15);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(50, 13);
+            this.label63.TabIndex = 44;
+            this.label63.Text = "Mineral 2";
+            // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.txtMinPerc2);
+            this.groupBox13.Controls.Add(this.label95);
+            this.groupBox13.Controls.Add(this.cmbGSizeMin2);
+            this.groupBox13.Controls.Add(this.label54);
+            this.groupBox13.Controls.Add(this.cmbStyleM2);
+            this.groupBox13.Controls.Add(this.label55);
+            this.groupBox13.Controls.Add(this.cmbM2Z3);
+            this.groupBox13.Controls.Add(this.cmbM2Z2);
+            this.groupBox13.Controls.Add(this.cmbM2Z1);
+            this.groupBox13.Controls.Add(this.label56);
+            this.groupBox13.Controls.Add(this.label57);
+            this.groupBox13.Controls.Add(this.label58);
+            this.groupBox13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox13.Location = new System.Drawing.Point(12, 127);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(679, 61);
+            this.groupBox13.TabIndex = 351;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Mineralization 2";
+            // 
+            // txtMinPerc2
+            // 
+            this.txtMinPerc2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMinPerc2.Location = new System.Drawing.Point(478, 30);
+            this.txtMinPerc2.Name = "txtMinPerc2";
+            this.txtMinPerc2.Size = new System.Drawing.Size(59, 20);
+            this.txtMinPerc2.TabIndex = 266;
+            // 
+            // label95
+            // 
+            this.label95.AutoSize = true;
+            this.label95.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label95.Location = new System.Drawing.Point(578, 14);
+            this.label95.Name = "label95";
+            this.label95.Size = new System.Drawing.Size(35, 13);
+            this.label95.TabIndex = 265;
+            this.label95.Text = "GSize";
+            // 
+            // cmbGSizeMin2
+            // 
+            this.cmbGSizeMin2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbGSizeMin2.FormattingEnabled = true;
+            this.cmbGSizeMin2.Location = new System.Drawing.Point(581, 30);
+            this.cmbGSizeMin2.Name = "cmbGSizeMin2";
+            this.cmbGSizeMin2.Size = new System.Drawing.Size(92, 21);
+            this.cmbGSizeMin2.TabIndex = 264;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(478, 11);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(15, 13);
+            this.label54.TabIndex = 55;
+            this.label54.Text = "%";
+            // 
+            // cmbStyleM2
+            // 
+            this.cmbStyleM2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbStyleM2.FormattingEnabled = true;
+            this.cmbStyleM2.Location = new System.Drawing.Point(340, 30);
+            this.cmbStyleM2.Name = "cmbStyleM2";
+            this.cmbStyleM2.Size = new System.Drawing.Size(117, 21);
+            this.cmbStyleM2.TabIndex = 17;
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.Location = new System.Drawing.Point(338, 14);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(30, 13);
+            this.label55.TabIndex = 52;
+            this.label55.Text = "Style";
+            // 
+            // cmbM2Z3
+            // 
+            this.cmbM2Z3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM2Z3.FormattingEnabled = true;
+            this.cmbM2Z3.Location = new System.Drawing.Point(228, 30);
+            this.cmbM2Z3.Name = "cmbM2Z3";
+            this.cmbM2Z3.Size = new System.Drawing.Size(93, 21);
+            this.cmbM2Z3.TabIndex = 16;
+            // 
+            // cmbM2Z2
+            // 
+            this.cmbM2Z2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM2Z2.FormattingEnabled = true;
+            this.cmbM2Z2.Location = new System.Drawing.Point(115, 30);
+            this.cmbM2Z2.Name = "cmbM2Z2";
+            this.cmbM2Z2.Size = new System.Drawing.Size(93, 21);
+            this.cmbM2Z2.TabIndex = 15;
+            // 
+            // cmbM2Z1
+            // 
+            this.cmbM2Z1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM2Z1.FormattingEnabled = true;
+            this.cmbM2Z1.Location = new System.Drawing.Point(6, 30);
+            this.cmbM2Z1.Name = "cmbM2Z1";
+            this.cmbM2Z1.Size = new System.Drawing.Size(93, 21);
+            this.cmbM2Z1.TabIndex = 14;
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label56.Location = new System.Drawing.Point(225, 16);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(50, 13);
+            this.label56.TabIndex = 45;
+            this.label56.Text = "Mineral 3";
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label57.Location = new System.Drawing.Point(6, 16);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(50, 13);
+            this.label57.TabIndex = 43;
+            this.label57.Text = "Mineral 1";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label58.Location = new System.Drawing.Point(112, 15);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(50, 13);
+            this.label58.TabIndex = 44;
+            this.label58.Text = "Mineral 2";
+            // 
+            // groupBox27
+            // 
+            this.groupBox27.Controls.Add(this.txtMinPerc1);
+            this.groupBox27.Controls.Add(this.label94);
+            this.groupBox27.Controls.Add(this.cmbGSizeMin1);
+            this.groupBox27.Controls.Add(this.label53);
+            this.groupBox27.Controls.Add(this.cmbStyleM1);
+            this.groupBox27.Controls.Add(this.label52);
+            this.groupBox27.Controls.Add(this.cmbM1Z3);
+            this.groupBox27.Controls.Add(this.cmbM1Z2);
+            this.groupBox27.Controls.Add(this.cmbM1Z1);
+            this.groupBox27.Controls.Add(this.label51);
+            this.groupBox27.Controls.Add(this.label49);
+            this.groupBox27.Controls.Add(this.label50);
+            this.groupBox27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox27.Location = new System.Drawing.Point(12, 65);
+            this.groupBox27.Name = "groupBox27";
+            this.groupBox27.Size = new System.Drawing.Size(679, 61);
+            this.groupBox27.TabIndex = 350;
+            this.groupBox27.TabStop = false;
+            this.groupBox27.Text = "Mineralization 1";
+            // 
+            // txtMinPerc1
+            // 
+            this.txtMinPerc1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMinPerc1.Location = new System.Drawing.Point(478, 30);
+            this.txtMinPerc1.Name = "txtMinPerc1";
+            this.txtMinPerc1.Size = new System.Drawing.Size(59, 20);
+            this.txtMinPerc1.TabIndex = 264;
+            // 
+            // label94
+            // 
+            this.label94.AutoSize = true;
+            this.label94.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label94.Location = new System.Drawing.Point(578, 14);
+            this.label94.Name = "label94";
+            this.label94.Size = new System.Drawing.Size(35, 13);
+            this.label94.TabIndex = 263;
+            this.label94.Text = "GSize";
+            // 
+            // cmbGSizeMin1
+            // 
+            this.cmbGSizeMin1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbGSizeMin1.FormattingEnabled = true;
+            this.cmbGSizeMin1.Location = new System.Drawing.Point(581, 30);
+            this.cmbGSizeMin1.Name = "cmbGSizeMin1";
+            this.cmbGSizeMin1.Size = new System.Drawing.Size(92, 21);
+            this.cmbGSizeMin1.TabIndex = 262;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.Location = new System.Drawing.Point(478, 16);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(15, 13);
+            this.label53.TabIndex = 55;
+            this.label53.Text = "%";
+            // 
+            // cmbStyleM1
+            // 
+            this.cmbStyleM1.DropDownWidth = 200;
+            this.cmbStyleM1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbStyleM1.FormattingEnabled = true;
+            this.cmbStyleM1.Location = new System.Drawing.Point(339, 30);
+            this.cmbStyleM1.Name = "cmbStyleM1";
+            this.cmbStyleM1.Size = new System.Drawing.Size(117, 21);
+            this.cmbStyleM1.TabIndex = 11;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.Location = new System.Drawing.Point(337, 14);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(30, 13);
+            this.label52.TabIndex = 52;
+            this.label52.Text = "Style";
+            // 
+            // cmbM1Z3
+            // 
+            this.cmbM1Z3.DropDownWidth = 200;
+            this.cmbM1Z3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM1Z3.FormattingEnabled = true;
+            this.cmbM1Z3.Location = new System.Drawing.Point(228, 30);
+            this.cmbM1Z3.Name = "cmbM1Z3";
+            this.cmbM1Z3.Size = new System.Drawing.Size(93, 21);
+            this.cmbM1Z3.TabIndex = 10;
+            // 
+            // cmbM1Z2
+            // 
+            this.cmbM1Z2.DropDownWidth = 200;
+            this.cmbM1Z2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM1Z2.FormattingEnabled = true;
+            this.cmbM1Z2.Location = new System.Drawing.Point(115, 30);
+            this.cmbM1Z2.Name = "cmbM1Z2";
+            this.cmbM1Z2.Size = new System.Drawing.Size(93, 21);
+            this.cmbM1Z2.TabIndex = 9;
+            // 
+            // cmbM1Z1
+            // 
+            this.cmbM1Z1.DropDownWidth = 200;
+            this.cmbM1Z1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbM1Z1.FormattingEnabled = true;
+            this.cmbM1Z1.Location = new System.Drawing.Point(6, 30);
+            this.cmbM1Z1.Name = "cmbM1Z1";
+            this.cmbM1Z1.Size = new System.Drawing.Size(93, 21);
+            this.cmbM1Z1.TabIndex = 8;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.Location = new System.Drawing.Point(225, 16);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(50, 13);
+            this.label51.TabIndex = 45;
+            this.label51.Text = "Mineral 3";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.Location = new System.Drawing.Point(6, 16);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(50, 13);
+            this.label49.TabIndex = 43;
+            this.label49.Text = "Mineral 1";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.Location = new System.Drawing.Point(112, 15);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(50, 13);
+            this.label50.TabIndex = 44;
+            this.label50.Text = "Mineral 2";
+            // 
+            // btnExporExcelMin
+            // 
+            this.btnExporExcelMin.Image = ((System.Drawing.Image)(resources.GetObject("btnExporExcelMin.Image")));
+            this.btnExporExcelMin.InitialImage = null;
+            this.btnExporExcelMin.Location = new System.Drawing.Point(615, 26);
+            this.btnExporExcelMin.Margin = new System.Windows.Forms.Padding(2);
+            this.btnExporExcelMin.Name = "btnExporExcelMin";
+            this.btnExporExcelMin.Size = new System.Drawing.Size(36, 36);
+            this.btnExporExcelMin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnExporExcelMin.TabIndex = 358;
+            this.btnExporExcelMin.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnExporExcelMin, "Export Excel");
+            this.btnExporExcelMin.Click += new System.EventHandler(this.btnExporExcelMin_Click);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.ForeColor = System.Drawing.Color.Blue;
+            this.label44.Location = new System.Drawing.Point(147, 50);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(122, 13);
+            this.label44.TabIndex = 357;
+            this.label44.Text = "2 Decimals From and To";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(9, 11);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(43, 13);
+            this.label45.TabIndex = 356;
+            this.label45.Text = "Hole ID";
+            // 
+            // cmbHoleIdMin
+            // 
+            this.cmbHoleIdMin.FormattingEnabled = true;
+            this.cmbHoleIdMin.Location = new System.Drawing.Point(12, 27);
+            this.cmbHoleIdMin.Name = "cmbHoleIdMin";
+            this.cmbHoleIdMin.Size = new System.Drawing.Size(127, 21);
+            this.cmbHoleIdMin.TabIndex = 346;
+            this.cmbHoleIdMin.SelectedIndexChanged += new System.EventHandler(this.cmbHoleIdMin_SelectedIndexChanged);
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(210, 10);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(20, 13);
+            this.label47.TabIndex = 354;
+            this.label47.Text = "To";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(146, 10);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(30, 13);
+            this.label48.TabIndex = 353;
+            this.label48.Text = "From";
+            // 
+            // dgMineraliz
+            // 
+            this.dgMineraliz.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgMineraliz.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgMineraliz.Location = new System.Drawing.Point(14, 254);
+            this.dgMineraliz.Name = "dgMineraliz";
+            this.dgMineraliz.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgMineraliz.Size = new System.Drawing.Size(679, 108);
+            this.dgMineraliz.TabIndex = 355;
+            this.dgMineraliz.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgMineraliz_CellClick);
+            this.dgMineraliz.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgMineraliz_CellDoubleClick);
+            // 
+            // txtRecoveryPerc
+            // 
+            this.txtRecoveryPerc.Location = new System.Drawing.Point(450, 72);
+            this.txtRecoveryPerc.MaxLength = 5;
+            this.txtRecoveryPerc.Name = "txtRecoveryPerc";
+            this.txtRecoveryPerc.Size = new System.Drawing.Size(75, 20);
+            this.txtRecoveryPerc.TabIndex = 66;
+            this.txtRecoveryPerc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRecoveryPerc_KeyPress);
+            this.txtRecoveryPerc.Leave += new System.EventHandler(this.txtRecoveryPerc_Leave);
+            // 
+            // label189
+            // 
+            this.label189.AutoSize = true;
+            this.label189.Location = new System.Drawing.Point(447, 56);
+            this.label189.Name = "label189";
+            this.label189.Size = new System.Drawing.Size(78, 13);
+            this.label189.TabIndex = 67;
+            this.label189.Text = "Recovery Perc";
+            // 
             // frmLoggin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -5716,8 +5727,6 @@ namespace LogginColombiaGold
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnValidBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnExcelBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnExporExcelMin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnValidMin)).EndInit();
             this.TabPpal.ResumeLayout(false);
             this.tbSamples.ResumeLayout(false);
             this.tbBox.ResumeLayout(false);
@@ -5761,23 +5770,6 @@ namespace LogginColombiaGold
             this.groupBox10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgStructure)).EndInit();
             this.tbMineraliz.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.groupBox14.ResumeLayout(false);
-            this.groupBox14.PerformLayout();
-            this.groupBox12.ResumeLayout(false);
-            this.groupBox12.PerformLayout();
-            this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgMineraliz)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.groupBox23.ResumeLayout(false);
-            this.groupBox23.PerformLayout();
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dtgInfill)).EndInit();
             this.tbGeotech.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -5803,6 +5795,25 @@ namespace LogginColombiaGold
             this.groupBox20.ResumeLayout(false);
             this.groupBox20.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tbInfill.ResumeLayout(false);
+            this.groupBox26.ResumeLayout(false);
+            this.groupBox26.PerformLayout();
+            this.groupBox23.ResumeLayout(false);
+            this.groupBox23.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dtgInfill)).EndInit();
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox12.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnValidMin)).EndInit();
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
+            this.groupBox27.ResumeLayout(false);
+            this.groupBox27.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnExporExcelMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgMineraliz)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -6148,121 +6159,6 @@ namespace LogginColombiaGold
         private System.Windows.Forms.Label label148;
         private System.Windows.Forms.ComboBox cmbVeinLocationSamp;
         private System.Windows.Forms.ComboBox cmbVeinStructureSamp;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.PictureBox btnValidMin;
-        private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.TextBox txtCommentsMin;
-        private System.Windows.Forms.TextBox txtToMin;
-        private System.Windows.Forms.TextBox txtFromMin;
-        private System.Windows.Forms.GroupBox groupBox14;
-        private System.Windows.Forms.TextBox txtMinPerc3;
-        private System.Windows.Forms.Label label96;
-        private System.Windows.Forms.ComboBox cmbGSizeMin3;
-        private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.ComboBox cmbStyleM3;
-        private System.Windows.Forms.Label label60;
-        private System.Windows.Forms.ComboBox cmbM3Z3;
-        private System.Windows.Forms.ComboBox cmbM3Z2;
-        private System.Windows.Forms.ComboBox cmbM3Z1;
-        private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.Label label63;
-        private System.Windows.Forms.GroupBox groupBox12;
-        private System.Windows.Forms.TextBox txtMinPerc2;
-        private System.Windows.Forms.Label label95;
-        private System.Windows.Forms.ComboBox cmbGSizeMin2;
-        private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.ComboBox cmbStyleM2;
-        private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.ComboBox cmbM2Z3;
-        private System.Windows.Forms.ComboBox cmbM2Z2;
-        private System.Windows.Forms.ComboBox cmbM2Z1;
-        private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.GroupBox groupBox13;
-        private System.Windows.Forms.TextBox txtMinPerc1;
-        private System.Windows.Forms.Label label94;
-        private System.Windows.Forms.ComboBox cmbGSizeMin1;
-        private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.ComboBox cmbStyleM1;
-        private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.ComboBox cmbM1Z3;
-        private System.Windows.Forms.ComboBox cmbM1Z2;
-        private System.Windows.Forms.ComboBox cmbM1Z1;
-        private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.PictureBox btnExporExcelMin;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.ComboBox cmbHoleIdMin;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.DataGridView dgMineraliz;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridView dtgInfill;
-        private System.Windows.Forms.TextBox txtPorStage;
-        private System.Windows.Forms.Label label152;
-        private System.Windows.Forms.TextBox txtAngleCore;
-        private System.Windows.Forms.Label label151;
-        private System.Windows.Forms.TextBox txtNumberInfill;
-        private System.Windows.Forms.Label label150;
-        private System.Windows.Forms.ComboBox cmbTypeInfill;
-        private System.Windows.Forms.Label label149;
-        private System.Windows.Forms.ComboBox cmbStage;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtPorGangueMin;
-        private System.Windows.Forms.Label label155;
-        private System.Windows.Forms.ComboBox cmbTexture;
-        private System.Windows.Forms.Label label154;
-        private System.Windows.Forms.ComboBox cmbGangueMin;
-        private System.Windows.Forms.Label label153;
-        private System.Windows.Forms.Button btnAgregar;
-        private System.Windows.Forms.Button btnCancelMin;
-        private System.Windows.Forms.Button btnAddMin;
-        private System.Windows.Forms.TextBox txtToInfill;
-        private System.Windows.Forms.TextBox txtFromInfill;
-        private System.Windows.Forms.Label label171;
-        private System.Windows.Forms.Label label172;
-        private System.Windows.Forms.Label label173;
-        private System.Windows.Forms.Label label174;
-        private System.Windows.Forms.ComboBox cmbTexture3;
-        private System.Windows.Forms.Label label168;
-        private System.Windows.Forms.ComboBox cmbTexture2;
-        private System.Windows.Forms.Label label167;
-        private System.Windows.Forms.TextBox txtPorGangueMin3;
-        private System.Windows.Forms.Label label165;
-        private System.Windows.Forms.ComboBox cmbGangueMin3;
-        private System.Windows.Forms.Label label166;
-        private System.Windows.Forms.TextBox txtPorGangueMin2;
-        private System.Windows.Forms.Label label161;
-        private System.Windows.Forms.ComboBox cmbGangueMin2;
-        private System.Windows.Forms.Label label162;
-        private System.Windows.Forms.Button btnCancelar;
-        private System.Windows.Forms.Button btnGuardar;
-        private System.Windows.Forms.GroupBox groupBox23;
-        private System.Windows.Forms.GroupBox groupBox11;
-        private System.Windows.Forms.ComboBox cmbStyle3;
-        private System.Windows.Forms.Label label170;
-        private System.Windows.Forms.ComboBox cmbStyle2;
-        private System.Windows.Forms.Label label169;
-        private System.Windows.Forms.TextBox txtPorOreMin3;
-        private System.Windows.Forms.Label label163;
-        private System.Windows.Forms.ComboBox cmbOreMin3;
-        private System.Windows.Forms.Label label164;
-        private System.Windows.Forms.TextBox txtPorOreMin2;
-        private System.Windows.Forms.Label label159;
-        private System.Windows.Forms.ComboBox cmbOreMin2;
-        private System.Windows.Forms.Label label160;
-        private System.Windows.Forms.ComboBox cmbStyle;
-        private System.Windows.Forms.Label label158;
-        private System.Windows.Forms.TextBox txtPorOreMin;
-        private System.Windows.Forms.Label label157;
-        private System.Windows.Forms.ComboBox cmbOreMin;
-        private System.Windows.Forms.Label label156;
-        private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.ComboBox cmbOreZone;
         private System.Windows.Forms.Label label175;
         private System.Windows.Forms.GroupBox groupBox24;
@@ -6296,6 +6192,122 @@ namespace LogginColombiaGold
         private System.Windows.Forms.Label label186;
         private System.Windows.Forms.TextBox txtFromOxide;
         private System.Windows.Forms.Label label187;
+        private System.Windows.Forms.TabPage tbInfill;
+        private System.Windows.Forms.GroupBox groupBox26;
         private System.Windows.Forms.ComboBox cmbHoleIdInfill;
+        private System.Windows.Forms.GroupBox groupBox23;
+        private System.Windows.Forms.TextBox txtPorGangueMin2;
+        private System.Windows.Forms.Label label153;
+        private System.Windows.Forms.ComboBox cmbGangueMin;
+        private System.Windows.Forms.Label label154;
+        private System.Windows.Forms.ComboBox cmbTexture;
+        private System.Windows.Forms.Label label155;
+        private System.Windows.Forms.TextBox txtPorGangueMin;
+        private System.Windows.Forms.Label label162;
+        private System.Windows.Forms.ComboBox cmbGangueMin2;
+        private System.Windows.Forms.ComboBox cmbTexture3;
+        private System.Windows.Forms.Label label161;
+        private System.Windows.Forms.Label label168;
+        private System.Windows.Forms.Label label166;
+        private System.Windows.Forms.ComboBox cmbTexture2;
+        private System.Windows.Forms.ComboBox cmbGangueMin3;
+        private System.Windows.Forms.Label label167;
+        private System.Windows.Forms.Label label165;
+        private System.Windows.Forms.TextBox txtPorGangueMin3;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.ComboBox cmbStyle3;
+        private System.Windows.Forms.Label label170;
+        private System.Windows.Forms.ComboBox cmbStyle2;
+        private System.Windows.Forms.Label label169;
+        private System.Windows.Forms.TextBox txtPorOreMin3;
+        private System.Windows.Forms.Label label163;
+        private System.Windows.Forms.ComboBox cmbOreMin3;
+        private System.Windows.Forms.Label label164;
+        private System.Windows.Forms.TextBox txtPorOreMin2;
+        private System.Windows.Forms.Label label159;
+        private System.Windows.Forms.ComboBox cmbOreMin2;
+        private System.Windows.Forms.Label label160;
+        private System.Windows.Forms.ComboBox cmbStyle;
+        private System.Windows.Forms.Label label158;
+        private System.Windows.Forms.TextBox txtPorOreMin;
+        private System.Windows.Forms.Label label157;
+        private System.Windows.Forms.ComboBox cmbOreMin;
+        private System.Windows.Forms.Label label156;
+        private System.Windows.Forms.TextBox txtToInfill;
+        private System.Windows.Forms.TextBox txtFromInfill;
+        private System.Windows.Forms.Label label171;
+        private System.Windows.Forms.Label label172;
+        private System.Windows.Forms.Label label173;
+        private System.Windows.Forms.Label label174;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button btnAgregar;
+        private System.Windows.Forms.TextBox txtPorStage;
+        private System.Windows.Forms.Label label152;
+        private System.Windows.Forms.TextBox txtAngleCore;
+        private System.Windows.Forms.Label label151;
+        private System.Windows.Forms.TextBox txtNumberInfill;
+        private System.Windows.Forms.Label label150;
+        private System.Windows.Forms.ComboBox cmbTypeInfill;
+        private System.Windows.Forms.Label label149;
+        private System.Windows.Forms.ComboBox cmbStage;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dtgInfill;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private System.Windows.Forms.Button btnCancelMin;
+        private System.Windows.Forms.Button btnAddMin;
+        private System.Windows.Forms.PictureBox btnValidMin;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.TextBox txtCommentsMin;
+        private System.Windows.Forms.TextBox txtToMin;
+        private System.Windows.Forms.TextBox txtFromMin;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.TextBox txtMinPerc3;
+        private System.Windows.Forms.Label label96;
+        private System.Windows.Forms.ComboBox cmbGSizeMin3;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.ComboBox cmbStyleM3;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.ComboBox cmbM3Z3;
+        private System.Windows.Forms.ComboBox cmbM3Z2;
+        private System.Windows.Forms.ComboBox cmbM3Z1;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.GroupBox groupBox13;
+        private System.Windows.Forms.TextBox txtMinPerc2;
+        private System.Windows.Forms.Label label95;
+        private System.Windows.Forms.ComboBox cmbGSizeMin2;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.ComboBox cmbStyleM2;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.ComboBox cmbM2Z3;
+        private System.Windows.Forms.ComboBox cmbM2Z2;
+        private System.Windows.Forms.ComboBox cmbM2Z1;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.GroupBox groupBox27;
+        private System.Windows.Forms.TextBox txtMinPerc1;
+        private System.Windows.Forms.Label label94;
+        private System.Windows.Forms.ComboBox cmbGSizeMin1;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.ComboBox cmbStyleM1;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.ComboBox cmbM1Z3;
+        private System.Windows.Forms.ComboBox cmbM1Z2;
+        private System.Windows.Forms.ComboBox cmbM1Z1;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.PictureBox btnExporExcelMin;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.ComboBox cmbHoleIdMin;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.DataGridView dgMineraliz;
+        private System.Windows.Forms.TextBox txtRecoveryPerc;
+        private System.Windows.Forms.Label label189;
     }
 }
