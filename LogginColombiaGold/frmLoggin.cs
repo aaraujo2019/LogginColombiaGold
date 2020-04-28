@@ -56,6 +56,7 @@ namespace LogginColombiaGold
         private DataTable dtGeneralInfill = new DataTable();
         private string sEditOxide;
         private long iSKDHOxides;
+        private List<RegInfill> listaRegistroValidos = new List<RegInfill>();
 
         public frmLoggin()
         {
@@ -272,12 +273,12 @@ namespace LogginColombiaGold
                 cmbHoleIDForm.ValueMember = "HoleID";
                 cmbHoleIDForm.DataSource = dtCollars;
                 cmbHoleIDForm.SelectedValue = "Select an option..";
-                
+
                 cmbHoleIdDens.DisplayMember = "HoleID";
                 cmbHoleIdDens.ValueMember = "HoleID";
                 cmbHoleIdDens.DataSource = dtCollars.Copy();
                 cmbHoleIdDens.SelectedValue = "Select an option..";
-                
+
                 DataTable rfVeinsCodes = oRf.getRfVeinsCodes();
                 DataRow dataRow2 = rfVeinsCodes.NewRow();
                 dataRow2[0] = "";
@@ -323,7 +324,7 @@ namespace LogginColombiaGold
                 cmbLithology.ValueMember = "Code";
                 cmbLithology.DataSource = dtLithology;
                 cmbLithology.SelectedValue = -1;
-                
+
                 oCollars.sHoleID = string.Empty;
                 oCollars.sLogged = clsRf.sUser;
                 DataTable dtCollars = oCollars.getDHCollarsLogged();
@@ -334,7 +335,7 @@ namespace LogginColombiaGold
                 cmbHoleID.ValueMember = "HoleID";
                 cmbHoleID.DataSource = dtCollars;
                 cmbHoleID.SelectedValue = "Select an option..";
-                
+
                 DataTable dtLocation = oRf.getLocation(string.Empty);
                 DataRow drLoc = dtLocation.NewRow();
                 drLoc[1] = "Select an option...";
@@ -413,7 +414,7 @@ namespace LogginColombiaGold
                 gdLoggin.DataSource = dtLoggin;
 
                 gdLoggin.Columns["SKDHSamples"].Visible = false;
-                
+
                 foreach (DataGridViewColumn Col in gdLoggin.Columns)
                 {
                     Col.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -724,7 +725,7 @@ namespace LogginColombiaGold
                         oLit.sHoleID = cmbHoleID.SelectedValue.ToString();
                         dtLit = oLit.getDH_Lithology();
 
-                        if(dtLit.Rows.Count > 0)
+                        if (dtLit.Rows.Count > 0)
                         {
                             DataRow[] myRowLth = dtLit.Select("[From] <= " + txtFrom.Text.ToString() + " and [To] >= " + txtTo.Text.ToString());
 
@@ -2561,7 +2562,7 @@ namespace LogginColombiaGold
                 cmbHoleIdWeat.ValueMember = "HoleID";
                 cmbHoleIdWeat.DataSource = dtCollars;
                 cmbHoleIdWeat.SelectedValue = "Select an option..";
-                                
+
                 cmbHoleIdOxide.DisplayMember = "HoleID";
                 cmbHoleIdOxide.ValueMember = "HoleID";
                 cmbHoleIdOxide.DataSource = dtCollars;
@@ -3203,6 +3204,12 @@ namespace LogginColombiaGold
             }
         }
 
+        private void txtLowerAngleAxis_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            solo_numeros(ref textBox, e);
+        }
+
         private void FilldtStruct(string _sOpcion)
         {
             try
@@ -3389,6 +3396,15 @@ namespace LogginColombiaGold
                     oStr.sFill4 = cmbFillSt4.SelectedValue.ToString();
                 }
 
+                if (txtLowerAngleAxis.Text == string.Empty)
+                {
+                    oStr.LowerAngleAxis = null;
+                }
+                else
+                {
+                    oStr.LowerAngleAxis = Convert.ToDouble(txtLowerAngleAxis.Text);
+                }
+
                 clsDH_Structures.sStaticFrom = txtToSt.Text;
 
                 string sRespStr = oStr.DH_Structures_Add();
@@ -3405,7 +3421,8 @@ namespace LogginColombiaGold
                         " Up AnglD: " + txtUpAngleSt.Text + "." +
                         " Btn AnglD: " + txtBtnAngleSt.Text + "." +
                         " App Thick: " + txtAppThickSt.Text + "." +
-                        " Number: " + txtNumberSt.Text);
+                        " Number: " + txtNumberSt.Text + "." +
+                        " LowerAngleAxis: " + txtLowerAngleAxis.Text);
 
 
                     if (sEditStruct == "1")
@@ -3464,6 +3481,7 @@ namespace LogginColombiaGold
                 cmbFillSt2.SelectedValue = "-1";
                 cmbFillSt3.SelectedValue = "-1";
                 cmbFillSt4.SelectedValue = "-1";
+                txtLowerAngleAxis.Text = string.Empty;
             }
             catch (Exception ex)
             {
@@ -3528,6 +3546,9 @@ namespace LogginColombiaGold
 
                 cmbFillSt4.SelectedValue = dgStructure.Rows[e.RowIndex].Cells["Fill4"].Value.ToString() == string.Empty ?
                     "-1" : dgStructure.Rows[e.RowIndex].Cells["Fill4"].Value.ToString();
+
+                txtLowerAngleAxis.Text = dgStructure.Rows[e.RowIndex].Cells["LowerAngleAxis"].Value.ToString() == string.Empty ?
+                    string.Empty : dgStructure.Rows[e.RowIndex].Cells["LowerAngleAxis"].Value.ToString();
 
             }
             catch (Exception ex)
@@ -5560,25 +5581,25 @@ namespace LogginColombiaGold
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A2Min3"].Value.ToString();
 
 
-                cmbTypeAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Type"].Value.ToString() == string.Empty) ? 
+                cmbTypeAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Type"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Type"].Value.ToString());
 
-                cmbIntAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Int"].Value.ToString() == string.Empty) ? 
+                cmbIntAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Int"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Int"].Value.ToString());
 
-                cmbStyleAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Style"].Value.ToString() == string.Empty) ? 
+                cmbStyleAlt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Style"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Style"].Value.ToString());
 
-                cmbMin1Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min"].Value.ToString() == string.Empty) ? 
+                cmbMin1Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Min"].Value.ToString());
 
-                cmbMin2Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min2"].Value.ToString() == string.Empty) ? 
+                cmbMin2Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min2"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Min2"].Value.ToString());
 
-                cmbStyleAlt33.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Style2"].Value.ToString() == string.Empty) ? 
+                cmbStyleAlt33.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Style2"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Style2"].Value.ToString());
 
-                cmbMin3Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min3"].Value.ToString() == string.Empty) ? 
+                cmbMin3Alt3.SelectedValue = ((dgAlterations.Rows[e.RowIndex].Cells["A3Min3"].Value.ToString() == string.Empty) ?
                     "-1" : dgAlterations.Rows[e.RowIndex].Cells["A3Min3"].Value.ToString());
 
             }
@@ -7647,19 +7668,19 @@ namespace LogginColombiaGold
                     oSheet.Cells[iInicial, 17] = dtAlterations.Rows[i]["A2Min3"].ToString()
                          == "-1" ? string.Empty : dtAlterations.Rows[i]["A2Min3"].ToString();
 
-                    oSheet.Cells[iInicial, 18] = ((dtAlterations.Rows[i]["A3Type"].ToString() 
+                    oSheet.Cells[iInicial, 18] = ((dtAlterations.Rows[i]["A3Type"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Type"].ToString());
-                    oSheet.Cells[iInicial, 19] = ((dtAlterations.Rows[i]["A3Int"].ToString() 
+                    oSheet.Cells[iInicial, 19] = ((dtAlterations.Rows[i]["A3Int"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Int"].ToString());
-                    oSheet.Cells[iInicial, 20] = ((dtAlterations.Rows[i]["A3Style"].ToString() 
+                    oSheet.Cells[iInicial, 20] = ((dtAlterations.Rows[i]["A3Style"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Style"].ToString());
-                    oSheet.Cells[iInicial, 21] = ((dtAlterations.Rows[i]["A3Style2"].ToString() 
+                    oSheet.Cells[iInicial, 21] = ((dtAlterations.Rows[i]["A3Style2"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Style2"].ToString());
-                    oSheet.Cells[iInicial, 22] = ((dtAlterations.Rows[i]["A3Min"].ToString() 
+                    oSheet.Cells[iInicial, 22] = ((dtAlterations.Rows[i]["A3Min"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Min"].ToString());
-                    oSheet.Cells[iInicial, 23] = ((dtAlterations.Rows[i]["A3Min"].ToString() 
+                    oSheet.Cells[iInicial, 23] = ((dtAlterations.Rows[i]["A3Min"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Min2"].ToString());
-                    oSheet.Cells[iInicial, 24] = ((dtAlterations.Rows[i]["A3Min3"].ToString() 
+                    oSheet.Cells[iInicial, 24] = ((dtAlterations.Rows[i]["A3Min3"].ToString()
                         == "-1") ? string.Empty : dtAlterations.Rows[i]["A3Min3"].ToString());
 
                     oSheet.Cells[iInicial, 18] = dtAlterations.Rows[i]["Comments"].ToString();
@@ -8836,6 +8857,7 @@ namespace LogginColombiaGold
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            RegInfill infilFT = new RegInfill();
             if (!ValidarValores())
             {
                 return;
@@ -8845,6 +8867,12 @@ namespace LogginColombiaGold
             if (sResp.ToString() != string.Empty)
             {
                 MessageBox.Show(sResp.ToString(), "Infill", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (listaRegistroValidos.Where(rv => rv.rFromTo == string.Concat(txtFromInfill.Text, ";", txtToInfill.Text)).Count() == 4)
+            {
+                MessageBox.Show("There are already 4 Infill, for this From-To.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -8874,37 +8902,32 @@ namespace LogginColombiaGold
                 cmbStage.SelectedValue = "0";
 
             if (!stagesAdicionados.Contains(cmbStage.SelectedValue.ToString()))
-            {
                 stagesAdicionados.Add((cmbStage.SelectedValue == null) ? "0" : cmbStage.SelectedValue.ToString());
-            }
-
+ 
             string IFrom = txtFromInfill.Text;
             string ITo = txtToInfill.Text;
 
             if (IFrom.Length == 3)
-            {
                 IFrom = string.Concat(IFrom, "0");
-            }
 
             if (ITo.Length == 3)
-            {
                 ITo = string.Concat(ITo, "0");
-            }
 
             if (IFrom.Length == 1)
-            {
                 IFrom = string.Concat(IFrom, ".00");
-            }
 
             if (ITo.Length == 1)
-            {
                 ITo = string.Concat(ITo, ".00");
-            }
 
             if (!fromTosAdicionados.Contains(IFrom + ";" + ITo))
-            {
                 fromTosAdicionados.Add(IFrom + ";" + ITo);
-            }
+
+            infilFT.rFromTo = string.Concat(txtFromInfill.Text, ";", txtToInfill.Text);
+            infilFT.rStage = cmbStage.SelectedValue.ToString();
+
+            if (listaRegistroValidos.Where(rv => rv.rFromTo == string.Concat(txtFromInfill.Text, ";", txtToInfill.Text) 
+                    && rv.rStage == cmbStage.SelectedValue.ToString()).Count() > 0 )
+                listaRegistroValidos.Add(infilFT);
 
             dtgInfill.Rows.Add(cmbHoleIdInfill.Text, txtFromInfill.Text, txtToInfill.Text,
                                 cmbStage.SelectedValue.ToString(), cmbTypeInfill.SelectedValue.ToString(), txtNumberInfill.Text, txtAngleCore.Text,
@@ -8993,7 +9016,7 @@ namespace LogginColombiaGold
                 MessageBox.Show(text.ToString(), "Infill", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            
+
             DataTable dataValidate = new DataTable();
             oInfill.dFrom = double.Parse(txtFromInfill.Text.ToString());
             oInfill.dTo = double.Parse(txtToInfill.Text.ToString());
@@ -9394,31 +9417,43 @@ namespace LogginColombiaGold
             cmbOreMin3.ValueMember = "IdMineral";
             cmbOreMin3.DataSource = dtOreMineralInfill3;
             cmbOreMin3.SelectedValue = string.Empty;
-            
+
 
             DataTable dtMineralStyleInfill = new DataTable();
             dtMineralStyleInfill = oRf.getRfMinerMinSt_List();
             cmbStyle.DisplayMember = "Mine_Style_Cod";
             cmbStyle.ValueMember = "Mine_Style_Cod";
-            cmbStyle.DataSource = dtMineralStyleInfill.Select("project like '%SEG%' and infill='1'");
+            DataRow dataRow = dtMineralStyleInfill.NewRow();
+            dataRow[0] = string.Empty;
+            dtMineralStyleInfill.Rows.Add(dataRow);
+            cmbStyle.DataSource = dtMineralStyleInfill;
+            cmbStyle.SelectedValue = string.Empty;
 
             DataTable dtMineralStyleInfill2 = new DataTable();
             dtMineralStyleInfill2 = oRf.getRfMinerMinSt_List();
             cmbStyle2.DisplayMember = "Mine_Style_Cod";
             cmbStyle2.ValueMember = "Mine_Style_Cod";
-            cmbStyle2.DataSource = dtMineralStyleInfill2.Select("project like '%SEG%' and infill='1'");
+            DataRow dataRow2 = dtMineralStyleInfill2.NewRow();
+            dataRow2[0] = string.Empty;
+            dtMineralStyleInfill2.Rows.Add(dataRow2);
+            cmbStyle2.DataSource = dtMineralStyleInfill2;
+            cmbStyle2.SelectedValue = string.Empty;
 
             DataTable dtMineralStyleInfill3 = new DataTable();
             dtMineralStyleInfill3 = oRf.getRfMinerMinSt_List();
             cmbStyle3.DisplayMember = "Mine_Style_Cod";
             cmbStyle3.ValueMember = "Mine_Style_Cod";
-            cmbStyle3.DataSource = dtMineralStyleInfill3.Select("project like '%SEG%' and infill='1'");
+            DataRow dataRow3 = dtMineralStyleInfill3.NewRow();
+            dataRow3[0] = string.Empty;
+            dtMineralStyleInfill3.Rows.Add(dataRow3);
+            cmbStyle3.DataSource = dtMineralStyleInfill3;
+            cmbStyle3.SelectedValue = string.Empty;
         }
-                
+
 
         private void txtAngleCore_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBox textbox = (TextBox)sender; 
+            TextBox textbox = (TextBox)sender;
             solo_numeros(ref textbox, e);
         }
 
@@ -9430,35 +9465,35 @@ namespace LogginColombiaGold
 
         public void solo_numeros(ref TextBox textbox, KeyPressEventArgs e)
         {
-            char signo_decimal = (char)46; 
+            char signo_decimal = (char)46;
 
             if (char.IsNumber(e.KeyChar) | valores_permitidos.Contains(e.KeyChar) |
                 e.KeyChar == (char)Keys.Escape | e.KeyChar == (char)Keys.Back)
             {
-                e.Handled = false; 
+                e.Handled = false;
                 return;
             }
             else if (e.KeyChar == signo_decimal)
             {
                 if (textbox.Text.Length == 0 | textbox.Text.LastIndexOf(signo_decimal) >= 0)
                 {
-                    e.Handled = true; 
+                    e.Handled = true;
                 }
                 else
                 {
                     e.KeyChar = Convert.ToChar(System.Globalization.NumberFormatInfo.CurrentInfo.CurrencyDecimalSeparator);
-                    e.Handled = false; 
+                    e.Handled = false;
                 }
                 return;
             }
-            else if (e.KeyChar == (char)13) 
+            else if (e.KeyChar == (char)13)
             {
-                e.Handled = true; 
-                SendKeys.Send("{TAB}"); 
+                e.Handled = true;
+                SendKeys.Send("{TAB}");
             }
-            else 
+            else
             {
-                e.Handled = true; 
+                e.Handled = true;
             }
         }
 
@@ -9764,7 +9799,7 @@ namespace LogginColombiaGold
                                 oInfill.Infill4OreMineral1Perc = dtgInfill.Rows[j].Cells[13].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[13].Value.ToString());
 
                                 oInfill.Infill4OreMineral2 = dtgInfill.Rows[j].Cells[17].Value.ToString();
-                                oInfill.Infill4OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value == null ? string.Empty :dtgInfill.Rows[j].Cells[18].Value.ToString();
+                                oInfill.Infill4OreMineral2Style = dtgInfill.Rows[j].Cells[18].Value == null ? string.Empty : dtgInfill.Rows[j].Cells[18].Value.ToString();
                                 oInfill.Infill4OreMineral2Perc = dtgInfill.Rows[j].Cells[19].Value.ToString() == string.Empty ? 0 : Convert.ToDouble(dtgInfill.Rows[j].Cells[19].Value.ToString());
 
                                 oInfill.Infill4OreMineral3 = dtgInfill.Rows[j].Cells[23].Value.ToString();
@@ -9926,6 +9961,8 @@ namespace LogginColombiaGold
         {
             try
             {
+                RegInfill infillReg = new RegInfill();
+
                 DataTable dtInfil = new DataTable();
                 oInfill.sHoleID = cmbHoleIdInfill.SelectedValue.ToString();
                 dtInfil = oInfill.getDHInfill();
@@ -9942,6 +9979,7 @@ namespace LogginColombiaGold
                         if (infill[4].ToString() != string.Empty && !stagesAdicionados.Contains(infill[4].ToString()))
                         {
                             stagesAdicionados.Add(infill[4].ToString());
+                            infillReg.rStage = infill[4].ToString();
                         }
 
                         if (infill[2].ToString() != string.Empty && infill[3].ToString() != string.Empty)
@@ -9951,8 +9989,12 @@ namespace LogginColombiaGold
                             if (!fromTosAdicionados.Contains(strFrom + ";" + strTo))
                             {
                                 fromTosAdicionados.Add(strFrom + ";" + strTo);
+                                infillReg.rFromTo = string.Concat(strFrom + ";" + strTo);
                             }
                         }
+
+                        if (infillReg.rFromTo != string.Empty && infillReg.rStage != string.Empty)
+                            listaRegistroValidos.Add(infillReg);
 
                         dtgInfill.Rows.Add(infill[1].ToString(), infill[2].ToString(), infill[3].ToString(), infill[4].ToString(),
 
@@ -9971,7 +10013,7 @@ namespace LogginColombiaGold
                     }
 
                     sEditInfill = "1";
-                }            
+                }
             }
             catch (Exception ex)
             {
@@ -10076,6 +10118,9 @@ namespace LogginColombiaGold
                     if (fromTosAdicionados.Contains(IFrom + ";" + ITo))
                         fromTosAdicionados.Remove(IFrom + ";" + ITo);
 
+                    if (listaRegistroValidos.Where(rv => rv.rFromTo == string.Concat(IFrom, ";", ITo) && rv.rStage == dtgInfill.Rows[e.RowIndex].Cells[3].Value.ToString()).Count() > 0)
+                        listaRegistroValidos.RemoveAll(rv => rv.rFromTo == string.Concat(IFrom, ";", ITo) && rv.rStage == dtgInfill.Rows[e.RowIndex].Cells[3].Value.ToString());
+
                     dtgInfill.Rows.RemoveAt(e.RowIndex);
                     MessageBox.Show("Sample deleted successfully.", "Infill", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -10090,7 +10135,9 @@ namespace LogginColombiaGold
                 {
                     fromTosAdicionados = new List<string>();
                     stagesAdicionados = new List<string>();
+                    listaRegistroValidos = new List<RegInfill>();
                 }
+
                 btnCancelar_Click(null, null);
                 FilldgInfill();
             }
@@ -10195,7 +10242,7 @@ namespace LogginColombiaGold
                     {
                         sresp = " 'From' greater than 'To'";
                         return sresp;
-                    }           
+                    }
                 }
 
                 return sresp;
@@ -10258,7 +10305,7 @@ namespace LogginColombiaGold
                     this.FilldtgOxides("2");
                     this.oRf.InsertTrans("DH_Oxides", sEditOxide == "1" ? "Update" : "Insert", clsRf.sUser.ToString(), string.Concat(
                     "Hole ID: ", cmbHoleIdOxide.SelectedValue.ToString(),
-                    ". From: ", txtFromOxide.Text.ToString(), ". To: ", txtToOxide.Text.ToString(), 
+                    ". From: ", txtFromOxide.Text.ToString(), ". To: ", txtToOxide.Text.ToString(),
                     ". Oxide Min: ", cmbmmnox_Per.Text, ". Rate: ", cmbIntensityOxide.Text));
 
                     if (sEditOxide == "1" && dtgOxides.Rows.Count > 1)
@@ -10363,8 +10410,8 @@ namespace LogginColombiaGold
         {
             try
             {
-                if (MessageBox.Show(string.Concat("Row Delete. Hole Id", dtgOxides.Rows[e.RowIndex].Cells["HoleID"].Value.ToString(), 
-                    " From ", dtgOxides.Rows[e.RowIndex].Cells["From"].Value.ToString(), 
+                if (MessageBox.Show(string.Concat("Row Delete. Hole Id", dtgOxides.Rows[e.RowIndex].Cells["HoleID"].Value.ToString(),
+                    " From ", dtgOxides.Rows[e.RowIndex].Cells["From"].Value.ToString(),
                     " To ", dtgOxides.Rows[e.RowIndex].Cells["To"].Value.ToString()), "Oxides", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
                 {
                     oOxid.iSKDHOxides = long.Parse(dtgOxides.Rows[e.RowIndex].Cells["SKDHOxides"].Value.ToString());
@@ -10384,6 +10431,11 @@ namespace LogginColombiaGold
                 MessageBox.Show(ex.Message);
             }
         }
+    }
 
+    public partial class RegInfill
+    {
+        public string rFromTo { set; get; }
+        public string rStage { set; get; }
     }
 }
