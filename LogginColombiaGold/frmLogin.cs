@@ -14,7 +14,6 @@ namespace LogginColombiaGold
 {
     public partial class frmLogin : Form
     {
-
         clsRf oRf = new clsRf();
         bool bAct = false;
 
@@ -27,19 +26,11 @@ namespace LogginColombiaGold
         {
             try
             {
-                //MessageBox.Show(GetSHA1(txtPwd.Text.ToString()));
-
                 string sPwd = GetSHA1(txtPwd.Text.ToString());
-                //DataTable dtRfWorker = new DataTable();
-                //dtRfWorker = oRf.getRfWorkerCred(txtUser.Text.ToString(), sPwd.ToString());
-                //if (dtRfWorker.Rows.Count > 0)
-                //if (txtUser.Text.ToString() == "" && txtPwd.Text.ToString() == "")
-
                 DataTable dtUser = new DataTable();
                 dtUser = oRf.getUsersPortal(txtUser.Text.ToString());
                 if (dtUser.Rows.Count > 0)
                 {
-
                     if (bool.Parse(dtUser.Rows[0]["activo_User"].ToString()) == false)
                     {
                         MessageBox.Show("Disabled User", "Logging", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -49,18 +40,13 @@ namespace LogginColombiaGold
                     if (dtUser.Rows[0]["login_User"].ToString().ToUpper() == txtUser.Text.ToString().ToUpper() &&
                         dtUser.Rows[0]["passwd_User"].ToString().ToUpper() == sPwd.ToString().ToUpper())
                     {
-
                         clsRf.sUser = txtUser.Text.ToString();
-                        //clsRf.sIdentification = dtRfWorker.Rows[0]["Identification"].ToString();
                         clsRf.sIdentification = dtUser.Rows[0]["id_User"].ToString();
                         clsRf.sIdGrupo = dtUser.Rows[0]["idGrupo_User"].ToString();
 
-                        //FrmPpal oPpal = new FrmPpal();
-                        //oPpal.Show();
                         frmSplash oSplash = new frmSplash();
                         oSplash.Show();
-                        this.Hide();
-                        //this.Dispose();
+                        Hide();
                     }
                     else
                     {
@@ -108,7 +94,6 @@ namespace LogginColombiaGold
         {
             try
             {
-                //ConfigurationSettings.AppSettings["IDProject"].ToString();
                 oRf.iIdProject = int.Parse(ConfigurationSettings.AppSettings["IDProject"].ToString());
                 DataTable dtVers = oRf.getVersionProject();
 
@@ -117,7 +102,7 @@ namespace LogginColombiaGold
                 {
                     bAct = true;
                     MessageBox.Show("Actualizar Versión");
-
+                    Close();
                     Process[] _proceses = null;
                     _proceses = Process.GetProcessesByName("LogginColombiaGold.exe");
                     foreach (Process proces in _proceses)

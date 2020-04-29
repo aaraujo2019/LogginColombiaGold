@@ -2891,7 +2891,6 @@ namespace LogginColombiaGold
 
                     cleanControlsWeat();
 
-
                     //Insertar el registro para el historial de transacciones por usuario
                     oRf.InsertTrans("DH_Weathering", sEditWeat == "1" ? "Update" : "Insert", clsRf.sUser.ToString(),
                         "Hole ID: " + cmbHoleIdWeat.SelectedValue.ToString() + "." +
@@ -2901,9 +2900,6 @@ namespace LogginColombiaGold
                         " Weathering: " + cmbWeatheringWeat.SelectedValue.ToString() + "." +
                         " Colour: " + cmbColourWeat.SelectedValue.ToString() + "." +
                         " Sufix: " + cmbSufixWeat.SelectedValue.ToString());
-
-
-
 
                     txtFromWeat.Text = clsDH_Weathering.sStaticFrom.ToString();
                     txtToWeat.Focus();
@@ -3126,7 +3122,6 @@ namespace LogginColombiaGold
                         return sresp;
                     }
                 }
-
 
                 return sresp;
             }
@@ -7716,6 +7711,7 @@ namespace LogginColombiaGold
                     oSheet.Cells[iInicial, 13] = dtStr.Rows[i]["Number"].ToString();
                     oSheet.Cells[iInicial, 14] = dtStr.Rows[i]["Comments"].ToString();
                     oSheet.Cells[iInicial, 15] = dtStr.Rows[i]["Lenght"].ToString();
+                    oSheet.Cells[iInicial, 16] = dtStr.Rows[i]["LowerAngleAxis"].ToString();
 
                     iInicial += 1;
                 }
