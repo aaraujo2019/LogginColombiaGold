@@ -9636,7 +9636,7 @@ namespace LogginColombiaGold
                             {
                                 if (dtgInfill.Rows[j].Cells[26].Value == null || dtgInfill.Rows[j].Cells[26].Value.ToString() == string.Empty)
                                 {
-                                    DataTable dataTable = oInfill.DH_Infill_Consulta(dtgInfill.Rows[j].Cells[0].Value.ToString(), double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ",")), double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ",")));
+                                    DataTable dataTable = oInfill.DH_Infill_Consulta(dtgInfill.Rows[j].Cells[0].Value.ToString(), double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString()), double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString()));
                                     if (dataTable.Rows.Count > 0 && dataTable.Rows[0][0].ToString() == "1")
                                     {
                                         oInfill.wHoleInfill = dtgInfill.Rows[j].Cells[0].Value.ToString();
@@ -9653,7 +9653,7 @@ namespace LogginColombiaGold
                             }
                             else
                             {
-                                DataTable dtConsultaInfiil = oInfill.DH_Infill_Consulta(dtgInfill.Rows[j].Cells[0].Value.ToString(), double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString().Replace(".", ",")), double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString().Replace(".", ",")));
+                                DataTable dtConsultaInfiil = oInfill.DH_Infill_Consulta(dtgInfill.Rows[j].Cells[0].Value.ToString(), double.Parse(dtgInfill.Rows[j].Cells[1].Value.ToString()), double.Parse(dtgInfill.Rows[j].Cells[2].Value.ToString()));
                                 if (dtConsultaInfiil.Rows.Count > 0 && dtConsultaInfiil.Rows[0][0].ToString() == "1")
                                 {
                                     oInfill.wHoleInfill = dtgInfill.Rows[j].Cells[0].Value.ToString();
